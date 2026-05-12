@@ -41,6 +41,6 @@ export const skills: Record<SkillCategory, string[]> = {
     "Postman",
     "Schema Builder",
   ],
-  web: ["TypeScript", "React", "Next.js", "Node.js", "Tailwind CSS"],
-  devops: ["Git / GitHub", "GitHub Actions", "Copado (basics)", "Vercel"],
+  web: ["HTML", "CSS"],
+  devops: ["Git / GitHub", "GitHub Actions"],
 };
