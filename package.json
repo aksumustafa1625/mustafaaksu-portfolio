@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "docs:sync": "node --env-file=.env.local scripts/sync-notion-docs.mjs"
   },
   "dependencies": {
     "clsx": "^2.1.1",
