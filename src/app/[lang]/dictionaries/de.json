@@ -68,14 +68,16 @@
   },
   "skills": {
     "title": "Kenntnisse",
-    "lead": "Werkzeuge, zu denen ich greife — sortiert nach ihrem Platz im Stack.",
+    "lead": "Revenue Cloud ist der Kern. Alles andere stützt die Quote-to-Cash-Story.",
     "categories": {
+      "revenuecloud": "Revenue Cloud",
       "salesforce": "Salesforce-Plattform",
-      "industry": "Industry Solutions",
+      "industry": "Industry & KI",
       "integration": "Integrationen",
       "tools": "Salesforce-Werkzeuge",
+      "devops": "DevOps",
       "web": "Web-Stack",
-      "devops": "DevOps"
+      "languages": "Sprachen"
     }
   },
   "blog": {

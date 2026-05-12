@@ -1,14 +1,25 @@
 export type SkillCategory =
+  | "revenuecloud"
   | "salesforce"
   | "industry"
   | "integration"
   | "tools"
+  | "devops"
   | "web"
-  | "devops";
+  | "languages";
 
 export const skills: Record<SkillCategory, string[]> = {
+  revenuecloud: [
+    "Salesforce CPQ (CPQ Admin certified)",
+    "Industries CPQ (Industries CPQ Developer certified)",
+    "Revenue Lifecycle Management (RLM)",
+    "Contract Lifecycle Management (CLM)",
+    "Salesforce Billing (basics)",
+    "Quote-to-Cash architecture",
+    "Subscription & usage-based pricing",
+  ],
   salesforce: [
-    "Apex (PD II)",
+    "Apex (PD II certified)",
     "Lightning Web Components",
     "Aura Components",
     "SOQL / SOSL",
@@ -16,13 +27,15 @@ export const skills: Record<SkillCategory, string[]> = {
     "Validation Rules",
     "Platform Events",
     "Async Apex (Queueable, Batch, Schedulable)",
+    "Trigger frameworks (Kevin O'Hara)",
     "Visualforce",
   ],
   industry: [
-    "OmniStudio (Developer + Consultant)",
-    "Industries CPQ",
-    "Salesforce CPQ",
-    "Agentforce",
+    "OmniStudio Developer (certified)",
+    "OmniStudio Consultant (certified)",
+    "Agentforce Specialist (certified)",
+    "Einstein Prompt Templates",
+    "ConnectApi.EinsteinLLM",
   ],
   integration: [
     "REST APIs",
@@ -30,17 +43,36 @@ export const skills: Record<SkillCategory, string[]> = {
     "Named Credentials",
     "External Services",
     "Platform Events",
-    "Webhooks",
-    "MuleSoft (basics)",
+    "Webhooks (HMAC-SHA256 verification)",
+    "MuleSoft Anypoint (intermediate)",
+    "SAP S/4HANA (active project)",
+    "OpenAPI 3.0",
   ],
   tools: [
     "Salesforce DX (sfdx)",
     "VS Code + SF Extensions",
+    "Scratch Orgs",
     "Workbench",
     "Data Loader",
     "Postman",
     "Schema Builder",
   ],
-  web: ["HTML", "CSS"],
-  devops: ["Git / GitHub", "GitHub Actions"],
+  devops: [
+    "Git / GitHub",
+    "GitHub Actions",
+    "CI/CD pipelines",
+    "Salesforce DevOps Center (basics)",
+    "Copado (basics)",
+  ],
+  web: [
+    "JavaScript (ES6+)",
+    "TypeScript (basics)",
+    "HTML",
+    "CSS",
+  ],
+  languages: [
+    "Turkish (native)",
+    "English (professional)",
+    "German (Goethe A2 — in progress)",
+  ],
 };

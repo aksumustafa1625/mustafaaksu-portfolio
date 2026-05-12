@@ -68,14 +68,16 @@
   },
   "skills": {
     "title": "Skills",
-    "lead": "Tools I reach for, organized by where they sit in the stack.",
+    "lead": "Revenue Cloud is the core. Everything else supports the Quote-to-Cash story.",
     "categories": {
+      "revenuecloud": "Revenue Cloud",
       "salesforce": "Salesforce Platform",
-      "industry": "Industry Solutions",
+      "industry": "Industry & AI",
       "integration": "Integrations",
       "tools": "Salesforce Tools",
+      "devops": "DevOps",
       "web": "Web Stack",
-      "devops": "DevOps"
+      "languages": "Languages"
     }
   },
   "blog": {

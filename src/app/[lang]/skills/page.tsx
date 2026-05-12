@@ -19,12 +19,14 @@ export default async function SkillsPage(props: PageProps<"/[lang]/skills">) {
   const dict = await getDictionary(lang);
 
   const categories: SkillCategory[] = [
+    "revenuecloud",
     "salesforce",
     "industry",
     "integration",
     "tools",
-    "web",
     "devops",
+    "web",
+    "languages",
   ];
 
   return (
