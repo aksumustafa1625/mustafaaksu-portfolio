@@ -117,7 +117,7 @@ const blocks = [
   h2("TL;DR"),
   p(
     rt(
-      "Personal portfolio site for Mustafa Aksu. Built from scratch with Next.js 16, bilingual (EN + DE), deployed on Vercel, custom domain via GoDaddy. The site itself is the first project case study — meta but honest.",
+      "Personal portfolio site for Mustafa Aksu — Salesforce Developer with 10 active certifications, 8 superbadges, and Five Star Ranger on Trailhead. Bilingual (EN + DE), targeted at the DACH Salesforce market. Three real case studies featured: TechnoStore (Revenue Cloud + MuleSoft Quote-to-Cash), VoltStream Mobility (channel attribution with Apex trigger framework), Urla Shoes (async-callout reference).",
     ),
   ),
 
@@ -139,10 +139,30 @@ const blocks = [
     }),
   ]),
   bullet([
+    rt("Trailhead: ", { bold: true }),
+    rt("aksumustafa16 (Five Star Ranger)", {
+      href: "https://www.salesforce.com/trailblazer/aksumustafa16",
+    }),
+  ]),
+  bullet([
     rt("Email: ", { bold: true }),
     rt("mustafa.aksu@mustafaaksu.dev", {
       href: "mailto:mustafa.aksu@mustafaaksu.dev",
     }),
+  ]),
+
+  h2("Credentials snapshot"),
+  bullet([
+    rt("10 Salesforce certifications", { bold: true }),
+    rt(" — PD I, PD II, Administrator, Platform App Builder, CPQ Admin, OmniStudio Developer, OmniStudio Consultant, Industries CPQ Developer, Agentforce Specialist + AI Associate (retired)."),
+  ]),
+  bullet([
+    rt("8 Superbadges", { bold: true }),
+    rt(" — Apex-heavy: Advanced Apex, Apex Specialist, Apex Callouts, Apex Web Services, Inbound Integration Specialist, Named Credentials, Platform Events, Platform API."),
+  ]),
+  bullet([
+    rt("Trailhead", { bold: true }),
+    rt(" — 518 badges, 258,050 points, 28 trails, Five Star Ranger rank."),
   ]),
 
   h2("Stack & key decisions"),
@@ -187,12 +207,16 @@ const blocks = [
 
   h2("Page architecture"),
   bullet([rt("/", { code: true }), rt(" — redirect to user's locale (en or de)")]),
-  bullet([rt("/[lang]", { code: true }), rt(" — hero, availability badge, featured projects")]),
-  bullet([rt("/[lang]/about", { code: true }), rt(" — bio, story, CV download")]),
-  bullet([rt("/[lang]/projects", { code: true }), rt(" — grid of case studies")]),
-  bullet([rt("/[lang]/projects/[slug]", { code: true }), rt(" — single project deep-dive")]),
-  bullet([rt("/[lang]/skills", { code: true }), rt(" — tech stack by category")]),
-  bullet([rt("/[lang]/contact", { code: true }), rt(" — contact form (mailto) + socials")]),
+  bullet([rt("/[lang]", { code: true }), rt(" — hero, credentials snapshot, featured projects")]),
+  bullet([rt("/[lang]/about", { code: true }), rt(" — bio with integration-focus emphasis")]),
+  bullet([rt("/[lang]/projects", { code: true }), rt(" — three real case studies")]),
+  bullet([rt("/[lang]/projects/[slug]", { code: true }), rt(" — single project deep-dive (problem / approach / outcome)")]),
+  bullet([rt("/[lang]/certifications", { code: true }), rt(" — 10 certs grouped by status + 8 superbadges + Trailhead stats")]),
+  bullet([rt("/[lang]/skills", { code: true }), rt(" — Salesforce / Industry / Integration / Tools / Web (HTML+CSS) / DevOps")]),
+  bullet([rt("/[lang]/blog", { code: true }), rt(" — empty-state placeholder for future technical posts")]),
+  bullet([rt("/[lang]/uses", { code: true }), rt(" — developer setup (uses.tech style)")]),
+  bullet([rt("/[lang]/now", { code: true }), rt(" — current focus, last updated date")]),
+  bullet([rt("/[lang]/contact", { code: true }), rt(" — mailto form + socials")]),
   p(rt("Plus: localized 404, sitemap.xml, robots.txt, dynamic OG images per locale.", { italic: true })),
 
   h2("Roadmap"),
@@ -201,17 +225,20 @@ const blocks = [
   todo("Set up Next.js 16 + Tailwind v4 + TypeScript", true),
   todo("Bilingual EN+DE i18n architecture", true),
   todo("All page skeletons with placeholder content", true),
-  todo("GitHub repo + Vercel deploy + custom domain", true),
+  todo("GitHub repo + Vercel deploy + custom domain (apex primary, www redirects)", true),
+  todo("Pivot positioning from generic web dev to Salesforce Developer", true),
 
-  h3("🟡 Phase 2 — Real content (next)"),
-  todo("Write actual About bio (English + German)", false),
-  todo("Replace placeholder project with 3-4 real case studies", false),
-  todo("Real skills list, audited honestly", false),
+  h3("🟡 Phase 2 — Real content"),
+  todo("Salesforce-focused About bio in EN + DE", true),
+  todo("Three real case studies: TechnoStore, VoltStream, Urla Shoes", true),
+  todo("Skills audited (Web stack reduced to HTML/CSS — honesty)", true),
+  todo("Certifications page with all 10 certs + 8 superbadges + Trailhead stats", true),
   todo("Add profile photo to About page", false),
   todo("Upload CV PDF to /public/cv.pdf", false),
+  todo("Extend VoltStream case study with Salesforce CPQ phase", false),
 
   h3("🔵 Phase 3 — Polish"),
-  todo("Add blog (MDX) — at least 2 posts", false),
+  todo("Add blog (MDX) — at least 2 Salesforce technical posts", false),
   todo("Vercel Analytics + Speed Insights", false),
   todo("Lighthouse audit, fix any < 95 scores", false),
   todo("Reach out to 2-3 friends for feedback", false),
@@ -223,17 +250,12 @@ const blocks = [
   todo("Pin the repo on GitHub profile", false),
 
   h2("Content backlog"),
-  p(
-    rt("What's still placeholder text in the codebase (find with ", { italic: true }),
-    rt('grep "Replace me"', { code: true }),
-    rt(" or ", { italic: true }),
-    rt('grep "placeholder"', { code: true }),
-    rt("):", { italic: true }),
-  ),
-  todo("src/lib/projects.ts — project-placeholder-1 entry needs real project", false),
-  todo("src/lib/site.ts — confirm LinkedIn URL is correct", false),
-  todo("src/app/[lang]/dictionaries/en.json — About body paragraphs are generic", false),
-  todo("src/app/[lang]/dictionaries/de.json — German translation quality check by a native speaker", false),
+  p(rt("Concrete items still pending:", { italic: true })),
+  todo("Add /public/profile.jpg + render on About page", false),
+  todo("Add /public/cv.pdf (Salesforce-targeted, 1-page)", false),
+  todo("German bio paragraphs — quality check by a native speaker before LinkedIn share", false),
+  todo("VoltStream — extend case study with Salesforce CPQ scope when added", false),
+  todo("Blog — write first post (e.g., 'Async callout patterns in Apex')", false),
 
   h2("Deploy runbook"),
   p(
