@@ -1,9 +1,9 @@
 export const site = {
   name: "Mustafa Aksu",
   url: "https://mustafaaksu.dev",
-  email: "mustafaaksu77@gmail.com",
+  email: "mustafa.aksul@mustafaaksu.dev",
   social: {
     github: "https://github.com/aksumustafa1625",
-    linkedin: "https://www.linkedin.com/in/mustafaaksu",
+    linkedin: "https://www.linkedin.com/in/aksumustafa16/",
   },
 } as const;
