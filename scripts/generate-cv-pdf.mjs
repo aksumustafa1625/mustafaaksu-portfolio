@@ -138,9 +138,46 @@ function inlineLink(doc, label, href) {
   return { text: label, link: href, color: COLOR_LINK };
 }
 
+// Draw a single centered line composed of segments. Each segment can carry
+// its own colour and hyperlink. We position every segment with an explicit
+// x so center alignment and inline links coexist (pdfkit's continued+center
+// flow gets them stacked at the same x otherwise).
+function centeredLine(doc, segments, opts = {}) {
+  const size = opts.size ?? 9;
+  doc.fontSize(size).font(opts.font ?? FONT_REG);
+
+  const widths = segments.map((seg) => {
+    doc.font(seg.font ?? opts.font ?? FONT_REG);
+    return doc.widthOfString(seg.text);
+  });
+  const totalWidth = widths.reduce((a, b) => a + b, 0);
+
+  const y = doc.y;
+  let x = (A4.width - totalWidth) / 2;
+
+  segments.forEach((seg, idx) => {
+    doc.font(seg.font ?? opts.font ?? FONT_REG);
+    doc.fillColor(seg.color ?? COLOR_BODY);
+    doc.text(seg.text, x, y, {
+      lineBreak: false,
+      width: widths[idx] + 2,
+      link: seg.link,
+      underline: !!seg.link,
+    });
+    x += widths[idx];
+  });
+
+  doc.fillColor(COLOR_BODY);
+  doc.x = MARGIN;
+  doc.y = y + doc.currentLineHeight() + (opts.after ?? 4);
+}
+
 // ---------- content (mirror of generate-cv.mjs) ----------
 
 function renderHeader(doc) {
+  // Name
+  doc.x = MARGIN;
+  doc.y = MARGIN;
   doc
     .font(FONT_BOLD)
     .fontSize(22)
@@ -151,61 +188,67 @@ function renderHeader(doc) {
     });
   doc.moveDown(0.1);
 
+  // Role subtitle
   doc
     .font(FONT_REG)
     .fontSize(12)
     .fillColor(COLOR_MUTED)
-    .text("Salesforce Developer", { width: CONTENT_WIDTH, align: "center" });
-  doc.moveDown(0.35);
-
-  // Contact line 1
-  doc.font(FONT_REG).fontSize(9).fillColor(COLOR_BODY);
-  doc.text("Türkiye  ·  Open to EU, DACH, Remote  ·  ", {
-    width: CONTENT_WIDTH,
-    align: "center",
-    continued: true,
-  });
-  doc
-    .fillColor(COLOR_LINK)
-    .text("mustafa.aksu@mustafaaksu.dev", {
-      link: "mailto:mustafa.aksu@mustafaaksu.dev",
-      underline: true,
-      continued: true,
+    .text("Salesforce Developer", MARGIN, doc.y, {
+      width: CONTENT_WIDTH,
+      align: "center",
     });
-  doc.fillColor(COLOR_BODY).text("  ·  ", { continued: true });
-  doc
-    .fillColor(COLOR_LINK)
-    .text("mustafaaksu.dev", {
-      link: "https://mustafaaksu.dev",
-      underline: true,
-      continued: false,
-    });
-  doc.fillColor(COLOR_BODY);
-  doc.moveDown(0.2);
+  doc.moveDown(0.55);
 
-  // Contact line 2
-  doc.fontSize(9).fillColor(COLOR_LINK);
-  doc.text("LinkedIn", {
-    width: CONTENT_WIDTH,
-    align: "center",
-    link: "https://www.linkedin.com/in/aksumustafa16/",
-    underline: true,
-    continued: true,
-  });
-  doc.fillColor(COLOR_BODY).text("    ·    ", { continued: true });
-  doc.fillColor(COLOR_LINK).text("GitHub", {
-    link: "https://github.com/aksumustafa1625",
-    underline: true,
-    continued: true,
-  });
-  doc.fillColor(COLOR_BODY).text("    ·    ", { continued: true });
-  doc.fillColor(COLOR_LINK).text("Trailhead (Five Star Ranger)", {
-    link: "https://www.salesforce.com/trailblazer/aksumustafa16",
-    underline: true,
-    continued: false,
-  });
-  doc.fillColor(COLOR_BODY);
-  doc.moveDown(0.5);
+  // Contact line 1 — location
+  centeredLine(
+    doc,
+    [{ text: "Nigeria  ·  Open to EU, DACH, Remote" }],
+    { size: 9, after: 2 },
+  );
+
+  // Contact line 2 — email + site (clickable)
+  centeredLine(
+    doc,
+    [
+      {
+        text: "mustafa.aksu@mustafaaksu.dev",
+        link: "mailto:mustafa.aksu@mustafaaksu.dev",
+        color: COLOR_LINK,
+      },
+      { text: "  ·  " },
+      {
+        text: "mustafaaksu.dev",
+        link: "https://mustafaaksu.dev",
+        color: COLOR_LINK,
+      },
+    ],
+    { size: 9, after: 2 },
+  );
+
+  // Contact line 3 — profile links
+  centeredLine(
+    doc,
+    [
+      {
+        text: "LinkedIn",
+        link: "https://www.linkedin.com/in/aksumustafa16/",
+        color: COLOR_LINK,
+      },
+      { text: "    ·    " },
+      {
+        text: "GitHub",
+        link: "https://github.com/aksumustafa1625",
+        color: COLOR_LINK,
+      },
+      { text: "    ·    " },
+      {
+        text: "Trailhead (Five Star Ranger)",
+        link: "https://www.salesforce.com/trailblazer/aksumustafa16",
+        color: COLOR_LINK,
+      },
+    ],
+    { size: 9, after: 10 },
+  );
 }
 
 function renderSummary(doc) {
