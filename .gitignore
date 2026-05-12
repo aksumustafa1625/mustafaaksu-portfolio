@@ -43,3 +43,6 @@ next-env.d.ts
 # editor
 .vscode/
 .idea/
+
+# generated CV (personal — script is versioned, output is local-only)
+/cv.docx
