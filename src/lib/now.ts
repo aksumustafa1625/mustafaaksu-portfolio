@@ -7,15 +7,15 @@ export const now: {
   lastUpdated: "2026-05-12",
   items: {
     en: [
-      "Preparing for the Salesforce Platform Developer II certification.",
-      "Building and iterating on this portfolio site with Next.js 16 and Tailwind v4.",
-      "Exploring Lightning Web Components performance patterns and reactive state.",
+      "Building the SAP S/4HANA ↔ Salesforce integration for TechnoStore — Product Master sync, Order Acknowledgment on activation, and a retry pattern in MuleSoft Anypoint. Currently mid-sprint (May 10–24).",
+      "Next up after SAP: a DATEV integration — the DACH-standard bookkeeping system used across virtually every German Mittelstand company. Wiring it to Salesforce will close the back-office loop on TechnoStore.",
+      "Deepening the case studies on mustafaaksu.dev with architecture write-ups, integration grids, and Notion links recruiters can dive into.",
       "Open to Salesforce Developer roles in the EU and DACH region.",
     ],
     de: [
-      "Bereite mich auf das Salesforce Platform Developer II-Zertifikat vor.",
-      "Baue und iteriere an dieser Portfolio-Seite mit Next.js 16 und Tailwind v4.",
-      "Erkunde Performance-Patterns und reaktive State-Verwaltung in Lightning Web Components.",
+      "Baue gerade die SAP-S/4HANA-↔-Salesforce-Integration für TechnoStore — Product-Master-Sync, Order Acknowledgment bei Aktivierung und ein Retry-Pattern in MuleSoft Anypoint. Mitten im Sprint (10.–24. Mai).",
+      "Als Nächstes nach SAP: eine DATEV-Integration — das DACH-Standardsystem für Buchhaltung, das in nahezu jedem deutschen Mittelstandsbetrieb läuft. Die Anbindung an Salesforce schließt die Back-Office-Schleife bei TechnoStore.",
+      "Vertiefe parallel die Fallstudien auf mustafaaksu.dev — mit Architektur-Notizen, Integrations-Grids und Notion-Links, in die Recruiter eintauchen können.",
       "Offen für Salesforce-Entwicklerrollen in der EU und DACH-Region.",
     ],
   },
