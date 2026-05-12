@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, BookOpen } from "lucide-react";
 import { FadeIn } from "@/components/fade-in";
 import { projects } from "@/lib/projects";
 import { getDictionary, hasLocale } from "../dictionaries";
@@ -47,7 +47,18 @@ export default async function ProjectsPage(
                 >
                   <div className="flex items-center justify-between text-xs text-muted">
                     <span>{p.year}</span>
-                    <span>{p.role}</span>
+                    <span className="flex items-center gap-2">
+                      {p.notionUrl ? (
+                        <span
+                          className="inline-flex items-center gap-1 rounded-full bg-accent/10 px-2 py-0.5 text-[10px] font-medium text-accent"
+                          title="Full case study on Notion"
+                        >
+                          <BookOpen className="h-3 w-3" />
+                          Notion
+                        </span>
+                      ) : null}
+                      {p.role}
+                    </span>
                   </div>
                   <h2 className="mt-3 text-lg font-medium text-foreground">
                     {t.title}

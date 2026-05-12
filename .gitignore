@@ -46,3 +46,7 @@ next-env.d.ts
 
 # generated CV (personal — script is versioned, output is local-only)
 /cv.docx
+
+# Salesforce DX cache (leaks in when the folder lives near other SF projects)
+/.sfdx/
+/.sf/

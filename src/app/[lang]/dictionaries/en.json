@@ -36,13 +36,17 @@
     "viewProject": "View project",
     "viewCode": "Source",
     "viewLive": "Live",
+    "viewNotion": "Full case study on Notion",
     "back": "Back to all projects",
     "tech": "Tech stack",
     "role": "Role",
     "year": "Year",
     "problem": "The problem",
     "approach": "The approach",
-    "outcome": "The outcome"
+    "outcome": "The outcome",
+    "integrations": "External integrations",
+    "highlights": "Highlights",
+    "architecture": "Architecture"
   },
   "certifications": {
     "title": "Certifications",

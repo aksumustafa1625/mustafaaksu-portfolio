@@ -36,13 +36,17 @@
     "viewProject": "Projekt ansehen",
     "viewCode": "Quellcode",
     "viewLive": "Live-Demo",
+    "viewNotion": "Vollständige Fallstudie auf Notion",
     "back": "Zurück zu allen Projekten",
     "tech": "Technologien",
     "role": "Rolle",
     "year": "Jahr",
     "problem": "Das Problem",
     "approach": "Der Ansatz",
-    "outcome": "Das Ergebnis"
+    "outcome": "Das Ergebnis",
+    "integrations": "Externe Integrationen",
+    "highlights": "Eckdaten",
+    "architecture": "Architektur"
   },
   "certifications": {
     "title": "Zertifikate",
