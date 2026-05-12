@@ -210,7 +210,7 @@ const blocks = [
   bullet([rt("/[lang]", { code: true }), rt(" — hero, credentials snapshot, featured projects")]),
   bullet([rt("/[lang]/about", { code: true }), rt(" — bio with integration-focus emphasis")]),
   bullet([rt("/[lang]/projects", { code: true }), rt(" — three real case studies")]),
-  bullet([rt("/[lang]/projects/[slug]", { code: true }), rt(" — single project deep-dive (problem / approach / outcome)")]),
+  bullet([rt("/[lang]/projects/[slug]", { code: true }), rt(" — single project deep-dive: highlights · problem · architecture · approach · outcome · integrations grid · Notion / Source / Live CTAs")]),
   bullet([rt("/[lang]/certifications", { code: true }), rt(" — 10 certs grouped by status + 8 superbadges + Trailhead stats")]),
   bullet([rt("/[lang]/skills", { code: true }), rt(" — Salesforce / Industry / Integration / Tools / Web (HTML+CSS) / DevOps")]),
   bullet([rt("/[lang]/blog", { code: true }), rt(" — empty-state placeholder for future technical posts")]),
@@ -218,6 +218,63 @@ const blocks = [
   bullet([rt("/[lang]/now", { code: true }), rt(" — current focus, last updated date")]),
   bullet([rt("/[lang]/contact", { code: true }), rt(" — mailto form + socials")]),
   p(rt("Plus: localized 404, sitemap.xml, robots.txt, dynamic OG images per locale.", { italic: true })),
+
+  h2("Featured case studies"),
+
+  h3("TechnoStore — Revenue Cloud Quote-to-Cash for the DACH market"),
+  p(
+    rt(
+      "End-to-end B2B electronics Quote-to-Cash demo on Salesforce Revenue Lifecycle Management, Contract Lifecycle Management, and Industries CPQ — orchestrated with MuleSoft Anypoint across seven external systems. Built specifically against DACH enterprise role expectations (T-Systems, Allianz Technology, Mercedes-Benz.io, BMW Group IT, SAP Industries practice).",
+    ),
+  ),
+  bullet([rt("Stack: ", { bold: true }), rt("Apex · RLM · CLM · Industries CPQ · MuleSoft Anypoint · Platform Events · Named Credentials · OpenAPI 3.0 · arc42 · Kevin O'Hara trigger framework")]),
+  bullet([rt("Integrations (7): ", { bold: true }), rt("Stripe (HMAC-SHA256 webhook), Sendcloud/DHL (v3 API), DocuSign (envelope + Connect webhook), JIRA Cloud (inventory tickets), Slack (#warehouse + #payments-team), Notion (programmatic publishing), MuleSoft (orchestration layer)")]),
+  bullet([rt("Architecture: ", { bold: true }), rt("OrderTriggerHandler fan-out across five downstream systems in parallel; Stripe webhook arrives at MuleSoft, HMAC-verified, scatters back to Salesforce + Slack + a Choice router for fulfilment; DocuSign Connect lands at a Salesforce Site and uses a Platform Event indirection to escape Guest User FLS limits.")]),
+  bullet([rt("Numbers: ", { bold: true }), rt("60 Apex classes across 6 SFDX packages (~214 KB of code), 10 Architecture Decision Records (Nygard format), 50-entry STAR-format Notion portfolio published programmatically, 2–6 second end-to-end Quote-to-Cash latency.")]),
+  bullet([rt("DACH-specific: ", { bold: true }), rt("19 % VAT formulas, DHL preference, DE/AT/CH address parsing.")]),
+  bullet([
+    rt("Repo: ", { bold: true }),
+    rt("github.com/aksumustafa1625/TechnoStore", { href: "https://github.com/aksumustafa1625/TechnoStore" }),
+  ]),
+  bullet([
+    rt("Notion case study: ", { bold: true }),
+    rt("TechnoStore Interview Prep", { href: "https://www.notion.so/TechnoStore-Interview-Prep-35d10a2e9f868035b2baf974792298c5" }),
+  ]),
+
+  h3("Urla Shoes — Route safety with Google Maps, OpenWeather, and Salesforce Einstein"),
+  p(
+    rt(
+      "A live demo combining three external integrations to plan a route, fetch weather along five waypoints, and let an Einstein Prompt Template (GPT-4o mini) decide whether the journey is safe. Direct match for fleet management, field service, and delivery scheduling work in the DACH market.",
+    ),
+  ),
+  bullet([rt("Stack: ", { bold: true }), rt("Apex (Queueable) · Lightning Web Components · Visualforce (bridge) · Salesforce Einstein · Prompt Templates · ConnectApi.EinsteinLLM · Named Credentials")]),
+  bullet([rt("Integrations: ", { bold: true }), rt("Google Maps Directions (via VF iframe + postMessage), OpenWeatherMap (5-waypoint parallel forecast), Salesforce Einstein (GPT-4o mini), Nationalize.io (secondary feature on Contact insert).")]),
+  bullet([rt("Architecture: ", { bold: true }), rt("routeWeather LWC orchestrates the flow — hosts a Visualforce page in an iframe (the only way to load Google Maps under Lightning Web Security), receives the route via postMessage, computes five waypoints, fires five parallel Promise.all fetches to OpenWeather, then POSTs a slim six-field-per-waypoint payload to RouteWeatherAnalysisService which calls ConnectApi.EinsteinLLM.generateMessagesForPromptTemplate('RouteWeatherAnalysis').")]),
+  bullet([rt("Output: ", { bold: true }), rt("AI verdict rendered in a colour-coded card by a keyword classifier (storm/ice/hazard → red; caution/careful → amber; else green).")]),
+  bullet([rt("Secondary feature: ", { bold: true }), rt("Contact-insert Queueable hits Nationalize.io with full HttpCalloutMock coverage across six scenarios (success, empty, HTTP 500, missing FirstName, bulk-10, parser unit test).")]),
+  bullet([
+    rt("Repo: ", { bold: true }),
+    rt("github.com/aksumustafa1625/urla-shoes", { href: "https://github.com/aksumustafa1625/urla-shoes" }),
+  ]),
+  bullet([
+    rt("Notion case study: ", { bold: true }),
+    rt("Urla Shoes Documentation", { href: "https://www.notion.so/Urla-Shoes-Documentation-Yedek-33310a2e9f8680c0a5acc0d6ccf49745" }),
+  ]),
+
+  h3("VoltStream Mobility — Channel-partner attribution for EV-charging sales"),
+  p(
+    rt(
+      "B2B EV-charging CRM where one field on an Opportunity auto-links the deal to the right channel partner via Apex. Modelled on the German e-mobility hiring market (EnBW, Ionity, Allego, Mercedes-Benz Mobility).",
+    ),
+  ),
+  bullet([rt("Stack: ", { bold: true }), rt("Apex · Custom Objects · Trigger Framework · SOQL · Lightning App Builder · Reports & Dashboards")]),
+  bullet([rt("Architecture: ", { bold: true }), rt("Custom Reseller__c object with indexed Company_Email__c External ID; four-layer pattern (trigger → handler → service → matcher) on the Kevin O'Hara framework. Lookup relationship (not master-detail) so revenue data survives partner churn.")]),
+  bullet([rt("Numbers: ", { bold: true }), rt("80 / 80 Apex tests passing, 100 % coverage including bulk and negative cases.")]),
+  bullet([rt("Next phase: ", { bold: true }), rt("Extend the schema with Salesforce CPQ for hardware-bundle pricing.")]),
+  bullet([
+    rt("Repo: ", { bold: true }),
+    rt("github.com/aksumustafa1625/VoltStreamMobility", { href: "https://github.com/aksumustafa1625/VoltStreamMobility" }),
+  ]),
 
   h2("Roadmap"),
 
