@@ -15,7 +15,7 @@
   "home": {
     "greeting": "Hi, I'm Mustafa.",
     "headline": "I build on the Salesforce platform.",
-    "subhead": "Salesforce developer focused on declarative-first solutions, clean Apex, and Lightning Web Components that scale with the business.",
+    "subhead": "Salesforce developer with deep Apex and integration expertise. 10 certifications across Platform, Industry Solutions, and Agentforce. Comfortable from Flow to async Apex.",
     "ctaProjects": "See my work",
     "ctaContact": "Get in touch",
     "availability": "Open to new opportunities"
@@ -25,6 +25,7 @@
     "lead": "I'm a Salesforce developer who cares about both code quality and user adoption.",
     "body": [
       "I build on the Salesforce platform end-to-end — Apex, Lightning Web Components, Flows, and the integrations that connect Salesforce to the rest of the business. I lean declarative-first and reach for Apex when it earns its place.",
+      "Integration is the part of the platform I love most. Eight of my Trailhead superbadges are Apex- and integration-focused (Advanced Apex, Apex Callouts, Inbound Integration, Named Credentials, Platform Events, Apex Web Services). My ten Salesforce certifications span Platform, Industry Solutions (OmniStudio, Industries CPQ), and Agentforce.",
       "Outside of orgs, I read, lift, and travel. I'm currently based in Türkiye and open to roles across the EU, the DACH region, or remote."
     ],
     "downloadCv": "Download CV"
@@ -45,15 +46,20 @@
   },
   "certifications": {
     "title": "Certifications",
-    "lead": "Credentials I've earned in the Salesforce ecosystem.",
-    "issuedBy": "Issued by",
-    "earned": "Earned",
-    "verify": "Verify credential",
+    "lead": "Credentials and learning history on the Salesforce platform.",
+    "issued": "Issued",
+    "retired": "Retired",
     "preparing": "In progress",
+    "active": "Active",
+    "verifyAll": "Verify on Trailblazer profile",
+    "superbadgesTitle": "Superbadges",
+    "superbadgesLead": "Hands-on, scenario-based challenges. Heavy on Apex and integrations.",
     "trailheadTitle": "Trailhead",
     "trailheadLead": "Continuous learning on the Salesforce platform.",
     "trailheadBadges": "Badges",
     "trailheadSuperBadges": "Super Badges",
+    "trailheadPoints": "Points",
+    "trailheadTrails": "Trails",
     "trailheadCta": "View Trailhead profile"
   },
   "skills": {
@@ -61,6 +67,7 @@
     "lead": "Tools I reach for, organized by where they sit in the stack.",
     "categories": {
       "salesforce": "Salesforce Platform",
+      "industry": "Industry Solutions",
       "integration": "Integrations",
       "tools": "Salesforce Tools",
       "web": "Web Stack",

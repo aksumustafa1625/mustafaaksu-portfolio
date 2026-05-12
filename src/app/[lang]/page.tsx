@@ -1,10 +1,11 @@
-import { ArrowRight, Mail } from "lucide-react";
+import { ArrowRight, Award, Mail, Sparkles } from "lucide-react";
 import { notFound } from "next/navigation";
 import { ButtonLink } from "@/components/ui/button";
 import { GithubIcon, LinkedinIcon } from "@/components/icons";
 import { FadeIn } from "@/components/fade-in";
 import { site } from "@/lib/site";
 import { projects } from "@/lib/projects";
+import { certifications, superbadges, trailhead } from "@/lib/certifications";
 import { getDictionary, hasLocale } from "./dictionaries";
 import Link from "next/link";
 
@@ -37,7 +38,39 @@ export default async function HomePage(props: PageProps<"/[lang]">) {
             {dict.home.subhead}
           </p>
         </FadeIn>
-        <FadeIn delay={0.4}>
+        <FadeIn delay={0.35}>
+          <div className="mt-8 flex flex-wrap gap-2">
+            <Link
+              href={`/${lang}/certifications`}
+              className="inline-flex items-center gap-1.5 rounded-full border border-border bg-muted-bg/40 px-3 py-1 text-xs text-foreground/80 hover:bg-muted-bg hover:text-foreground transition-colors"
+            >
+              <Award className="h-3.5 w-3.5 text-accent" />
+              <span className="font-semibold text-foreground">
+                {certifications.filter((c) => c.status === "active").length}
+              </span>
+              Salesforce certifications
+            </Link>
+            <Link
+              href={`/${lang}/certifications`}
+              className="inline-flex items-center gap-1.5 rounded-full border border-border bg-muted-bg/40 px-3 py-1 text-xs text-foreground/80 hover:bg-muted-bg hover:text-foreground transition-colors"
+            >
+              <Sparkles className="h-3.5 w-3.5 text-accent" />
+              <span className="font-semibold text-foreground">
+                {superbadges.length}
+              </span>
+              Superbadges
+            </Link>
+            <a
+              href={trailhead.profileUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1.5 rounded-full border border-border bg-muted-bg/40 px-3 py-1 text-xs text-foreground/80 hover:bg-muted-bg hover:text-foreground transition-colors"
+            >
+              {trailhead.rank} · {trailhead.badges} badges
+            </a>
+          </div>
+        </FadeIn>
+        <FadeIn delay={0.45}>
           <div className="mt-10 flex flex-wrap items-center gap-3">
             <ButtonLink href={`/${lang}/projects`} size="lg">
               {dict.home.ctaProjects}

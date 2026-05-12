@@ -1,38 +1,112 @@
 export type Certification = {
   name: string;
-  issuer: string;
-  year: number;
-  credentialUrl?: string;
-  status: "active" | "preparing";
+  category:
+    | "Platform"
+    | "Sales Cloud"
+    | "Industry Solutions"
+    | "Agentforce"
+    | "AI Associate";
+  issuedMonth: string;
+  issuedYear: number;
+  status: "active" | "preparing" | "retired";
 };
 
-// TODO Mustafa: replace these with your real credentials.
-// For each active cert, paste the verification URL from credential.salesforce.com.
 export const certifications: Certification[] = [
   {
-    name: "Salesforce Platform Developer I",
-    issuer: "Salesforce",
-    year: 2025,
+    name: "Salesforce Certified OmniStudio Developer",
+    category: "Industry Solutions",
+    issuedMonth: "Jun",
+    issuedYear: 2025,
     status: "active",
   },
   {
-    name: "Salesforce Administrator",
-    issuer: "Salesforce",
-    year: 2024,
+    name: "Salesforce Certified OmniStudio Consultant",
+    category: "Industry Solutions",
+    issuedMonth: "Jun",
+    issuedYear: 2025,
     status: "active",
   },
   {
-    name: "Salesforce Platform Developer II",
-    issuer: "Salesforce",
-    year: 2026,
-    status: "preparing",
+    name: "Salesforce Certified Industries CPQ Developer",
+    category: "Industry Solutions",
+    issuedMonth: "May",
+    issuedYear: 2025,
+    status: "active",
+  },
+  {
+    name: "Salesforce Certified Platform App Builder",
+    category: "Platform",
+    issuedMonth: "Apr",
+    issuedYear: 2025,
+    status: "active",
+  },
+  {
+    name: "Salesforce Certified CPQ Administrator",
+    category: "Sales Cloud",
+    issuedMonth: "Mar",
+    issuedYear: 2025,
+    status: "active",
+  },
+  {
+    name: "Salesforce Certified Agentforce Specialist",
+    category: "Agentforce",
+    issuedMonth: "Jan",
+    issuedYear: 2025,
+    status: "active",
+  },
+  {
+    name: "Salesforce Certified Platform Developer II",
+    category: "Platform",
+    issuedMonth: "Dec",
+    issuedYear: 2024,
+    status: "active",
+  },
+  {
+    name: "Salesforce Certified Platform Developer I",
+    category: "Platform",
+    issuedMonth: "Nov",
+    issuedYear: 2024,
+    status: "active",
+  },
+  {
+    name: "Salesforce Certified Administrator",
+    category: "Platform",
+    issuedMonth: "Oct",
+    issuedYear: 2024,
+    status: "active",
+  },
+  {
+    name: "Salesforce Certified AI Associate",
+    category: "AI Associate",
+    issuedMonth: "Dec",
+    issuedYear: 2024,
+    status: "retired",
   },
 ];
 
+export type Superbadge = {
+  name: string;
+  completedMonth: string;
+  completedYear: number;
+};
+
+export const superbadges: Superbadge[] = [
+  { name: "Advanced Apex Specialist", completedMonth: "Dec", completedYear: 2024 },
+  { name: "Apex Specialist", completedMonth: "Oct", completedYear: 2024 },
+  { name: "Apex Callouts Superbadge", completedMonth: "Dec", completedYear: 2024 },
+  { name: "Apex Web Services Superbadge", completedMonth: "Dec", completedYear: 2024 },
+  { name: "Salesforce Inbound Integration Specialist", completedMonth: "Dec", completedYear: 2024 },
+  { name: "Named Credentials Superbadge Unit", completedMonth: "Dec", completedYear: 2024 },
+  { name: "Platform Events Superbadge Unit", completedMonth: "Dec", completedYear: 2024 },
+  { name: "Platform API Superbadge Unit", completedMonth: "Dec", completedYear: 2024 },
+];
+
 export const trailhead = {
-  username: "mustafaaksu",
-  profileUrl: "https://www.salesforce.com/trailblazer/mustafaaksu",
-  badges: 0,
-  superBadges: 0,
-  rank: "Ranger",
+  username: "aksumustafa16",
+  profileUrl: "https://www.salesforce.com/trailblazer/aksumustafa16",
+  rank: "Five Star Ranger",
+  badges: 518,
+  superBadges: superbadges.length,
+  points: 258050,
+  trails: 28,
 };

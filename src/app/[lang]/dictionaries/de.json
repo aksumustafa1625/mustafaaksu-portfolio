@@ -15,7 +15,7 @@
   "home": {
     "greeting": "Hallo, ich bin Mustafa.",
     "headline": "Ich entwickle auf der Salesforce-Plattform.",
-    "subhead": "Salesforce-Entwickler mit Fokus auf Declarative-first-Lösungen, sauberen Apex-Code und Lightning Web Components, die mit dem Unternehmen wachsen.",
+    "subhead": "Salesforce-Entwickler mit tiefer Apex- und Integrationsexpertise. 10 Zertifikate in Platform, Industry Solutions und Agentforce. Souverän von Flow bis Async Apex.",
     "ctaProjects": "Meine Arbeit ansehen",
     "ctaContact": "Kontakt aufnehmen",
     "availability": "Offen für neue Möglichkeiten"
@@ -25,6 +25,7 @@
     "lead": "Ich bin ein Salesforce-Entwickler, dem sowohl Code-Qualität als auch User Adoption am Herzen liegen.",
     "body": [
       "Ich baue auf der Salesforce-Plattform Ende-zu-Ende — Apex, Lightning Web Components, Flows und die Integrationen, die Salesforce mit dem Rest des Unternehmens verbinden. Ich gehe declarative-first vor und greife zu Apex, wenn es seinen Platz verdient.",
+      "Integration ist der Teil der Plattform, den ich am meisten liebe. Acht meiner Trailhead-Superbadges drehen sich um Apex und Integration (Advanced Apex, Apex Callouts, Inbound Integration, Named Credentials, Platform Events, Apex Web Services). Meine zehn Salesforce-Zertifikate umfassen Platform, Industry Solutions (OmniStudio, Industries CPQ) und Agentforce.",
       "Abseits von Orgs lese ich, trainiere und reise. Aktuell bin ich in der Türkei und offen für Stellen in der EU, der DACH-Region oder Remote."
     ],
     "downloadCv": "Lebenslauf herunterladen"
@@ -45,15 +46,20 @@
   },
   "certifications": {
     "title": "Zertifikate",
-    "lead": "Anerkennungen, die ich im Salesforce-Ökosystem erworben habe.",
-    "issuedBy": "Ausgestellt von",
-    "earned": "Erworben",
-    "verify": "Zertifikat verifizieren",
+    "lead": "Anerkennungen und Lernhistorie auf der Salesforce-Plattform.",
+    "issued": "Ausgestellt",
+    "retired": "Ausgelaufen",
     "preparing": "In Vorbereitung",
+    "active": "Aktiv",
+    "verifyAll": "Auf Trailblazer-Profil verifizieren",
+    "superbadgesTitle": "Superbadges",
+    "superbadgesLead": "Praktische, szenariobasierte Challenges. Stark Apex- und integrationslastig.",
     "trailheadTitle": "Trailhead",
     "trailheadLead": "Kontinuierliches Lernen auf der Salesforce-Plattform.",
     "trailheadBadges": "Badges",
     "trailheadSuperBadges": "Super Badges",
+    "trailheadPoints": "Punkte",
+    "trailheadTrails": "Trails",
     "trailheadCta": "Trailhead-Profil ansehen"
   },
   "skills": {
@@ -61,6 +67,7 @@
     "lead": "Werkzeuge, zu denen ich greife — sortiert nach ihrem Platz im Stack.",
     "categories": {
       "salesforce": "Salesforce-Plattform",
+      "industry": "Industry Solutions",
       "integration": "Integrationen",
       "tools": "Salesforce-Werkzeuge",
       "web": "Web-Stack",

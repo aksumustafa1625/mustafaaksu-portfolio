@@ -20,6 +20,7 @@ export default async function SkillsPage(props: PageProps<"/[lang]/skills">) {
 
   const categories: SkillCategory[] = [
     "salesforce",
+    "industry",
     "integration",
     "tools",
     "web",

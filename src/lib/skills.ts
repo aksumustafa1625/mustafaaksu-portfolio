@@ -1,5 +1,6 @@
 export type SkillCategory =
   | "salesforce"
+  | "industry"
   | "integration"
   | "tools"
   | "web"
@@ -7,14 +8,21 @@ export type SkillCategory =
 
 export const skills: Record<SkillCategory, string[]> = {
   salesforce: [
-    "Apex",
+    "Apex (PD II)",
     "Lightning Web Components",
     "Aura Components",
     "SOQL / SOSL",
     "Flow Builder",
     "Validation Rules",
+    "Platform Events",
+    "Async Apex (Queueable, Batch, Schedulable)",
     "Visualforce",
-    "OmniStudio (basics)",
+  ],
+  industry: [
+    "OmniStudio (Developer + Consultant)",
+    "Industries CPQ",
+    "Salesforce CPQ",
+    "Agentforce",
   ],
   integration: [
     "REST APIs",
@@ -23,6 +31,7 @@ export const skills: Record<SkillCategory, string[]> = {
     "External Services",
     "Platform Events",
     "Webhooks",
+    "MuleSoft (basics)",
   ],
   tools: [
     "Salesforce DX (sfdx)",
