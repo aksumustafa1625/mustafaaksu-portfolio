@@ -1,35 +1,37 @@
 {
   "meta": {
-    "title": "Mustafa Aksu — Software-Entwickler",
-    "description": "Software-Entwickler, der elegante und performante Web-Erlebnisse baut. Offen für Möglichkeiten in der EU und Remote."
+    "title": "Mustafa Aksu — Salesforce-Entwickler",
+    "description": "Salesforce-Entwickler mit Apex, Lightning Web Components, Flows und den Integrationen, die mit dem Unternehmen wachsen. Offen für Stellen in der EU und Remote."
   },
   "nav": {
     "home": "Start",
     "about": "Über mich",
     "projects": "Projekte",
+    "certifications": "Zertifikate",
     "skills": "Kenntnisse",
+    "blog": "Blog",
     "contact": "Kontakt"
   },
   "home": {
     "greeting": "Hallo, ich bin Mustafa.",
-    "headline": "Ich baue Software, die sich mühelos anfühlt.",
-    "subhead": "Software-Entwickler mit Fokus auf saubere Architektur, schnelle Interfaces und die kleinen Details, die Produkte richtig wirken lassen.",
+    "headline": "Ich entwickle auf der Salesforce-Plattform.",
+    "subhead": "Salesforce-Entwickler mit Fokus auf Declarative-first-Lösungen, sauberen Apex-Code und Lightning Web Components, die mit dem Unternehmen wachsen.",
     "ctaProjects": "Meine Arbeit ansehen",
     "ctaContact": "Kontakt aufnehmen",
     "availability": "Offen für neue Möglichkeiten"
   },
   "about": {
     "title": "Über mich",
-    "lead": "Ich bin ein Software-Entwickler, dem Handwerk wichtig ist.",
+    "lead": "Ich bin ein Salesforce-Entwickler, dem sowohl Code-Qualität als auch User Adoption am Herzen liegen.",
     "body": [
-      "Ich baue Webanwendungen Ende-zu-Ende — von der Datenmodellierung bis zu dem Pixel, das den Button beim Drücken richtig anfühlen lässt. Mein Alltag besteht hauptsächlich aus TypeScript, React und Node, mit gesundem Respekt für die Datenbank darunter.",
-      "Abseits vom Code lese ich, trainiere und reise. Aktuell bin ich in der Türkei und offen für Stellen in der EU, der DACH-Region oder Remote."
+      "Ich baue auf der Salesforce-Plattform Ende-zu-Ende — Apex, Lightning Web Components, Flows und die Integrationen, die Salesforce mit dem Rest des Unternehmens verbinden. Ich gehe declarative-first vor und greife zu Apex, wenn es seinen Platz verdient.",
+      "Abseits von Orgs lese ich, trainiere und reise. Aktuell bin ich in der Türkei und offen für Stellen in der EU, der DACH-Region oder Remote."
     ],
     "downloadCv": "Lebenslauf herunterladen"
   },
   "projects": {
     "title": "Projekte",
-    "lead": "Eine Auswahl an Dingen, die ich gebaut habe. Jedes hat mich etwas anderes gelehrt.",
+    "lead": "Salesforce-Orgs, die ich geformt habe, und Side-Projects, die ich gelauncht habe. Jedes hat mich etwas anderes gelehrt.",
     "viewProject": "Projekt ansehen",
     "viewCode": "Quellcode",
     "viewLive": "Live-Demo",
@@ -41,16 +43,45 @@
     "approach": "Der Ansatz",
     "outcome": "Das Ergebnis"
   },
+  "certifications": {
+    "title": "Zertifikate",
+    "lead": "Anerkennungen, die ich im Salesforce-Ökosystem erworben habe.",
+    "issuedBy": "Ausgestellt von",
+    "earned": "Erworben",
+    "verify": "Zertifikat verifizieren",
+    "preparing": "In Vorbereitung",
+    "trailheadTitle": "Trailhead",
+    "trailheadLead": "Kontinuierliches Lernen auf der Salesforce-Plattform.",
+    "trailheadBadges": "Badges",
+    "trailheadSuperBadges": "Super Badges",
+    "trailheadCta": "Trailhead-Profil ansehen"
+  },
   "skills": {
     "title": "Kenntnisse",
     "lead": "Werkzeuge, zu denen ich greife — sortiert nach ihrem Platz im Stack.",
     "categories": {
-      "frontend": "Frontend",
-      "backend": "Backend",
-      "database": "Datenbanken",
-      "devops": "DevOps & Cloud",
-      "tools": "Werkzeuge"
+      "salesforce": "Salesforce-Plattform",
+      "integration": "Integrationen",
+      "tools": "Salesforce-Werkzeuge",
+      "web": "Web-Stack",
+      "devops": "DevOps"
     }
+  },
+  "blog": {
+    "title": "Blog",
+    "lead": "Notizen aus der Praxis zu Salesforce-Entwicklung, Integrationen und den rauen Kanten der Plattform.",
+    "empty": "Der erste Beitrag ist unterwegs. Folge mir auf LinkedIn für Updates.",
+    "readMore": "Mehr lesen",
+    "readingTime": "Min. Lesezeit"
+  },
+  "uses": {
+    "title": "Setup",
+    "lead": "Die Hardware, Software und Dienste, die ich täglich verwende. Inspiriert von uses.tech."
+  },
+  "now": {
+    "title": "Aktuell",
+    "lead": "Worauf ich mich gerade konzentriere.",
+    "lastUpdated": "Zuletzt aktualisiert"
   },
   "contact": {
     "title": "Lass uns reden",
@@ -66,7 +97,8 @@
   },
   "footer": {
     "tagline": "Von Grund auf gebaut mit Next.js und viel Kaffee.",
-    "rights": "Alle Rechte vorbehalten."
+    "rights": "Alle Rechte vorbehalten.",
+    "more": "Mehr"
   },
   "common": {
     "switchLanguage": "Sprache",

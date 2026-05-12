@@ -5,5 +5,6 @@ export const site = {
   social: {
     github: "https://github.com/aksumustafa1625",
     linkedin: "https://www.linkedin.com/in/aksumustafa16/",
+    trailhead: "https://www.salesforce.com/trailblazer/mustafaaksu",
   },
 } as const;

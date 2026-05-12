@@ -24,7 +24,9 @@ export function Header({
     { href: `/${lang}`, label: dict.nav.home },
     { href: `/${lang}/about`, label: dict.nav.about },
     { href: `/${lang}/projects`, label: dict.nav.projects },
+    { href: `/${lang}/certifications`, label: dict.nav.certifications },
     { href: `/${lang}/skills`, label: dict.nav.skills },
+    { href: `/${lang}/blog`, label: dict.nav.blog },
     { href: `/${lang}/contact`, label: dict.nav.contact },
   ];
 

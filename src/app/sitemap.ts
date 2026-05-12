@@ -5,7 +5,17 @@ import { projects } from "@/lib/projects";
 const BASE = "https://mustafaaksu.dev";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticPaths = ["", "/about", "/projects", "/skills", "/contact"];
+  const staticPaths = [
+    "",
+    "/about",
+    "/projects",
+    "/certifications",
+    "/skills",
+    "/blog",
+    "/uses",
+    "/now",
+    "/contact",
+  ];
 
   const pages = locales.flatMap((lang) =>
     staticPaths.map((path) => ({
