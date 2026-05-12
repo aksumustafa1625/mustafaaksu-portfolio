@@ -241,7 +241,7 @@ function renderHeader(doc) {
   // Contact line 1 — location + availability
   centeredLine(
     doc,
-    [{ text: "Nigeria  ·  Targeting EU & DACH  ·  Visa sponsorship — or contract / freelance" }],
+    [{ text: "Nigeria  ·  Targeting EU & DACH  ·  Visa sponsorship — or freelance" }],
     { size: 9, after: 2 },
   );
 

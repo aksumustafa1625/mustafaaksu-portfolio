@@ -101,7 +101,7 @@ const header = [
   new Paragraph({
     alignment: AlignmentType.CENTER,
     children: [
-      t("Nigeria · Targeting EU & DACH · Visa sponsorship — or contract / freelance · "),
+      t("Nigeria · Targeting EU & DACH · Visa sponsorship — or freelance · "),
       link("mustafa.aksu@mustafaaksu.dev", "mailto:mustafa.aksu@mustafaaksu.dev"),
       t(" · "),
       link("mustafaaksu.dev", "https://mustafaaksu.dev"),
