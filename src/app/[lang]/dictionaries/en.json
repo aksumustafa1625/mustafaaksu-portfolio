@@ -1,0 +1,77 @@
+{
+  "meta": {
+    "title": "Mustafa Aksu — Software Engineer",
+    "description": "Software Engineer building elegant, performant web experiences. Open to opportunities across the EU and remote."
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "projects": "Projects",
+    "skills": "Skills",
+    "contact": "Contact"
+  },
+  "home": {
+    "greeting": "Hi, I'm Mustafa.",
+    "headline": "I build software that feels effortless.",
+    "subhead": "Software engineer focused on clean architecture, fast interfaces, and the small details that make products feel right.",
+    "ctaProjects": "See my work",
+    "ctaContact": "Get in touch",
+    "availability": "Open to new opportunities"
+  },
+  "about": {
+    "title": "About",
+    "lead": "I'm a software engineer who cares about craftsmanship.",
+    "body": [
+      "I build web applications end-to-end, from data modeling to the pixel that makes the button feel right when you press it. My day-to-day is mostly TypeScript, React, and Node, with a healthy respect for the database underneath.",
+      "Outside of code, I read, lift, and travel. I'm currently based in Türkiye and open to roles across the EU, the DACH region, or remote."
+    ],
+    "downloadCv": "Download CV"
+  },
+  "projects": {
+    "title": "Projects",
+    "lead": "A selection of things I've built. Each one taught me something different.",
+    "viewProject": "View project",
+    "viewCode": "Source",
+    "viewLive": "Live",
+    "back": "Back to all projects",
+    "tech": "Tech stack",
+    "role": "Role",
+    "year": "Year",
+    "problem": "The problem",
+    "approach": "The approach",
+    "outcome": "The outcome"
+  },
+  "skills": {
+    "title": "Skills",
+    "lead": "Tools I reach for, organized by where they sit in the stack.",
+    "categories": {
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "database": "Databases",
+      "devops": "DevOps & Cloud",
+      "tools": "Tools"
+    }
+  },
+  "contact": {
+    "title": "Let's talk",
+    "lead": "The fastest way is email. I read everything and reply within a day or two.",
+    "name": "Your name",
+    "email": "Your email",
+    "message": "Your message",
+    "send": "Send message",
+    "sending": "Sending…",
+    "success": "Thanks — I'll get back to you soon.",
+    "error": "Something went wrong. Try emailing me directly?",
+    "orEmail": "Or email me directly at"
+  },
+  "footer": {
+    "tagline": "Built from scratch with Next.js and a lot of coffee.",
+    "rights": "All rights reserved."
+  },
+  "common": {
+    "switchLanguage": "Language",
+    "switchTheme": "Toggle theme",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  }
+}

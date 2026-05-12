@@ -1,0 +1,77 @@
+{
+  "meta": {
+    "title": "Mustafa Aksu — Software-Entwickler",
+    "description": "Software-Entwickler, der elegante und performante Web-Erlebnisse baut. Offen für Möglichkeiten in der EU und Remote."
+  },
+  "nav": {
+    "home": "Start",
+    "about": "Über mich",
+    "projects": "Projekte",
+    "skills": "Kenntnisse",
+    "contact": "Kontakt"
+  },
+  "home": {
+    "greeting": "Hallo, ich bin Mustafa.",
+    "headline": "Ich baue Software, die sich mühelos anfühlt.",
+    "subhead": "Software-Entwickler mit Fokus auf saubere Architektur, schnelle Interfaces und die kleinen Details, die Produkte richtig wirken lassen.",
+    "ctaProjects": "Meine Arbeit ansehen",
+    "ctaContact": "Kontakt aufnehmen",
+    "availability": "Offen für neue Möglichkeiten"
+  },
+  "about": {
+    "title": "Über mich",
+    "lead": "Ich bin ein Software-Entwickler, dem Handwerk wichtig ist.",
+    "body": [
+      "Ich baue Webanwendungen Ende-zu-Ende — von der Datenmodellierung bis zu dem Pixel, das den Button beim Drücken richtig anfühlen lässt. Mein Alltag besteht hauptsächlich aus TypeScript, React und Node, mit gesundem Respekt für die Datenbank darunter.",
+      "Abseits vom Code lese ich, trainiere und reise. Aktuell bin ich in der Türkei und offen für Stellen in der EU, der DACH-Region oder Remote."
+    ],
+    "downloadCv": "Lebenslauf herunterladen"
+  },
+  "projects": {
+    "title": "Projekte",
+    "lead": "Eine Auswahl an Dingen, die ich gebaut habe. Jedes hat mich etwas anderes gelehrt.",
+    "viewProject": "Projekt ansehen",
+    "viewCode": "Quellcode",
+    "viewLive": "Live-Demo",
+    "back": "Zurück zu allen Projekten",
+    "tech": "Technologien",
+    "role": "Rolle",
+    "year": "Jahr",
+    "problem": "Das Problem",
+    "approach": "Der Ansatz",
+    "outcome": "Das Ergebnis"
+  },
+  "skills": {
+    "title": "Kenntnisse",
+    "lead": "Werkzeuge, zu denen ich greife — sortiert nach ihrem Platz im Stack.",
+    "categories": {
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "database": "Datenbanken",
+      "devops": "DevOps & Cloud",
+      "tools": "Werkzeuge"
+    }
+  },
+  "contact": {
+    "title": "Lass uns reden",
+    "lead": "Am schnellsten geht's per E-Mail. Ich lese alles und antworte meist innerhalb eines Tages.",
+    "name": "Dein Name",
+    "email": "Deine E-Mail",
+    "message": "Deine Nachricht",
+    "send": "Nachricht senden",
+    "sending": "Wird gesendet…",
+    "success": "Danke — ich melde mich bald.",
+    "error": "Etwas ist schiefgelaufen. Schreib mir direkt eine E-Mail?",
+    "orEmail": "Oder schreib mir direkt an"
+  },
+  "footer": {
+    "tagline": "Von Grund auf gebaut mit Next.js und viel Kaffee.",
+    "rights": "Alle Rechte vorbehalten."
+  },
+  "common": {
+    "switchLanguage": "Sprache",
+    "switchTheme": "Theme wechseln",
+    "openMenu": "Menü öffnen",
+    "closeMenu": "Menü schließen"
+  }
+}
