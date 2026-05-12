@@ -101,7 +101,7 @@ const header = [
   new Paragraph({
     alignment: AlignmentType.CENTER,
     children: [
-      t("Nigeria · Open to EU, DACH, Remote · "),
+      t("Nigeria · Targeting EU & DACH · Visa sponsorship — or contract / freelance · "),
       link("mustafa.aksu@mustafaaksu.dev", "mailto:mustafa.aksu@mustafaaksu.dev"),
       t(" · "),
       link("mustafaaksu.dev", "https://mustafaaksu.dev"),
@@ -352,7 +352,7 @@ const experience = [
   roleHeader(
     "High School Counselor",
     "Nigerian Tulip International Colleges (NTIC) · Nigeria · On-site",
-    "Sep 2014 – Jun 2017",
+    "Sep 2014 – Jun 2020",
   ),
   bullet(
     "Guided a multicultural student body in an international school context; coordinated academic planning, mentoring, and personal-development programs.",

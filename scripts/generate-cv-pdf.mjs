@@ -23,9 +23,36 @@ const COLOR_MUTED = "#555555";
 const COLOR_RULE = "#888888";
 const COLOR_LINK = "#0b5fff";
 
-const FONT_REG = "Helvetica";
-const FONT_BOLD = "Helvetica-Bold";
-const FONT_ITAL = "Helvetica-Oblique";
+// pdfkit's built-in Helvetica is WinAnsi-only, so Turkish characters
+// (Çiçeği, Balıkesir, Türkiye) render as garbage. Register Arial TTFs
+// from the Windows Fonts directory — Arial is metric-compatible with
+// Helvetica so layout stays the same, but supports full Latin Extended.
+// Falls back to common Linux paths so the script can also run on CI.
+function pickFontPath(winName, linuxPath) {
+  if (process.platform === "win32") {
+    return path.join(process.env.SystemRoot ?? "C:\\Windows", "Fonts", winName);
+  }
+  return linuxPath;
+}
+
+const FONT_REG = "reg";
+const FONT_BOLD = "bold";
+const FONT_ITAL = "ital";
+
+const FONT_PATHS = {
+  [FONT_REG]: pickFontPath(
+    "arial.ttf",
+    "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+  ),
+  [FONT_BOLD]: pickFontPath(
+    "arialbd.ttf",
+    "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+  ),
+  [FONT_ITAL]: pickFontPath(
+    "ariali.ttf",
+    "/usr/share/fonts/truetype/dejavu/DejaVuSans-Oblique.ttf",
+  ),
+};
 
 // ---------- helpers ----------
 
@@ -116,21 +143,33 @@ function roleHeader(doc, title, organization, dates) {
   doc.moveDown(0.35);
   const y = doc.y;
 
-  // Left: title + organization
-  doc.font(FONT_BOLD).fontSize(10).fillColor(COLOR_BODY);
-  doc.text(title, MARGIN, y, { continued: true, width: CONTENT_WIDTH });
-  doc.font(FONT_ITAL).text(`  —  ${organization}`, { continued: false });
-
-  // Right: dates aligned right on the same line
-  doc.font(FONT_REG).fontSize(9).fillColor(COLOR_MUTED);
+  // Measure the date string at its own font/size so we can carve out
+  // a right-aligned column for it. Without this, a long title wraps
+  // into the date's x position and they collide on screen.
+  doc.font(FONT_REG).fontSize(9);
   const datesWidth = doc.widthOfString(dates);
-  doc.text(dates, A4.width - MARGIN - datesWidth, y, {
-    width: datesWidth,
-    align: "right",
+
+  // Draw the dates first so they sit at the original y. They use
+  // lineBreak: false so they don't advance the cursor.
+  doc.fillColor(COLOR_MUTED).text(dates, A4.width - MARGIN - datesWidth, y, {
+    width: datesWidth + 2,
     lineBreak: false,
   });
 
+  // Title + organisation gets a constrained left zone so it can wrap
+  // without crashing into the date column.
+  const padding = 16;
+  const leftWidth = CONTENT_WIDTH - datesWidth - padding;
+
+  doc.font(FONT_BOLD).fontSize(10).fillColor(COLOR_BODY);
+  doc.text(title, MARGIN, y, { continued: true, width: leftWidth });
+  doc.font(FONT_ITAL).text(`  —  ${organization}`, {
+    continued: false,
+    width: leftWidth,
+  });
+
   doc.fillColor(COLOR_BODY);
+  doc.x = MARGIN;
   doc.moveDown(0.1);
 }
 
@@ -199,10 +238,10 @@ function renderHeader(doc) {
     });
   doc.moveDown(0.55);
 
-  // Contact line 1 — location
+  // Contact line 1 — location + availability
   centeredLine(
     doc,
-    [{ text: "Nigeria  ·  Open to EU, DACH, Remote" }],
+    [{ text: "Nigeria  ·  Targeting EU & DACH  ·  Visa sponsorship — or contract / freelance" }],
     { size: 9, after: 2 },
   );
 
@@ -538,7 +577,7 @@ function renderEarlierCareer(doc) {
     doc,
     "High School Counselor",
     "Nigerian Tulip International Colleges (NTIC) · Nigeria · On-site",
-    "Sep 2014 — Jun 2017",
+    "Sep 2014 — Jun 2020",
   );
   bullet(
     doc,
@@ -581,6 +620,17 @@ const doc = new PDFDocument({
       "Salesforce, Apex, LWC, Revenue Cloud, CPQ, MuleSoft, Quote-to-Cash, DACH, OmniStudio, Agentforce",
   },
 });
+
+// Register Unicode-capable TTFs so Turkish characters render correctly.
+for (const [name, fontPath] of Object.entries(FONT_PATHS)) {
+  if (!fs.existsSync(fontPath)) {
+    throw new Error(
+      `Font file not found at ${fontPath}. ` +
+        `Edit FONT_PATHS in scripts/generate-cv-pdf.mjs for your platform.`,
+    );
+  }
+  doc.registerFont(name, fontPath);
+}
 
 const stream = fs.createWriteStream(outPath);
 doc.pipe(stream);
