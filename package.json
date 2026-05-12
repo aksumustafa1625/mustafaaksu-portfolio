@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "eslint",
     "docs:sync": "node --env-file=.env.local scripts/sync-notion-docs.mjs",
-    "cv:generate": "node scripts/generate-cv.mjs"
+    "cv:generate": "node scripts/generate-cv.mjs",
+    "cv:pdf": "node scripts/generate-cv-pdf.mjs",
+    "cv:all": "node scripts/generate-cv.mjs && node scripts/generate-cv-pdf.mjs"
   },
   "dependencies": {
     "clsx": "^2.1.1",
@@ -27,6 +29,7 @@
     "docx": "^9.6.1",
     "eslint": "^9",
     "eslint-config-next": "16.2.6",
+    "pdfkit": "^0.18.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
