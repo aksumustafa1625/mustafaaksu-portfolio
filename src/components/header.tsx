@@ -23,6 +23,7 @@ export function Header({
   const nav = [
     { href: `/${lang}`, label: dict.nav.home },
     { href: `/${lang}/about`, label: dict.nav.about },
+    { href: `/${lang}/revenue-cloud`, label: dict.nav.revenueCloud },
     { href: `/${lang}/projects`, label: dict.nav.projects },
     { href: `/${lang}/certifications`, label: dict.nav.certifications },
     { href: `/${lang}/skills`, label: dict.nav.skills },

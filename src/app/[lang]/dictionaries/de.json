@@ -6,6 +6,7 @@
   "nav": {
     "home": "Start",
     "about": "Über mich",
+    "revenueCloud": "Revenue Cloud",
     "projects": "Projekte",
     "certifications": "Zertifikate",
     "skills": "Kenntnisse",
@@ -65,6 +66,21 @@
     "trailheadPoints": "Punkte",
     "trailheadTrails": "Trails",
     "trailheadCta": "Trailhead-Profil ansehen"
+  },
+  "revenueCloud": {
+    "title": "Revenue Cloud",
+    "lead": "Revenue Cloud ist mein Kerngebiet. Quote-to-Cash vom Produktkatalog bis zum Settlement, end-to-end orchestriert.",
+    "intro": "Ich arbeite auf der gesamten Revenue-Cloud-Oberfläche — Salesforce CPQ, Industries CPQ, Revenue Lifecycle Management, Contract Lifecycle Management — und besitze auch die Integrations-Schicht, die alles zusammenbindet. Sechs Zertifikate stützen die Salesforce-Seite; auf der Integrations-Seite bin ich am erfahrensten.",
+    "capabilitiesTitle": "Was ich baue",
+    "lifecycleTitle": "Der Quote-to-Cash-Lifecycle, den ich umsetze",
+    "lifecycleLead": "Wie ein Deal in der TechnoStore-Referenzarchitektur vom Katalog bis zum Settlement wandert — konkret, nicht theoretisch.",
+    "credentialsTitle": "Stützende Zertifikate",
+    "credentialsLead": "Sechs aktive Salesforce-Zertifikate clustern sich rund um Revenue Cloud und den Support-Stack.",
+    "credentialsCta": "Alle Zertifikate ansehen",
+    "projectsTitle": "Wo das in meiner Arbeit auftaucht",
+    "projectsLead": "Die Referenzarchitektur ist real, nicht hypothetisch. Zwei Projekte setzen verschiedene Ausschnitte davon um.",
+    "ctaCaseStudy": "TechnoStore-Fallstudie lesen",
+    "ctaContact": "Über Revenue Cloud reden"
   },
   "skills": {
     "title": "Kenntnisse",

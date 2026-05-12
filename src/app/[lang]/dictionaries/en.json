@@ -6,6 +6,7 @@
   "nav": {
     "home": "Home",
     "about": "About",
+    "revenueCloud": "Revenue Cloud",
     "projects": "Projects",
     "certifications": "Certifications",
     "skills": "Skills",
@@ -65,6 +66,21 @@
     "trailheadPoints": "Points",
     "trailheadTrails": "Trails",
     "trailheadCta": "View Trailhead profile"
+  },
+  "revenueCloud": {
+    "title": "Revenue Cloud",
+    "lead": "Revenue Cloud is my core. Quote-to-Cash from product catalogue to settlement, orchestrated end-to-end.",
+    "intro": "I work across the full Revenue Cloud surface — Salesforce CPQ, Industries CPQ, Revenue Lifecycle Management, Contract Lifecycle Management — and own the integration layer that ties it all together. Six certifications back the Salesforce side; the integration side is where I get to be most senior.",
+    "capabilitiesTitle": "What I build",
+    "lifecycleTitle": "The Quote-to-Cash lifecycle I implement",
+    "lifecycleLead": "How a deal moves from the catalogue to settlement in the TechnoStore reference architecture — concrete, not theoretical.",
+    "credentialsTitle": "Credentials backing this",
+    "credentialsLead": "Six active Salesforce certifications cluster around Revenue Cloud and its supporting stack.",
+    "credentialsCta": "See all certifications",
+    "projectsTitle": "Where this shows up in my work",
+    "projectsLead": "The reference architecture is real, not hypothetical. Two projects implement different slices of it.",
+    "ctaCaseStudy": "Read the TechnoStore case study",
+    "ctaContact": "Talk Revenue Cloud with me"
   },
   "skills": {
     "title": "Skills",
