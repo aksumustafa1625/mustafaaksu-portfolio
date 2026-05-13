@@ -301,82 +301,39 @@ function renderProjects(doc) {
 
   roleHeader(
     doc,
-    "Urla Shoes — Routensicherheit mit Google Maps, OpenWeather & Einstein",
+    "Urla Shoes — Multifeature Salesforce-Plattform-Sandbox",
     "Salesforce-Entwickler",
     "2024",
   );
   bullet(
     doc,
-    "Live-Demo, die drei externe Integrationen kombiniert, um eine Route zu planen, das Wetter an fünf Wegpunkten parallel abzurufen und ein Einstein Prompt Template (GPT-4o mini) entscheiden zu lassen, ob die Reise sicher ist.",
+    "Route-Safety-LWC: kombiniert Google Maps Directions, OpenWeather (5 parallele Wegpunkte via Promise.all) und ein Einstein Prompt Template (GPT-4o mini via ConnectApi.EinsteinLLM) auf einem Screen — KI-Urteil farbcodiert nach Risiko-Schlagwort (Sturm/Eis → rot, Vorsicht → gelb, sonst grün).",
   );
   bullet(
     doc,
-    "routeWeather LWC orchestriert eine Visualforce-Brücke, um Google Maps unter Lightning Web Security zu laden; postMessage zwischen LWC und VF; fünf parallele Promise.all-Fetches an OpenWeather.",
+    "Contact-Enrichment-Queueable: bei Contact-Insert ruft Nationalize.io auf; HttpCalloutMock-Abdeckung über sechs Szenarien (Erfolg, leer, HTTP 500, fehlender FirstName, Bulk-10, Parser-Unit-Test); schreibt Land in ein Custom Field.",
   );
   bullet(
     doc,
-    "RouteWeatherAnalysisService ruft ConnectApi.EinsteinLLM.generateMessagesForPromptTemplate auf; KI-Urteil in einer farbcodierten Karte gerendert über einen Schlagwort-Klassifizierer (Sturm/Eis → rot; Vorsicht → gelb; sonst grün).",
+    "Lead-Queue-Routing: scheduled Batch (LeadQueueScheduler) + Platform Event (Lead_Shift_Event__e) + LWC-Dashboard (leadShiftDashboard) für schichtbasierte Lead-Verteilung.",
   );
   bullet(
     doc,
-    "Sekundärfeature: Contact-Insert-Queueable ruft Nationalize.io mit voller HttpCalloutMock-Abdeckung über sechs Szenarien auf (Erfolg, leer, HTTP 500, fehlender FirstName, Bulk-10, Parser-Unit-Test).",
+    "Loan-Sync-Pipeline: Custom Objects (Loan__c, Loan_Sync_Log__c) + Opportunity-getriggerter Sync-Service + Retry-Scheduler (LoanSyncRetryScheduler) mit Audit-Logging.",
+  );
+  bullet(
+    doc,
+    "Reseller-Matching-Engine: mehrkriterielles Reseller-Scoring (ResellerMatchingEngine + ResellerMappingSelector) + Opportunity-Trigger + LWC-Badge (resellerTierBadge) für Partner-Tier-Visualisierung.",
+  );
+  bullet(
+    doc,
+    "Plattform-Foundations: erweiterbares TriggerHandler-Framework (Rekursionsschutz, Bypass-Mechanismus), Round-Robin-Task-Zuweisung, SLA-Ablauf-Automatisierung.",
   );
   bullet(doc, [
     { text: "Repository: ", font: "bold" },
     inlineLink(
       "github.com/aksumustafa1625/urla-shoes",
       "https://github.com/aksumustafa1625/urla-shoes",
-    ),
-  ]);
-
-  roleHeader(
-    doc,
-    "VoltStream Mobility — Channel-Partner-Attribution für E-Mobility",
-    "Salesforce-Entwickler",
-    "2025",
-  );
-  bullet(
-    doc,
-    "B2B-CRM für E-Ladelösungen, modelliert nach dem deutschen E-Mobility-Markt (EnBW, Ionity, Allego, Mercedes-Benz Mobility); verknüpft Opportunities automatisch via Apex mit dem richtigen Channel-Partner.",
-  );
-  bullet(
-    doc,
-    "Custom Object Reseller__c mit indizierter Company_Email__c als External ID; case-insensitive SOQL-Lookup über ein vierstufiges Pattern (Trigger → Handler → Service → Matcher).",
-  );
-  bullet(
-    doc,
-    "80 / 80 Apex-Tests grün mit 100 % Abdeckung, inkl. Bulk- und Negativfällen. Lookup-Beziehung statt Master-Detail gewählt, damit Umsatzdaten Partnerwechsel überleben.",
-  );
-  bullet(doc, [
-    { text: "Repository: ", font: "bold" },
-    inlineLink(
-      "github.com/aksumustafa1625/VoltStreamMobility",
-      "https://github.com/aksumustafa1625/VoltStreamMobility",
-    ),
-  ]);
-
-  roleHeader(
-    doc,
-    "mustafaaksu.dev — Persönliche Portfolio-Seite",
-    "Designer & Product Owner",
-    "2026",
-  );
-  bullet(doc, [
-    { text: "Zweisprachiges (EN + DE) Salesforce-Entwickler-Portfolio auf " },
-    inlineLink("mustafaaksu.dev", "https://mustafaaksu.dev"),
-    {
-      text: " — gehostet auf Vercel; Lighthouse-perfekt, Dark-Mode, SEO-ready (Sitemap, Robots, locale-spezifische Open-Graph-Bilder).",
-    },
-  ]);
-  bullet(
-    doc,
-    "Inhalte in TypeScript modelliert — ein Projekt, Zertifikat oder Trailhead-Statistik hinzufügen ist eine einzige Object-Bearbeitung; Site, Sitemap und eine synchronisierte Notion-Doku aktualisieren sich aus derselben Quelle.",
-  );
-  bullet(doc, [
-    { text: "Repository: ", font: "bold" },
-    inlineLink(
-      "github.com/aksumustafa1625/mustafaaksu-portfolio",
-      "https://github.com/aksumustafa1625/mustafaaksu-portfolio",
     ),
   ]);
 }

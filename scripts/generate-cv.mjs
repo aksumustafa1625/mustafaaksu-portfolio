@@ -168,68 +168,31 @@ const projects = [
   ]),
 
   roleHeader(
-    "Urla Shoes — Route safety with Google Maps, OpenWeather & Einstein",
+    "Urla Shoes — Multi-feature Salesforce platform sandbox",
     "Salesforce Developer",
     "2024",
   ),
   bullet(
-    "Live demo combining three external integrations to plan a route, fetch weather along five waypoints in parallel, and let an Einstein Prompt Template (GPT-4o mini) assess whether the journey is safe.",
+    "Route Safety LWC: combines Google Maps Directions, OpenWeather (5 parallel waypoints via Promise.all) and an Einstein Prompt Template (GPT-4o mini via ConnectApi.EinsteinLLM) into one screen — AI verdict colour-coded by hazard keyword (storm/ice → red, caution → amber, else green).",
   ),
   bullet(
-    "routeWeather LWC orchestrates a Visualforce-bridge to load Google Maps under Lightning Web Security; postMessage between LWC and VF; five parallel Promise.all fetches to OpenWeather.",
+    "Contact Enrichment Queueable: on Contact insert, hits Nationalize.io with HttpCalloutMock coverage across six scenarios (success, empty, HTTP 500, missing FirstName, bulk-10, parser unit test); writes country to a custom field.",
   ),
   bullet(
-    "RouteWeatherAnalysisService calls ConnectApi.EinsteinLLM.generateMessagesForPromptTemplate; AI verdict rendered in a colour-coded card by a keyword classifier (storm/ice → red; caution → amber; else green).",
+    "Lead Queue Routing: scheduled batch (LeadQueueScheduler) + Platform Event (Lead_Shift_Event__e) + LWC dashboard (leadShiftDashboard) for shift-based lead distribution.",
   ),
   bullet(
-    "Secondary feature: Contact-insert Queueable hits Nationalize.io with full HttpCalloutMock coverage across six scenarios (success, empty, HTTP 500, missing FirstName, bulk-10, parser unit test).",
+    "Loan Sync Pipeline: custom objects (Loan__c, Loan_Sync_Log__c) + Opportunity-triggered sync service + retry scheduler (LoanSyncRetryScheduler) with audit logging.",
+  ),
+  bullet(
+    "Reseller Matching Engine: multi-criteria reseller scoring (ResellerMatchingEngine + ResellerMappingSelector) + Opportunity trigger + LWC badge (resellerTierBadge) for partner tier visualisation.",
+  ),
+  bullet(
+    "Platform foundations: extensible TriggerHandler framework (recursion guards, bypass mechanism), round-robin task assignment, SLA expiry automation.",
   ),
   bullet([
     t("Repository: ", { bold: true }),
     link("github.com/aksumustafa1625/urla-shoes", "https://github.com/aksumustafa1625/urla-shoes"),
-  ]),
-
-  roleHeader(
-    "VoltStream Mobility — Channel-Partner Attribution for EV Charging",
-    "Salesforce Developer",
-    "2025",
-  ),
-  bullet(
-    "B2B EV-charging CRM modelled on the German e-mobility hiring market (EnBW, Ionity, Allego, Mercedes-Benz Mobility); auto-links Opportunities to the right channel partner via Apex.",
-  ),
-  bullet(
-    "Custom Reseller__c object with indexed Company_Email__c as an External ID; case-insensitive SOQL lookup wired through a four-layer pattern (trigger → handler → service → matcher).",
-  ),
-  bullet(
-    "80 / 80 Apex tests passing with 100 % coverage including bulk and negative scenarios. Lookup relationship chosen over master-detail so revenue data outlives partner churn.",
-  ),
-  bullet([
-    t("Repository: ", { bold: true }),
-    link(
-      "github.com/aksumustafa1625/VoltStreamMobility",
-      "https://github.com/aksumustafa1625/VoltStreamMobility",
-    ),
-  ]),
-
-  roleHeader(
-    "mustafaaksu.dev — Personal Portfolio Site",
-    "Designer & Product Owner",
-    "2026",
-  ),
-  bullet([
-    t("Bilingual (EN + DE) Salesforce-developer portfolio at "),
-    link("mustafaaksu.dev", "https://mustafaaksu.dev"),
-    t(" hosted on Vercel; Lighthouse-perfect, dark-mode, SEO-ready (sitemap, robots, per-locale Open Graph images)."),
-  ]),
-  bullet(
-    "Content modelled in TypeScript so adding a project, certification, or Trailhead stat is a single object edit — site, sitemap, and a synced Notion documentation page all update from that source.",
-  ),
-  bullet([
-    t("Repository: ", { bold: true }),
-    link(
-      "github.com/aksumustafa1625/mustafaaksu-portfolio",
-      "https://github.com/aksumustafa1625/mustafaaksu-portfolio",
-    ),
   ]),
 ];
 
