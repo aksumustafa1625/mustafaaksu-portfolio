@@ -260,11 +260,11 @@ export default async function RevenueCloudPage(
           </p>
         </FadeIn>
 
-        <div className="mt-10 grid gap-4 sm:grid-cols-2">
+        <div className="mt-10 max-w-2xl">
           <FadeIn delay={0.15}>
             <Link
               href={`/${lang}/projects/technostore-revenue-cloud`}
-              className="group block h-full rounded-2xl border border-border p-6 transition-colors hover:bg-muted-bg"
+              className="group block rounded-2xl border border-border p-6 transition-colors hover:bg-muted-bg"
             >
               <p className="text-xs uppercase tracking-widest text-accent">
                 Reference architecture
@@ -278,28 +278,6 @@ export default async function RevenueCloudPage(
               </p>
               <span className="mt-5 inline-flex items-center gap-1 text-sm text-foreground/80 group-hover:text-accent">
                 {dict.revenueCloud.ctaCaseStudy}
-                <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-              </span>
-            </Link>
-          </FadeIn>
-          <FadeIn delay={0.2}>
-            <Link
-              href={`/${lang}/projects/voltstream-mobility`}
-              className="group block h-full rounded-2xl border border-border p-6 transition-colors hover:bg-muted-bg"
-            >
-              <p className="text-xs uppercase tracking-widest text-accent">
-                CPQ extension
-              </p>
-              <h3 className="mt-3 text-lg font-medium text-foreground">
-                VoltStream Mobility — Channel attribution & CPQ next
-              </h3>
-              <p className="mt-2 text-sm text-muted">
-                Channel-partner attribution on the Kevin O&apos;Hara trigger
-                framework today, Salesforce CPQ for hardware-bundle pricing
-                next.
-              </p>
-              <span className="mt-5 inline-flex items-center gap-1 text-sm text-foreground/80 group-hover:text-accent">
-                {dict.projects.viewProject}
                 <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
               </span>
             </Link>

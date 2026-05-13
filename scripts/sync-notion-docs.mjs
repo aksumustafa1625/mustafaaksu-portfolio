@@ -117,7 +117,7 @@ const blocks = [
   h2("TL;DR"),
   p(
     rt(
-      "Personal portfolio site for Mustafa Aksu — Salesforce Developer with seven active certifications, eight Superbadges, and Five Star Ranger on Trailhead. Bilingual (EN + DE), targeted at the DACH Salesforce market. Three real case studies featured: TechnoStore (Revenue Cloud + MuleSoft Quote-to-Cash), VoltStream Mobility (channel attribution with Apex trigger framework), Urla Shoes (Google Maps + OpenWeather + Einstein route safety).",
+      "Personal portfolio site for Mustafa Aksu — Salesforce Developer with seven active certifications, eight Superbadges, and Five Star Ranger on Trailhead. Bilingual (EN + DE), targeted at the DACH Salesforce market. Two real case studies featured: TechnoStore (Revenue Cloud + MuleSoft Quote-to-Cash) and Urla Shoes (multi-feature Salesforce sandbox — route safety AI, contact enrichment, lead routing, loan sync, reseller matching).",
     ),
   ),
 
@@ -261,21 +261,6 @@ const blocks = [
     rt("Urla Shoes Documentation", { href: "https://www.notion.so/Urla-Shoes-Documentation-Yedek-33310a2e9f8680c0a5acc0d6ccf49745" }),
   ]),
 
-  h3("VoltStream Mobility — Channel-partner attribution for EV-charging sales"),
-  p(
-    rt(
-      "B2B EV-charging CRM where one field on an Opportunity auto-links the deal to the right channel partner via Apex. Modelled on the German e-mobility hiring market (EnBW, Ionity, Allego, Mercedes-Benz Mobility).",
-    ),
-  ),
-  bullet([rt("Stack: ", { bold: true }), rt("Apex · Custom Objects · Trigger Framework · SOQL · Lightning App Builder · Reports & Dashboards")]),
-  bullet([rt("Architecture: ", { bold: true }), rt("Custom Reseller__c object with indexed Company_Email__c External ID; four-layer pattern (trigger → handler → service → matcher) on the Kevin O'Hara framework. Lookup relationship (not master-detail) so revenue data survives partner churn.")]),
-  bullet([rt("Numbers: ", { bold: true }), rt("80 / 80 Apex tests passing, 100 % coverage including bulk and negative cases.")]),
-  bullet([rt("Next phase: ", { bold: true }), rt("Extend the schema with Salesforce CPQ for hardware-bundle pricing.")]),
-  bullet([
-    rt("Repo: ", { bold: true }),
-    rt("github.com/aksumustafa1625/VoltStreamMobility", { href: "https://github.com/aksumustafa1625/VoltStreamMobility" }),
-  ]),
-
   h2("Roadmap"),
 
   h3("✅ Phase 1 — Foundation"),
@@ -287,12 +272,12 @@ const blocks = [
 
   h3("🟡 Phase 2 — Real content"),
   todo("Salesforce-focused About bio in EN + DE", true),
-  todo("Three real case studies: TechnoStore, VoltStream, Urla Shoes", true),
+  todo("Two real case studies: TechnoStore, Urla Shoes", true),
   todo("Skills audited (Web stack reduced to HTML/CSS — honesty)", true),
   todo("Certifications page with all 10 certs + 8 superbadges + Trailhead stats", true),
   todo("Add profile photo to About page", false),
   todo("Upload CV PDF to /public/cv.pdf", false),
-  todo("Extend VoltStream case study with Salesforce CPQ phase", false),
+  todo("Re-add VoltStream Mobility (channel-partner attribution + Salesforce CPQ) once the CPQ extension is built", false),
 
   h3("🔵 Phase 3 — Polish"),
   todo("Add blog (MDX) — at least 2 Salesforce technical posts", false),
@@ -311,7 +296,7 @@ const blocks = [
   todo("Add /public/profile.jpg + render on About page", false),
   todo("Add /public/cv.pdf (Salesforce-targeted, 1-page)", false),
   todo("German bio paragraphs — quality check by a native speaker before LinkedIn share", false),
-  todo("VoltStream — extend case study with Salesforce CPQ scope when added", false),
+  todo("Build VoltStream Mobility CPQ extension, then re-add to site /projects and CV", false),
   todo("Blog — write first post (e.g., 'Async callout patterns in Apex')", false),
 
   h2("Deploy runbook"),

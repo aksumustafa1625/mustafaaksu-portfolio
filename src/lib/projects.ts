@@ -175,59 +175,6 @@ export const projects: Project[] = [
       },
     },
   },
-  {
-    slug: "voltstream-mobility",
-    year: 2025,
-    role: "Salesforce Developer",
-    tech: [
-      "Apex",
-      "Custom Objects",
-      "Trigger Framework",
-      "SOQL",
-      "Lightning App Builder",
-      "Reports & Dashboards",
-    ],
-    highlights: {
-      en: [
-        "Custom Reseller__c object with indexed External ID",
-        "Four-layer Apex pattern: trigger → handler → service → matcher",
-        "80 / 80 Apex tests, 100 % coverage",
-        "Salesforce CPQ extension planned next",
-      ],
-      de: [
-        "Custom Object Reseller__c mit indizierter External ID",
-        "Vierschichtiges Apex-Pattern: Trigger → Handler → Service → Matcher",
-        "80 / 80 Apex-Tests, 100 % Coverage",
-        "Salesforce-CPQ-Erweiterung als nächster Schritt geplant",
-      ],
-    },
-    repoUrl: "https://github.com/aksumustafa1625/VoltStreamMobility",
-    featured: true,
-    translations: {
-      en: {
-        title: "VoltStream Mobility — Channel-partner attribution for EV-charging sales",
-        tagline:
-          "B2B EV-charging CRM where one field on an Opportunity auto-links the deal to the right channel partner via Apex. Modelled on the German e-mobility hiring market (EnBW, Ionity, Allego, Mercedes-Benz Mobility).",
-        problem:
-          "Channel-partner attribution is a real workflow gap on most B2B Salesforce orgs: sales reps enter Opportunities manually and forget to credit the reseller that sourced the deal, so revenue-by-partner reports go dark. Manual lookup is slow and error-prone, and German e-mobility companies sell through electrical contractors, auto dealers, hotel chains, and parking operators — each tracked as a separate channel.",
-        approach:
-          "Custom Reseller__c object with Company_Email__c as an indexed unique External ID. Sales reps enter the reseller email on the Opportunity; an after-insert/after-update Apex trigger (Kevin O'Hara framework, four-layer pattern: trigger → handler → service → matcher) does a case-insensitive SOQL lookup against active resellers and populates the lookup field. Lookup relationship chosen over master-detail so revenue data outlives partner churn. Permission set scoped to the Sales profile.",
-        outcome:
-          "80 of 80 Apex tests passing with 100 % coverage including bulk, edge, and negative cases. Reseller-attributed revenue dashboards work out of the box. Reusable pattern transferable to any channel-driven B2B org in DACH. Next phase: extend the schema with Salesforce CPQ for hardware-bundle pricing.",
-      },
-      de: {
-        title: "VoltStream Mobility — Channel-Partner-Attribution für E-Mobility-Vertrieb",
-        tagline:
-          "B2B-CRM für EV-Ladelösungen, bei dem ein Feld an der Opportunity den Deal via Apex automatisch dem richtigen Channel-Partner zuordnet. Gebaut für den deutschen E-Mobility-Stellenmarkt (EnBW, Ionity, Allego, Mercedes-Benz Mobility).",
-        problem:
-          "Channel-Partner-Attribution ist eine echte Workflow-Lücke in vielen B2B-Salesforce-Orgs: Reps erfassen Opportunities manuell und vergessen, den Reseller zu kreditieren, der den Deal gebracht hat — Revenue-by-Partner-Reports laufen ins Leere. Manuelle Lookups sind langsam und fehleranfällig, und deutsche E-Mobility-Firmen verkaufen über Elektrofachbetriebe, Autohäuser, Hotelketten und Parkplatzbetreiber — jeder als eigener Kanal.",
-        approach:
-          "Custom Object Reseller__c mit Company_Email__c als indizierte, eindeutige External ID. Reps tragen die Reseller-E-Mail in die Opportunity ein; ein after-insert/after-update Apex-Trigger (Kevin-O'Hara-Framework, vierschichtiges Pattern: Trigger → Handler → Service → Matcher) macht ein case-insensitive SOQL-Lookup auf aktive Reseller und befüllt das Lookup-Feld. Lookup statt Master-Detail gewählt, damit Revenue-Daten Partnerwechsel überleben. Permission Set auf das Sales-Profil zugeschnitten.",
-        outcome:
-          "80 von 80 Apex-Tests grün mit 100 % Coverage — inklusive Bulk-, Edge- und Negativfällen. Reseller-Revenue-Dashboards funktionieren out-of-the-box. Wiederverwendbares Pattern, das auf jede channel-getriebene B2B-Org in DACH übertragbar ist. Nächste Phase: Schema-Erweiterung mit Salesforce CPQ für Hardware-Bundle-Pricing.",
-      },
-    },
-  },
 ];
 
 export const getProject = (slug: string) =>
