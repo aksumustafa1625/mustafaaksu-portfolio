@@ -39,10 +39,20 @@ export default async function AboutPage(props: PageProps<"/[lang]/about">) {
         </div>
       </FadeIn>
       <FadeIn delay={0.3}>
-        <div className="mt-10">
-          <ButtonLink href="/cv.pdf" variant="secondary">
+        <div className="mt-10 flex flex-wrap gap-3">
+          <ButtonLink
+            href={lang === "de" ? "/cv-de.pdf" : "/cv.pdf"}
+            variant="secondary"
+          >
             <Download className="h-4 w-4" />
             {dict.about.downloadCv}
+          </ButtonLink>
+          <ButtonLink
+            href={lang === "de" ? "/cv.pdf" : "/cv-de.pdf"}
+            variant="ghost"
+          >
+            <Download className="h-4 w-4" />
+            {dict.about.downloadCvOther}
           </ButtonLink>
         </div>
       </FadeIn>
