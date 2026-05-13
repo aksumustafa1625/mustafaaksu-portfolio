@@ -287,6 +287,16 @@ const trailhead = [
   ]),
 ];
 
+const community = [
+  sectionHeading("Community"),
+  p([
+    t("Founder & operator", { bold: true }),
+    t(" — "),
+    link("Salesforce Revenue Cloud | Germany", "https://www.linkedin.com/groups/10046805/"),
+    t(" LinkedIn group (279 members)  ·  11,982 LinkedIn followers writing about Revenue Cloud, integrations, and the DACH Salesforce market."),
+  ]),
+];
+
 const education = [
   sectionHeading("Education"),
 
@@ -353,6 +363,7 @@ const doc = new Document({
         ...skills,
         ...certifications,
         ...trailhead,
+        ...community,
         ...education,
         ...earlierCareer,
       ],

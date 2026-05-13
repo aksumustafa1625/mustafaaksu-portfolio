@@ -465,6 +465,24 @@ function renderTrailhead(doc) {
   doc.moveDown(0.1);
 }
 
+function renderCommunity(doc) {
+  sectionHeading(doc, "Community");
+  ensureRoom(doc, 16);
+  doc.font(FONT_BOLD).fontSize(9).fillColor(COLOR_BODY);
+  doc.text("Founder & operator", MARGIN, doc.y, { continued: true });
+  doc.font(FONT_REG).text(" — ", { continued: true });
+  doc.fillColor(COLOR_LINK).text("Salesforce Revenue Cloud | Germany", {
+    link: "https://www.linkedin.com/groups/10046805/",
+    underline: true,
+    continued: true,
+  });
+  doc.fillColor(COLOR_BODY).text(
+    " LinkedIn group (279 members)  ·  11,982 LinkedIn followers writing about Revenue Cloud, integrations, and the DACH Salesforce market.",
+    { width: CONTENT_WIDTH, lineGap: 1 },
+  );
+  doc.moveDown(0.06);
+}
+
 function renderEducation(doc) {
   sectionHeading(doc, "Education");
 
@@ -532,6 +550,7 @@ renderProjects(doc);
 renderSkills(doc);
 renderCertifications(doc);
 renderTrailhead(doc);
+renderCommunity(doc);
 renderEducation(doc);
 renderEarlierCareer(doc);
 

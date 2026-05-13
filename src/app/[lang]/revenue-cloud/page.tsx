@@ -5,13 +5,16 @@ import {
   ArrowRight,
   Award,
   CheckCircle2,
+  ExternalLink,
   Mail,
+  Users,
   Workflow,
 } from "lucide-react";
 import { ButtonLink } from "@/components/ui/button";
 import { FadeIn } from "@/components/fade-in";
 import { capabilities, lifecycle } from "@/lib/revenue-cloud";
 import { certifications } from "@/lib/certifications";
+import { site } from "@/lib/site";
 import { getDictionary, hasLocale } from "../dictionaries";
 
 export async function generateMetadata(
@@ -188,6 +191,58 @@ export default async function RevenueCloudPage(
               {dict.revenueCloud.credentialsCta}
               <ArrowRight className="h-3.5 w-3.5" />
             </Link>
+          </div>
+        </FadeIn>
+      </section>
+
+      {/* Community */}
+      <section className="border-t border-border py-16">
+        <FadeIn>
+          <div className="flex items-center gap-2 text-accent">
+            <Users className="h-4 w-4" />
+            <p className="text-sm uppercase tracking-widest">
+              {dict.revenueCloud.communityTitle}
+            </p>
+          </div>
+        </FadeIn>
+        <FadeIn delay={0.1}>
+          <h2 className="mt-3 max-w-3xl text-2xl font-semibold tracking-tight sm:text-3xl">
+            {dict.revenueCloud.communityHeadline}
+          </h2>
+        </FadeIn>
+        <FadeIn delay={0.15}>
+          <p className="mt-3 max-w-3xl text-base text-muted">
+            {dict.revenueCloud.communityBody}
+          </p>
+        </FadeIn>
+
+        <FadeIn delay={0.2}>
+          <dl className="mt-8 grid grid-cols-2 gap-4 sm:max-w-md">
+            <div className="rounded-xl border border-border bg-muted-bg/30 p-4">
+              <dt className="text-xs uppercase tracking-wider text-muted">
+                {dict.revenueCloud.communityMembersLabel}
+              </dt>
+              <dd className="mt-1 text-2xl font-semibold text-foreground">
+                {site.community.groupMembers}
+              </dd>
+            </div>
+            <div className="rounded-xl border border-border bg-muted-bg/30 p-4">
+              <dt className="text-xs uppercase tracking-wider text-muted">
+                {dict.revenueCloud.communityFollowersLabel}
+              </dt>
+              <dd className="mt-1 text-2xl font-semibold text-foreground">
+                {site.community.linkedinFollowers.toLocaleString()}
+              </dd>
+            </div>
+          </dl>
+        </FadeIn>
+
+        <FadeIn delay={0.25}>
+          <div className="mt-8">
+            <ButtonLink href={site.social.linkedinGroup} target="_blank">
+              {dict.revenueCloud.communityJoinCta}
+              <ExternalLink className="h-4 w-4" />
+            </ButtonLink>
           </div>
         </FadeIn>
       </section>
