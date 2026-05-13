@@ -508,7 +508,7 @@ function renderEarlierCareer(doc) {
   sectionHeading(doc, "Frühere Berufserfahrung");
   paragraph(
     doc,
-    "2000 – 2020: Lehrer und schließlich Schulleiter (Müdür) am Sevgi Çiçeği Anafen Dershanesi (Türkei, 2000 – 2014), danach Berater am Nigerian Tulip International Colleges (Nigeria, 2014 – 2020) — Grundlage für Führung, strukturierte Kommunikation, Mentoring und kulturübergreifendes Stakeholder-Management.",
+    "2000 – 2020: Lehrer und schließlich Schulleiter am Sevgi Çiçeği Anafen Dershanesi (Türkei, 2000 – 2014), danach Berater am Nigerian Tulip International Colleges (Nigeria, 2014 – 2020) — Grundlage für Führung, strukturierte Kommunikation, Mentoring und kulturübergreifendes Stakeholder-Management.",
   );
 }
 
