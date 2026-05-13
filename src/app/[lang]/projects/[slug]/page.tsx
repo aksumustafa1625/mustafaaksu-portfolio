@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
@@ -123,6 +124,18 @@ export default async function ProjectDetail(
       <FadeIn delay={0.3}>
         <div className="mt-10 space-y-8 text-base leading-relaxed text-foreground/80">
           <Section title={dict.projects.problem} body={t.problem} />
+          {project.demoImage ? (
+            <div className="overflow-hidden rounded-2xl border border-border">
+              <Image
+                src={project.demoImage}
+                alt={project.demoImageAlt ?? `${t.title} demo screenshot`}
+                width={1280}
+                height={720}
+                className="h-auto w-full"
+                priority
+              />
+            </div>
+          ) : null}
           {t.architecture ? (
             <Section
               title={dict.projects.architecture}
@@ -143,20 +156,33 @@ export default async function ProjectDetail(
             <ul className="mt-5 grid gap-3 sm:grid-cols-2">
               {project.integrations.map((it) => {
                 const card = (
-                  <div className="group flex h-full flex-col rounded-xl border border-border bg-muted-bg/30 p-4 transition-colors hover:border-accent/40 hover:bg-muted-bg/60">
-                    <div className="flex items-start justify-between gap-2">
-                      <span className="text-sm font-medium text-foreground">
-                        {it.name}
-                      </span>
-                      {it.href ? (
-                        <ArrowUpRight className="h-3.5 w-3.5 flex-shrink-0 text-muted transition-colors group-hover:text-accent" />
+                  <div className="group flex h-full gap-3 rounded-xl border border-border bg-muted-bg/30 p-4 transition-colors hover:border-accent/40 hover:bg-muted-bg/60">
+                    {it.logoImage ? (
+                      <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-white/95 p-1.5">
+                        <Image
+                          src={it.logoImage}
+                          alt={`${it.name} logo`}
+                          width={36}
+                          height={36}
+                          className="h-full w-full object-contain"
+                        />
+                      </div>
+                    ) : null}
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-start justify-between gap-2">
+                        <span className="text-sm font-medium text-foreground">
+                          {it.name}
+                        </span>
+                        {it.href ? (
+                          <ArrowUpRight className="h-3.5 w-3.5 flex-shrink-0 text-muted transition-colors group-hover:text-accent" />
+                        ) : null}
+                      </div>
+                      {it.note ? (
+                        <p className="mt-1.5 text-xs leading-relaxed text-muted">
+                          {it.note}
+                        </p>
                       ) : null}
                     </div>
-                    {it.note ? (
-                      <p className="mt-1.5 text-xs leading-relaxed text-muted">
-                        {it.note}
-                      </p>
-                    ) : null}
                   </div>
                 );
                 return (

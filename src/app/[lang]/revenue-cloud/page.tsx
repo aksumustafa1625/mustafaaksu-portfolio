@@ -53,9 +53,19 @@ export default async function RevenueCloudPage(
       {/* Hero */}
       <section className="py-16 sm:py-20">
         <FadeIn>
-          <p className="text-sm uppercase tracking-widest text-accent">
-            {dict.revenueCloud.title}
-          </p>
+          <div className="flex items-center gap-3">
+            <Image
+              src="/revenue-cloud-icon.png"
+              alt="Salesforce Revenue Cloud"
+              width={48}
+              height={48}
+              priority
+              className="h-12 w-12 rounded-lg"
+            />
+            <p className="text-sm uppercase tracking-widest text-accent">
+              {dict.revenueCloud.title}
+            </p>
+          </div>
         </FadeIn>
         <FadeIn delay={0.1}>
           <h1 className="mt-4 max-w-3xl text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl">

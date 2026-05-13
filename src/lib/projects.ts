@@ -4,6 +4,7 @@ export type Integration = {
   name: string;
   href?: string;
   note?: string;
+  logoImage?: string;
 };
 
 export type Project = {
@@ -16,6 +17,8 @@ export type Project = {
   liveUrl?: string;
   repoUrl?: string;
   notionUrl?: string;
+  demoImage?: string;
+  demoImageAlt?: string;
   featured?: boolean;
   translations: Record<
     Locale,
@@ -49,13 +52,13 @@ export const projects: Project[] = [
       "arc42",
     ],
     integrations: [
-      { name: "Stripe", href: "https://stripe.com", note: "Checkout + webhook with HMAC-SHA256 verification" },
-      { name: "Sendcloud / DHL", href: "https://www.sendcloud.com", note: "v3 API, DACH carrier prioritised" },
-      { name: "DocuSign", href: "https://www.docusign.com", note: "Envelope creation + Connect webhook" },
-      { name: "JIRA Cloud", href: "https://www.atlassian.com/software/jira", note: "Auto-ticket on inventory shortage" },
-      { name: "Slack", href: "https://slack.com", note: "Two channels: #warehouse + #payments-team" },
-      { name: "Notion", href: "https://www.notion.so", note: "Programmatic 50-entry portfolio publishing" },
-      { name: "MuleSoft Anypoint", href: "https://www.mulesoft.com", note: "Orchestration layer for the whole flow" },
+      { name: "Stripe", href: "https://stripe.com", note: "Checkout + webhook with HMAC-SHA256 verification", logoImage: "/integrations/stripe.png" },
+      { name: "Sendcloud / DHL", href: "https://www.sendcloud.com", note: "v3 API, DACH carrier prioritised", logoImage: "/integrations/sendcloud.png" },
+      { name: "DocuSign", href: "https://www.docusign.com", note: "Envelope creation + Connect webhook", logoImage: "/integrations/docusign.png" },
+      { name: "JIRA Cloud", href: "https://www.atlassian.com/software/jira", note: "Auto-ticket on inventory shortage", logoImage: "/integrations/jira.png" },
+      { name: "Slack", href: "https://slack.com", note: "Two channels: #warehouse + #payments-team", logoImage: "/integrations/slack.png" },
+      { name: "Notion", href: "https://www.notion.so", note: "Programmatic 50-entry portfolio publishing", logoImage: "/integrations/notion.png" },
+      { name: "MuleSoft Anypoint", href: "https://www.mulesoft.com", note: "Orchestration layer for the whole flow", logoImage: "/integrations/mulesoft.png" },
     ],
     highlights: {
       en: [
@@ -153,6 +156,8 @@ export const projects: Project[] = [
     },
     repoUrl: "https://github.com/aksumustafa1625/urla-shoes",
     notionUrl: "https://www.notion.so/Urla-Shoes-Documentation-Yedek-33310a2e9f8680c0a5acc0d6ccf49745",
+    demoImage: "/projects/urla-shoes-demo.png",
+    demoImageAlt: "Route Safety LWC — Essen to Berlin route, 5-waypoint weather, Einstein AI safety verdict",
     featured: true,
     translations: {
       en: {

@@ -175,12 +175,23 @@ export default async function CertificationsPage(
 
       <FadeIn delay={0.6}>
         <section className="mt-16 rounded-2xl border border-border bg-muted-bg/30 p-6 sm:p-8">
-          <p className="text-sm uppercase tracking-widest text-muted">
-            {dict.certifications.trailheadTitle}
-          </p>
-          <h2 className="mt-3 text-2xl font-semibold tracking-tight">
-            {dict.certifications.trailheadLead}
-          </h2>
+          <div className="flex flex-col-reverse items-start gap-6 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex-1">
+              <p className="text-sm uppercase tracking-widest text-muted">
+                {dict.certifications.trailheadTitle}
+              </p>
+              <h2 className="mt-3 text-2xl font-semibold tracking-tight">
+                {dict.certifications.trailheadLead}
+              </h2>
+            </div>
+            <Image
+              src="/badges/trailhead-five-star-ranger.png"
+              alt="Trailhead Five Star Ranger rank"
+              width={140}
+              height={140}
+              className="h-28 w-28 flex-shrink-0 sm:h-32 sm:w-32"
+            />
+          </div>
           <dl className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
             <Stat
               label={dict.certifications.trailheadBadges}
