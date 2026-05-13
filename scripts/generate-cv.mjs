@@ -134,7 +134,7 @@ const summary = [
   sectionHeading("Professional Summary"),
   p([
     t(
-      "Salesforce Developer with seven active certifications and eight Trailhead Superbadges, specialising in Apex architecture, async patterns (Queueable, Batch, Schedulable, Platform Events), and end-to-end integrations (MuleSoft, REST/SOAP, SAP S/4HANA). Owns Revenue Cloud (RLM + CLM) and Industries CPQ implementations from declarative design through trigger frameworks, unit testing, and SFDX / GitHub Actions deployment. MSc Computer Software Engineering · bilingual EN/DE portfolio · targeting senior Salesforce roles in the DACH market.",
+      "Salesforce Developer with seven active certifications and eight Trailhead Superbadges, specialising in Apex architecture, async patterns (Queueable, Batch, Schedulable, Platform Events), and end-to-end integrations (MuleSoft, REST/SOAP, SAP S/4HANA). Owns Revenue Cloud (RLM + CLM) and Industries CPQ implementations from declarative design through trigger frameworks, unit testing, and SFDX / GitHub Actions deployment. MSc Computer Software Engineering · bilingual EN/DE portfolio · targeting Salesforce Developer roles in the DACH market.",
     ),
   ]),
 ];

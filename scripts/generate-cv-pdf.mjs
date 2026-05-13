@@ -29,6 +29,20 @@ const FONT_ITAL = "Helvetica-Oblique";
 
 // ---------- helpers ----------
 
+// pdfkit's standard Helvetica is WinAnsi-encoded, which is missing the Turkish
+// characters ğ ı ş (and their uppercase forms). The cleanest fix would be to
+// embed a Unicode TTF, but we keep zero dependencies and just transliterate
+// those characters in the PDF only. The .docx generator handles Unicode natively
+// via Word, so "Balıkesir" and "Sevgi Çiçeği" still appear correctly there.
+const LATIN_MAP = {
+  ğ: "g", Ğ: "G",
+  ı: "i", İ: "I",
+  ş: "s", Ş: "S",
+};
+function latin(value) {
+  return String(value).replace(/[ğĞıİşŞ]/g, (c) => LATIN_MAP[c] || c);
+}
+
 function ensureRoom(doc, needed) {
   if (doc.y + needed > A4.height - MARGIN) {
     doc.addPage();
@@ -66,7 +80,7 @@ function paragraph(doc, text, opts = {}) {
     .font(FONT_REG)
     .fontSize(opts.size ?? 9)
     .fillColor(COLOR_BODY)
-    .text(text, MARGIN, doc.y, {
+    .text(latin(text), MARGIN, doc.y, {
       width: CONTENT_WIDTH,
       lineGap: 1,
       align: opts.align ?? "left",
@@ -98,7 +112,7 @@ function bullet(doc, runs) {
     if (run.color) doc.fillColor(run.color);
     else doc.fillColor(COLOR_BODY);
 
-    doc.text(run.text, {
+    doc.text(latin(run.text), {
       continued: !isLast,
       width: innerWidth,
       link: run.link ?? undefined,
@@ -115,9 +129,9 @@ function bullet(doc, runs) {
 function labeledLine(doc, label, body) {
   ensureRoom(doc, 14);
   doc.font(FONT_BOLD).fontSize(9).fillColor(COLOR_BODY);
-  doc.text(`${label}: `, MARGIN, doc.y, { continued: true });
+  doc.text(`${latin(label)}: `, MARGIN, doc.y, { continued: true });
   doc.font(FONT_REG);
-  doc.text(body, { width: CONTENT_WIDTH, lineGap: 1 });
+  doc.text(latin(body), { width: CONTENT_WIDTH, lineGap: 1 });
   doc.moveDown(0.06);
 }
 
@@ -126,16 +140,34 @@ function roleHeader(doc, titleText, organizationText, dateText) {
   doc.moveDown(0.15);
   const y = doc.y;
 
-  doc.font(FONT_BOLD).fontSize(9.5).fillColor(COLOR_BODY);
-  doc.text(titleText, MARGIN, y, { continued: true, width: CONTENT_WIDTH });
-  doc.font(FONT_ITAL).text(`  —  ${organizationText}`, { continued: false });
-
+  // Measure the date width first so we can leave room on the left side and
+  // anchor the date to the right at this y. lineBreak:false keeps doc.y put.
   doc.font(FONT_REG).fontSize(9).fillColor(COLOR_MUTED);
-  const datesWidth = doc.widthOfString(dateText);
-  doc.text(dateText, A4.width - MARGIN - datesWidth, y, {
+  const dateLatin = latin(dateText);
+  const datesWidth = doc.widthOfString(dateLatin);
+  const gap = 12;
+  const leftWidth = CONTENT_WIDTH - datesWidth - gap;
+
+  doc.text(dateLatin, A4.width - MARGIN - datesWidth, y, {
     width: datesWidth,
     align: "right",
     lineBreak: false,
+  });
+
+  // Title + organization on the left, constrained to the space the date isn't
+  // using. With width:leftWidth on a continued chain, pdfkit wraps inside that
+  // box if the combined string is too wide — title becomes line 1 + line 2,
+  // date stays on line 1 as anchored above.
+  doc.font(FONT_BOLD).fontSize(9.5).fillColor(COLOR_BODY);
+  doc.text(latin(titleText), MARGIN, y, {
+    continued: true,
+    width: leftWidth,
+    lineGap: 1,
+  });
+  doc.font(FONT_ITAL).text(latin(`  —  ${organizationText}`), {
+    continued: false,
+    width: leftWidth,
+    lineGap: 1,
   });
 
   doc.fillColor(COLOR_BODY);
@@ -155,7 +187,7 @@ function centeredLine(doc, segments, opts = {}) {
 
   const widths = segments.map((seg) => {
     doc.font(seg.font ?? opts.font ?? FONT_REG);
-    return doc.widthOfString(seg.text);
+    return doc.widthOfString(latin(seg.text));
   });
   const totalWidth = widths.reduce((a, b) => a + b, 0);
 
@@ -165,7 +197,7 @@ function centeredLine(doc, segments, opts = {}) {
   segments.forEach((seg, idx) => {
     doc.font(seg.font ?? opts.font ?? FONT_REG);
     doc.fillColor(seg.color ?? COLOR_BODY);
-    doc.text(seg.text, x, y, {
+    doc.text(latin(seg.text), x, y, {
       lineBreak: false,
       width: widths[idx] + 2,
       link: seg.link,
@@ -238,7 +270,7 @@ function renderSummary(doc) {
   sectionHeading(doc, "Professional Summary");
   paragraph(
     doc,
-    "Salesforce Developer with seven active certifications and eight Trailhead Superbadges, specialising in Apex architecture, async patterns (Queueable, Batch, Schedulable, Platform Events), and end-to-end integrations (MuleSoft, REST/SOAP, SAP S/4HANA). Owns Revenue Cloud (RLM + CLM) and Industries CPQ implementations from declarative design through trigger frameworks, unit testing, and SFDX / GitHub Actions deployment. MSc Computer Software Engineering · bilingual EN/DE portfolio · targeting senior Salesforce roles in the DACH market.",
+    "Salesforce Developer with seven active certifications and eight Trailhead Superbadges, specialising in Apex architecture, async patterns (Queueable, Batch, Schedulable, Platform Events), and end-to-end integrations (MuleSoft, REST/SOAP, SAP S/4HANA). Owns Revenue Cloud (RLM + CLM) and Industries CPQ implementations from declarative design through trigger frameworks, unit testing, and SFDX / GitHub Actions deployment. MSc Computer Software Engineering · bilingual EN/DE portfolio · targeting Salesforce Developer roles in the DACH market.",
   );
 }
 
