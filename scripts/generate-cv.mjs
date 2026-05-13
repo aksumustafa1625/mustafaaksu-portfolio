@@ -2,6 +2,11 @@
 //
 // Usage:
 //   npm run cv:generate    # writes cv.docx in the repo root
+//
+// Keep the content here in sync with `scripts/generate-cv-pdf.mjs` (the
+// .pdf equivalent). Single-column layout, Calibri, no images — chosen so
+// applicant-tracking systems parse the text cleanly.
+// Target length: 1–1.5 pages, projects-first ordering.
 
 import fs from "node:fs/promises";
 import {
@@ -9,7 +14,6 @@ import {
   Packer,
   Paragraph,
   TextRun,
-  HeadingLevel,
   AlignmentType,
   TabStopType,
   TabStopPosition,
@@ -26,7 +30,7 @@ const t = (text, opts = {}) =>
     text,
     bold: opts.bold ?? false,
     italics: opts.italic ?? false,
-    size: opts.size ?? 22, // half-points → 22 = 11pt
+    size: opts.size ?? 18, // half-points → 18 = 9pt body (was 22)
     color: opts.color,
     font: FONT,
   });
@@ -38,13 +42,10 @@ const p = (runs, opts = {}) =>
     alignment: opts.alignment,
   });
 
-const blank = () =>
-  new Paragraph({ children: [], spacing: { before: 0, after: 60 } });
-
 const sectionHeading = (text) =>
   new Paragraph({
-    children: [t(text.toUpperCase(), { bold: true, size: 24 })],
-    spacing: { before: 240, after: 80 },
+    children: [t(text.toUpperCase(), { bold: true, size: 20 })],
+    spacing: { before: 200, after: 60 },
     border: {
       bottom: { color: "888888", space: 2, style: BorderStyle.SINGLE, size: 6 },
     },
@@ -54,7 +55,7 @@ const bullet = (runs) =>
   new Paragraph({
     children: Array.isArray(runs) ? runs : [t(runs)],
     bullet: { level: 0 },
-    spacing: { before: 0, after: 40 },
+    spacing: { before: 0, after: 30 },
   });
 
 const link = (text, href, opts = {}) =>
@@ -64,7 +65,7 @@ const link = (text, href, opts = {}) =>
       new TextRun({
         text,
         style: "Hyperlink",
-        size: opts.size ?? 22,
+        size: opts.size ?? 18,
         font: FONT,
       }),
     ],
@@ -74,50 +75,58 @@ const roleHeader = (titleText, organizationText, dateText) =>
   new Paragraph({
     tabStops: [{ type: TabStopType.RIGHT, position: TabStopPosition.MAX }],
     children: [
-      t(titleText, { bold: true }),
-      t(" — "),
-      t(organizationText, { italic: true }),
+      t(titleText, { bold: true, size: 19 }),
+      t(" — ", { size: 19 }),
+      t(organizationText, { italic: true, size: 19 }),
       t("\t"),
-      t(dateText),
+      t(dateText, { color: "555555" }),
     ],
-    spacing: { before: 120, after: 40 },
+    spacing: { before: 100, after: 20 },
   });
+
+// "Label: long comma-separated tail" — used in Skills + Certifications
+const labeledLine = (label, body) =>
+  p([t(`${label}: `, { bold: true }), t(body)], { after: 30 });
 
 // ---------- content ----------
 
 const header = [
   new Paragraph({
     alignment: AlignmentType.CENTER,
-    children: [t("Mustafa Aksu", { bold: true, size: 36 })],
-    spacing: { after: 60 },
+    children: [t("MUSTAFA AKSU", { bold: true, size: 36 })],
+    spacing: { after: 40 },
   }),
   new Paragraph({
     alignment: AlignmentType.CENTER,
     children: [
-      t("Salesforce Developer", { size: 24, color: "555555" }),
+      t("Salesforce Developer  ·  Revenue Cloud  ·  Industries CPQ", {
+        size: 22,
+        color: "555555",
+      }),
     ],
     spacing: { after: 60 },
   }),
   new Paragraph({
     alignment: AlignmentType.CENTER,
     children: [
-      t("Nigeria · Targeting EU & DACH · Visa sponsorship — or freelance · "),
+      t("Nigeria  ·  Open to relocation — Germany / DACH"),
+    ],
+    spacing: { after: 40 },
+  }),
+  new Paragraph({
+    alignment: AlignmentType.CENTER,
+    children: [
       link("mustafa.aksu@mustafaaksu.dev", "mailto:mustafa.aksu@mustafaaksu.dev"),
-      t(" · "),
+      t("  ·  "),
       link("mustafaaksu.dev", "https://mustafaaksu.dev"),
-    ],
-    spacing: { after: 60 },
-  }),
-  new Paragraph({
-    alignment: AlignmentType.CENTER,
-    children: [
+      t("  ·  "),
       link("LinkedIn", "https://www.linkedin.com/in/aksumustafa16/"),
       t("  ·  "),
       link("GitHub", "https://github.com/aksumustafa1625"),
       t("  ·  "),
       link("Trailhead (Five Star Ranger)", "https://www.salesforce.com/trailblazer/aksumustafa16"),
     ],
-    spacing: { after: 120 },
+    spacing: { after: 80 },
   }),
 ];
 
@@ -125,71 +134,8 @@ const summary = [
   sectionHeading("Professional Summary"),
   p([
     t(
-      "Salesforce Developer with seven active certifications across Platform (PD I, PD II, Administrator, App Builder), Industry Solutions (Industries CPQ Developer), Sales Cloud (CPQ Administrator), and Agentforce (Agentforce Specialist). Eight Trailhead Superbadges concentrated in Apex and integration (Advanced Apex, Apex Callouts, Apex Web Services, Inbound Integration Specialist, Named Credentials, Platform Events, Platform API). Five Star Ranger on Trailhead with 518 badges and 258,050 points.",
+      "Salesforce Developer with seven active certifications and eight Trailhead Superbadges, specialising in Apex architecture, async patterns (Queueable, Batch, Schedulable, Platform Events), and end-to-end integrations (MuleSoft, REST/SOAP, SAP S/4HANA). Owns Revenue Cloud (RLM + CLM) and Industries CPQ implementations from declarative design through trigger frameworks, unit testing, and SFDX / GitHub Actions deployment. MSc Computer Software Engineering · bilingual EN/DE portfolio · targeting senior Salesforce roles in the DACH market.",
     ),
-  ]),
-  p([
-    t(
-      "Specialise in Apex architecture, asynchronous patterns (Queueable, Batch, Schedulable, Platform Events), and end-to-end integrations between Salesforce and external systems (MuleSoft, REST/SOAP APIs, payment gateways, e-signature). Comfortable owning a feature from declarative design through Apex trigger framework, unit tests, and deployment via SFDX and GitHub Actions. Master's degree in Computer Software Engineering. Bilingual portfolio in English and German, targeting the DACH Salesforce market.",
-    ),
-  ]),
-];
-
-const certifications = [
-  sectionHeading("Salesforce Certifications"),
-  bullet([t("Salesforce Certified Industries CPQ Developer", { bold: true }), t(" — May 2025")]),
-  bullet([t("Salesforce Certified Platform App Builder", { bold: true }), t(" — April 2025")]),
-  bullet([t("Salesforce Certified CPQ Administrator", { bold: true }), t(" — March 2025")]),
-  bullet([t("Salesforce Certified Agentforce Specialist", { bold: true }), t(" — January 2025")]),
-  bullet([t("Salesforce Certified Platform Developer II", { bold: true }), t(" — December 2024")]),
-  bullet([t("Salesforce Certified Platform Developer I", { bold: true }), t(" — November 2024")]),
-  bullet([t("Salesforce Certified Administrator", { bold: true }), t(" — October 2024")]),
-  bullet([
-    t("Salesforce Certified AI Associate", { bold: true }),
-    t(" — December 2024 (retired credential)", { italic: true }),
-  ]),
-];
-
-const trailhead = [
-  sectionHeading("Trailhead"),
-  p([
-    t("Profile: ", { bold: true }),
-    link("salesforce.com/trailblazer/aksumustafa16", "https://www.salesforce.com/trailblazer/aksumustafa16"),
-  ]),
-  bullet([t("Rank: ", { bold: true }), t("Five Star Ranger (working toward All Star Ranger)")]),
-  bullet([t("Badges: ", { bold: true }), t("518 · Points: 258,050 · Trails: 28")]),
-  bullet([t("Superbadges (8): ", { bold: true }), t("Advanced Apex Specialist, Apex Specialist, Apex Callouts, Apex Web Services, Inbound Integration Specialist, Named Credentials, Platform Events, Platform API")]),
-];
-
-const skills = [
-  sectionHeading("Technical Skills"),
-  bullet([
-    t("Salesforce Platform: ", { bold: true }),
-    t("Apex (PD II), Lightning Web Components (LWC), Aura Components, SOQL / SOSL, Flow Builder, Validation Rules, Platform Events, Async Apex (Queueable, Batch, Schedulable), Visualforce"),
-  ]),
-  bullet([
-    t("Industry Solutions: ", { bold: true }),
-    t("Industries CPQ, Salesforce CPQ, Agentforce, Einstein Prompt Templates"),
-  ]),
-  bullet([
-    t("Integration: ", { bold: true }),
-    t("REST APIs, SOAP APIs, Named Credentials, External Services, Platform Events, Webhooks, MuleSoft Anypoint (basics)"),
-  ]),
-  bullet([
-    t("Tools: ", { bold: true }),
-    t("Salesforce DX (sfdx), VS Code + SF Extensions, Workbench, Data Loader, Postman, Schema Builder"),
-  ]),
-  bullet([
-    t("DevOps: ", { bold: true }),
-    t("Git, GitHub, GitHub Actions, CI/CD pipelines, Copado (basics)"),
-  ]),
-  bullet([
-    t("Other: ", { bold: true }),
-    t("HTML, CSS, Agile / SCRUM, JIRA, OAuth2, JSON, JWT"),
-  ]),
-  bullet([
-    t("Languages: ", { bold: true }),
-    t("Turkish (native), English (professional), German (basics — portfolio shipped bilingually)"),
   ]),
 ];
 
@@ -199,108 +145,145 @@ const projects = [
   roleHeader(
     "TechnoStore — Quote-to-Cash on Salesforce Revenue Cloud",
     "Salesforce Developer / Solution Architect",
-    "2025",
+    "2025 — present",
   ),
-  bullet([
-    t(
-      "Built an end-to-end Quote-to-Cash demo for a B2B electronics supplier targeting the DACH market — Revenue Lifecycle Management (RLM) + Contract Lifecycle Management (CLM) + Industries CPQ on the Salesforce side.",
-    ),
-  ]),
-  bullet([
-    t(
-      "Orchestrated seven external systems (Stripe, Sendcloud / DHL, DocuSign, JIRA, Slack ×2, Notion) via MuleSoft Anypoint Studio with HMAC-verified webhook callbacks.",
-    ),
-  ]),
-  bullet([
-    t(
-      "Applied the Kevin O'Hara sfdc-trigger-framework across a six-package SFDX layout; achieved full Apex test coverage and published OpenAPI 3.0 specs for inbound webhooks.",
-    ),
-  ]),
-  bullet([
-    t(
-      "Documented architecture as an arc42 blueprint plus a 50-entry STAR-format Notion portfolio generated programmatically via a custom Apex Notion-publishing service.",
-    ),
-  ]),
+  bullet(
+    "Built end-to-end Quote-to-Cash demo for a B2B electronics supplier targeting DACH — Revenue Lifecycle Management (RLM) + Contract Lifecycle Management (CLM) + Industries CPQ.",
+  ),
+  bullet(
+    "Orchestrated seven external systems (Stripe, Sendcloud / DHL, DocuSign, JIRA, Slack ×2, Notion) via MuleSoft Anypoint Studio with HMAC-SHA256-verified webhook callbacks.",
+  ),
+  bullet(
+    "Applied the Kevin O'Hara sfdc-trigger-framework across a six-package SFDX layout; full Apex test coverage; published OpenAPI 3.0 specs for inbound webhooks.",
+  ),
+  bullet(
+    "Documented architecture as an arc42 blueprint plus a 50-entry STAR-format Notion portfolio generated programmatically via a custom Apex Notion-publishing service.",
+  ),
+  bullet(
+    "Extending with SAP S/4HANA via MuleSoft (Product Master sync, Order Acknowledgment on activation) and a DATEV integration for the DACH back-office story.",
+  ),
   bullet([
     t("Repository: ", { bold: true }),
     link("github.com/aksumustafa1625/TechnoStore", "https://github.com/aksumustafa1625/TechnoStore"),
   ]),
 
   roleHeader(
-    "VoltStream Mobility — Channel-Partner Attribution",
-    "Salesforce Developer",
-    "2025",
-  ),
-  bullet([
-    t(
-      "Designed and implemented a B2B EV-charging CRM for the German e-mobility market modelled on EnBW / Ionity / Allego sales motions.",
-    ),
-  ]),
-  bullet([
-    t(
-      "Custom Reseller__c object with indexed Company_Email__c as an External ID; Apex trigger auto-links Opportunities to the right channel partner via case-insensitive SOQL on insert and update.",
-    ),
-  ]),
-  bullet([
-    t(
-      "Four-layer architecture (trigger → handler → service → matcher) on the Kevin O'Hara framework; 80 / 80 Apex tests passing with 100% coverage including bulk and negative scenarios.",
-    ),
-  ]),
-  bullet([
-    t(
-      "Lookup relationship (not master-detail) so revenue data survives partner churn; reseller-revenue dashboards available out of the box.",
-    ),
-  ]),
-  bullet([
-    t("Repository: ", { bold: true }),
-    link("github.com/aksumustafa1625/VoltStreamMobility", "https://github.com/aksumustafa1625/VoltStreamMobility"),
-  ]),
-
-  roleHeader(
-    "Urla Shoes — Async-Callout Reference Pattern",
+    "Urla Shoes — Route safety with Google Maps, OpenWeather & Einstein",
     "Salesforce Developer",
     "2024",
   ),
-  bullet([
-    t(
-      "Reference implementation for Apex triggers that need to call external APIs — uses Queueable with Database.AllowsCallouts to overcome the trigger-callout limitation.",
-    ),
-  ]),
-  bullet([
-    t(
-      "On Contact insert, enqueues a job that calls Nationalize.io, parses the JSON response, and writes the most-probable country code to Nationalized_Country__c.",
-    ),
-  ]),
-  bullet([
-    t(
-      "Full test coverage with HttpCalloutMock across six scenarios: success, empty response, HTTP 500, missing FirstName, bulk insert of 10 records, and a direct unit test of the JSON parser.",
-    ),
-  ]),
+  bullet(
+    "Live demo combining three external integrations to plan a route, fetch weather along five waypoints in parallel, and let an Einstein Prompt Template (GPT-4o mini) assess whether the journey is safe.",
+  ),
+  bullet(
+    "routeWeather LWC orchestrates a Visualforce-bridge to load Google Maps under Lightning Web Security; postMessage between LWC and VF; five parallel Promise.all fetches to OpenWeather.",
+  ),
+  bullet(
+    "RouteWeatherAnalysisService calls ConnectApi.EinsteinLLM.generateMessagesForPromptTemplate; AI verdict rendered in a colour-coded card by a keyword classifier (storm/ice → red; caution → amber; else green).",
+  ),
+  bullet(
+    "Secondary feature: Contact-insert Queueable hits Nationalize.io with full HttpCalloutMock coverage across six scenarios (success, empty, HTTP 500, missing FirstName, bulk-10, parser unit test).",
+  ),
   bullet([
     t("Repository: ", { bold: true }),
     link("github.com/aksumustafa1625/urla-shoes", "https://github.com/aksumustafa1625/urla-shoes"),
   ]),
 
   roleHeader(
+    "VoltStream Mobility — Channel-Partner Attribution for EV Charging",
+    "Salesforce Developer",
+    "2025",
+  ),
+  bullet(
+    "B2B EV-charging CRM modelled on the German e-mobility hiring market (EnBW, Ionity, Allego, Mercedes-Benz Mobility); auto-links Opportunities to the right channel partner via Apex.",
+  ),
+  bullet(
+    "Custom Reseller__c object with indexed Company_Email__c as an External ID; case-insensitive SOQL lookup wired through a four-layer pattern (trigger → handler → service → matcher).",
+  ),
+  bullet(
+    "80 / 80 Apex tests passing with 100 % coverage including bulk and negative scenarios. Lookup relationship chosen over master-detail so revenue data outlives partner churn.",
+  ),
+  bullet([
+    t("Repository: ", { bold: true }),
+    link(
+      "github.com/aksumustafa1625/VoltStreamMobility",
+      "https://github.com/aksumustafa1625/VoltStreamMobility",
+    ),
+  ]),
+
+  roleHeader(
     "mustafaaksu.dev — Personal Portfolio Site",
-    "Designer + product owner",
+    "Designer & Product Owner",
     "2026",
   ),
   bullet([
-    t(
-      "Designed and shipped a bilingual (EN + DE) Salesforce-developer portfolio site at ",
-    ),
+    t("Bilingual (EN + DE) Salesforce-developer portfolio at "),
     link("mustafaaksu.dev", "https://mustafaaksu.dev"),
-    t(" hosted on Vercel with a GoDaddy custom domain; Lighthouse-perfect, dark-mode, SEO-ready (sitemap, robots, per-locale Open Graph images)."),
+    t(" hosted on Vercel; Lighthouse-perfect, dark-mode, SEO-ready (sitemap, robots, per-locale Open Graph images)."),
   ]),
-  bullet([
-    t(
-      "Content modelled in TypeScript so adding a new project, certification, or Trailhead stat is a single object edit — site, sitemap, and a programmatically synced Notion documentation page all update from that source.",
-    ),
-  ]),
+  bullet(
+    "Content modelled in TypeScript so adding a project, certification, or Trailhead stat is a single object edit — site, sitemap, and a synced Notion documentation page all update from that source.",
+  ),
   bullet([
     t("Repository: ", { bold: true }),
-    link("github.com/aksumustafa1625/mustafaaksu-portfolio", "https://github.com/aksumustafa1625/mustafaaksu-portfolio"),
+    link(
+      "github.com/aksumustafa1625/mustafaaksu-portfolio",
+      "https://github.com/aksumustafa1625/mustafaaksu-portfolio",
+    ),
+  ]),
+];
+
+const skills = [
+  sectionHeading("Technical Skills"),
+  labeledLine(
+    "Revenue Cloud",
+    "Salesforce CPQ (Admin), Industries CPQ (Developer), Revenue Lifecycle Management (RLM), Contract Lifecycle Management (CLM), Salesforce Billing, Quote-to-Cash architecture, subscription & usage-based pricing",
+  ),
+  labeledLine(
+    "Salesforce Platform",
+    "Apex (PD II), Lightning Web Components (LWC), Aura, SOQL / SOSL, Flow Builder, Validation Rules, Platform Events, Async Apex (Queueable, Batch, Schedulable), Trigger frameworks (Kevin O'Hara), Visualforce",
+  ),
+  labeledLine(
+    "Industry & AI",
+    "Agentforce Specialist, Einstein Prompt Templates, ConnectApi.EinsteinLLM",
+  ),
+  labeledLine(
+    "Integration",
+    "REST APIs, SOAP APIs, Named Credentials, External Services, Platform Events, Webhooks (HMAC-SHA256), MuleSoft Anypoint, SAP S/4HANA, OpenAPI 3.0",
+  ),
+  labeledLine(
+    "DevOps & Tools",
+    "Salesforce DX (sfdx), VS Code + SF Extensions, Scratch Orgs, Workbench, Data Loader, Postman, Git, GitHub Actions, CI/CD pipelines, Salesforce DevOps Center, Copado (basics)",
+  ),
+  labeledLine(
+    "Other",
+    "JavaScript (ES6+), TypeScript, HTML, CSS, Agile / SCRUM, JIRA, OAuth2, JSON, JWT",
+  ),
+  labeledLine(
+    "Languages",
+    "Turkish (native), English (professional), German (Goethe A2 — in progress)",
+  ),
+];
+
+const certifications = [
+  sectionHeading("Salesforce Certifications"),
+  labeledLine(
+    "Platform",
+    "Administrator (Oct 2024), Platform App Builder (Apr 2025), Platform Developer I (Nov 2024), Platform Developer II (Dec 2024)",
+  ),
+  labeledLine(
+    "Industry & Revenue",
+    "Industries CPQ Developer (May 2025), CPQ Administrator (Mar 2025)",
+  ),
+  labeledLine("AI", "Agentforce Specialist (Jan 2025)"),
+];
+
+const trailhead = [
+  sectionHeading("Trailhead"),
+  p([
+    t("Five Star Ranger", { bold: true }),
+    t("  ·  518 badges  ·  258K points  ·  8 Superbadges (Advanced Apex, Apex Specialist, Apex Callouts, Apex Web Services, Inbound Integration, Named Credentials, Platform Events, Platform API)  ·  "),
+    link("@aksumustafa16", "https://www.salesforce.com/trailblazer/aksumustafa16"),
   ]),
 ];
 
@@ -308,68 +291,41 @@ const education = [
   sectionHeading("Education"),
 
   roleHeader(
-    "Master of Science in Computer Software Engineering",
-    "North American University (NAU)",
-    "Jan 2021 – May 2023",
+    "MSc Computer Software Engineering",
+    "North American University",
+    "Jan 2021 — May 2023",
   ),
-  bullet(
-    "Capstone: cloud-based SaaS subscription-billing application with JWT authentication, dynamic pricing modules, and Hibernate ORM persistence.",
-  ),
-  bullet(
-    "Coursework: distributed systems, software architecture, database optimization (indexing, normalization, query tuning), NoSQL fundamentals, API security (OAuth2, rate limiting), TDD / BDD methodologies.",
-  ),
-  bullet(
-    "Practiced Agile / SCRUM in bi-weekly sprints; led sprint planning, conducted code reviews, used Jira / Trello / Git / GitHub for distributed version control.",
-  ),
-  bullet(
-    "Implemented CI/CD pipelines with Jenkins and GitHub Actions, automated tests (JUnit, TestNG), and Docker containerization.",
-  ),
+  p([
+    t(
+      "Capstone: cloud-based SaaS subscription-billing application with JWT authentication, dynamic pricing modules, and Hibernate ORM persistence. Coursework: distributed systems, software architecture, database optimization, NoSQL fundamentals, API security (OAuth2), TDD/BDD. CI/CD with Jenkins and GitHub Actions; JUnit/TestNG; Docker containerization.",
+    ),
+  ]),
 
   roleHeader(
     "Postgraduate Degree in Information Technology",
     "Vistula University",
-    "Jun 2019 – May 2020",
+    "Jun 2019 — May 2020",
   ),
-  bullet(
-    "Advanced system architecture, software development, and data management — fully online international program, completed with strong self-discipline and remote-team collaboration habits.",
-  ),
+  p([
+    t(
+      "Advanced system architecture, software development, and data management; fully online international program.",
+    ),
+  ]),
 
   roleHeader(
-    "Bachelor of Education (BEd) — Turkish Language and Literature",
+    "Bachelor of Education — Turkish Language and Literature",
     "Balıkesir University",
-    "Sep 1996 – Jun 2000",
-  ),
-  bullet(
-    "Served as MC for the graduation ceremony; foundation in structured communication and presentation that transfers directly to technical demos and stakeholder briefings.",
+    "Sep 1996 — Jun 2000",
   ),
 ];
 
-const experience = [
+const earlierCareer = [
   sectionHeading("Earlier Career"),
-
-  roleHeader(
-    "High School Counselor",
-    "Nigerian Tulip International Colleges (NTIC) · Nigeria · On-site",
-    "Sep 2014 – Jun 2020",
-  ),
-  bullet(
-    "Guided a multicultural student body in an international school context; coordinated academic planning, mentoring, and personal-development programs.",
-  ),
-  bullet(
-    "Developed strong cross-cultural communication and stakeholder-management skills that now translate to consulting-style work with global Salesforce teams.",
-  ),
-
-  roleHeader(
-    "Turkish Language Teacher",
-    "Sevgi Çiçeği Anafen Dershanesi · Türkiye · On-site",
-    "Sep 2000 – Aug 2014",
-  ),
-  bullet(
-    "Designed and delivered language curriculum to high-school students over 14 years at the same institution; sustained, results-oriented training programs.",
-  ),
-  bullet(
-    "Honed structured presentation, mentoring, and explanation skills — directly applicable to demoing Salesforce solutions, training admin users, and communicating with non-technical stakeholders.",
-  ),
+  p([
+    t(
+      "2000 – 2020: Educator and counselor roles at Sevgi Çiçeği Anafen Dershanesi (Türkiye) and Nigerian Tulip International Colleges (Nigeria) — foundation for structured communication, mentoring, and cross-cultural stakeholder management.",
+    ),
+  ]),
 ];
 
 // ---------- assemble ----------
@@ -380,25 +336,25 @@ const doc = new Document({
   description: "ATS-friendly CV generated from scripts/generate-cv.mjs",
   styles: {
     default: {
-      document: { run: { font: FONT, size: 22 } },
+      document: { run: { font: FONT, size: 18 } },
     },
   },
   sections: [
     {
       properties: {
         page: {
-          margin: { top: 720, bottom: 720, left: 720, right: 720 },
+          margin: { top: 600, bottom: 600, left: 600, right: 600 },
         },
       },
       children: [
         ...header,
         ...summary,
+        ...projects,
+        ...skills,
         ...certifications,
         ...trailhead,
-        ...skills,
-        ...projects,
         ...education,
-        ...experience,
+        ...earlierCareer,
       ],
     },
   ],

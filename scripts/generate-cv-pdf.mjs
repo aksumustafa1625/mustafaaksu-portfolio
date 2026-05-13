@@ -4,9 +4,9 @@
 //   npm run cv:pdf    # writes public/cv.pdf (served by Vercel from the site)
 //
 // Keep the content here in sync with `scripts/generate-cv.mjs` (the .docx
-// equivalent) until/unless we factor the content into a shared module.
-// Single-column layout, Helvetica (always available), no images — chosen
-// so applicant-tracking systems parse the text cleanly.
+// equivalent). Single-column layout, Helvetica (always available), no
+// images — chosen so applicant-tracking systems parse the text cleanly.
+// Target length: 1–1.5 A4 pages, projects-first ordering.
 
 import fs from "node:fs";
 import path from "node:path";
@@ -15,7 +15,7 @@ import PDFDocument from "pdfkit";
 // ---------- layout constants ----------
 
 const A4 = { width: 595, height: 842 };
-const MARGIN = 48;
+const MARGIN = 36;
 const CONTENT_WIDTH = A4.width - MARGIN * 2;
 
 const COLOR_BODY = "#111111";
@@ -23,36 +23,9 @@ const COLOR_MUTED = "#555555";
 const COLOR_RULE = "#888888";
 const COLOR_LINK = "#0b5fff";
 
-// pdfkit's built-in Helvetica is WinAnsi-only, so Turkish characters
-// (Çiçeği, Balıkesir, Türkiye) render as garbage. Register Arial TTFs
-// from the Windows Fonts directory — Arial is metric-compatible with
-// Helvetica so layout stays the same, but supports full Latin Extended.
-// Falls back to common Linux paths so the script can also run on CI.
-function pickFontPath(winName, linuxPath) {
-  if (process.platform === "win32") {
-    return path.join(process.env.SystemRoot ?? "C:\\Windows", "Fonts", winName);
-  }
-  return linuxPath;
-}
-
-const FONT_REG = "reg";
-const FONT_BOLD = "bold";
-const FONT_ITAL = "ital";
-
-const FONT_PATHS = {
-  [FONT_REG]: pickFontPath(
-    "arial.ttf",
-    "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
-  ),
-  [FONT_BOLD]: pickFontPath(
-    "arialbd.ttf",
-    "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
-  ),
-  [FONT_ITAL]: pickFontPath(
-    "ariali.ttf",
-    "/usr/share/fonts/truetype/dejavu/DejaVuSans-Oblique.ttf",
-  ),
-};
+const FONT_REG = "Helvetica";
+const FONT_BOLD = "Helvetica-Bold";
+const FONT_ITAL = "Helvetica-Oblique";
 
 // ---------- helpers ----------
 
@@ -72,48 +45,48 @@ function rule(doc) {
 }
 
 function sectionHeading(doc, title) {
-  ensureRoom(doc, 32);
-  doc.moveDown(0.6);
+  ensureRoom(doc, 24);
+  doc.moveDown(0.25);
   doc
     .font(FONT_BOLD)
-    .fontSize(10.5)
+    .fontSize(10)
     .fillColor(COLOR_BODY)
     .text(title.toUpperCase(), MARGIN, doc.y, {
       characterSpacing: 1.2,
       width: CONTENT_WIDTH,
     });
-  doc.moveDown(0.15);
+  doc.moveDown(0.05);
   rule(doc);
-  doc.moveDown(0.25);
+  doc.moveDown(0.12);
 }
 
 function paragraph(doc, text, opts = {}) {
-  ensureRoom(doc, 30);
+  ensureRoom(doc, 20);
   doc
     .font(FONT_REG)
-    .fontSize(opts.size ?? 9.5)
+    .fontSize(opts.size ?? 9)
     .fillColor(COLOR_BODY)
     .text(text, MARGIN, doc.y, {
       width: CONTENT_WIDTH,
-      lineGap: 1.5,
+      lineGap: 1,
       align: opts.align ?? "left",
     });
-  doc.moveDown(opts.after ?? 0.35);
+  doc.moveDown(opts.after ?? 0.1);
 }
 
 function bullet(doc, runs) {
-  ensureRoom(doc, 18);
+  ensureRoom(doc, 16);
   const startY = doc.y;
   doc
     .font(FONT_REG)
-    .fontSize(9.5)
+    .fontSize(9)
     .fillColor(COLOR_BODY)
     .text("•", MARGIN, startY, { continued: false, width: 10 });
 
-  doc.font(FONT_REG).fontSize(9.5).fillColor(COLOR_BODY);
+  doc.font(FONT_REG).fontSize(9).fillColor(COLOR_BODY);
   doc.y = startY;
-  doc.x = MARGIN + 12;
-  const innerWidth = CONTENT_WIDTH - 12;
+  doc.x = MARGIN + 11;
+  const innerWidth = CONTENT_WIDTH - 11;
 
   const list = Array.isArray(runs) ? runs : [{ text: runs }];
   list.forEach((run, idx) => {
@@ -130,57 +103,52 @@ function bullet(doc, runs) {
       width: innerWidth,
       link: run.link ?? undefined,
       underline: !!run.link,
-      lineGap: 1.5,
+      lineGap: 1,
     });
   });
 
   doc.x = MARGIN;
-  doc.moveDown(0.18);
+  doc.moveDown(0.04);
 }
 
-function roleHeader(doc, title, organization, dates) {
-  ensureRoom(doc, 22);
-  doc.moveDown(0.35);
+// "Label: long comma-separated tail that wraps to the available width."
+function labeledLine(doc, label, body) {
+  ensureRoom(doc, 14);
+  doc.font(FONT_BOLD).fontSize(9).fillColor(COLOR_BODY);
+  doc.text(`${label}: `, MARGIN, doc.y, { continued: true });
+  doc.font(FONT_REG);
+  doc.text(body, { width: CONTENT_WIDTH, lineGap: 1 });
+  doc.moveDown(0.06);
+}
+
+function roleHeader(doc, titleText, organizationText, dateText) {
+  ensureRoom(doc, 18);
+  doc.moveDown(0.15);
   const y = doc.y;
 
-  // Measure the date string at its own font/size so we can carve out
-  // a right-aligned column for it. Without this, a long title wraps
-  // into the date's x position and they collide on screen.
-  doc.font(FONT_REG).fontSize(9);
-  const datesWidth = doc.widthOfString(dates);
+  doc.font(FONT_BOLD).fontSize(9.5).fillColor(COLOR_BODY);
+  doc.text(titleText, MARGIN, y, { continued: true, width: CONTENT_WIDTH });
+  doc.font(FONT_ITAL).text(`  —  ${organizationText}`, { continued: false });
 
-  // Draw the dates first so they sit at the original y. They use
-  // lineBreak: false so they don't advance the cursor.
-  doc.fillColor(COLOR_MUTED).text(dates, A4.width - MARGIN - datesWidth, y, {
-    width: datesWidth + 2,
+  doc.font(FONT_REG).fontSize(9).fillColor(COLOR_MUTED);
+  const datesWidth = doc.widthOfString(dateText);
+  doc.text(dateText, A4.width - MARGIN - datesWidth, y, {
+    width: datesWidth,
+    align: "right",
     lineBreak: false,
   });
 
-  // Title + organisation gets a constrained left zone so it can wrap
-  // without crashing into the date column.
-  const padding = 16;
-  const leftWidth = CONTENT_WIDTH - datesWidth - padding;
-
-  doc.font(FONT_BOLD).fontSize(10).fillColor(COLOR_BODY);
-  doc.text(title, MARGIN, y, { continued: true, width: leftWidth });
-  doc.font(FONT_ITAL).text(`  —  ${organization}`, {
-    continued: false,
-    width: leftWidth,
-  });
-
   doc.fillColor(COLOR_BODY);
-  doc.x = MARGIN;
-  doc.moveDown(0.1);
+  doc.moveDown(0.05);
 }
 
-function inlineLink(doc, label, href) {
+function inlineLink(label, href) {
   return { text: label, link: href, color: COLOR_LINK };
 }
 
-// Draw a single centered line composed of segments. Each segment can carry
-// its own colour and hyperlink. We position every segment with an explicit
-// x so center alignment and inline links coexist (pdfkit's continued+center
-// flow gets them stacked at the same x otherwise).
+// Centered line with mixed segments, used by the header so inline links
+// and a centered alignment can coexist (pdfkit's continued+center stacks
+// segments at the same x otherwise).
 function centeredLine(doc, segments, opts = {}) {
   const size = opts.size ?? 9;
   doc.fontSize(size).font(opts.font ?? FONT_REG);
@@ -208,85 +176,61 @@ function centeredLine(doc, segments, opts = {}) {
 
   doc.fillColor(COLOR_BODY);
   doc.x = MARGIN;
-  doc.y = y + doc.currentLineHeight() + (opts.after ?? 4);
+  doc.y = y + doc.currentLineHeight() + (opts.after ?? 3);
 }
 
-// ---------- content (mirror of generate-cv.mjs) ----------
+// ---------- content ----------
 
 function renderHeader(doc) {
-  // Name
   doc.x = MARGIN;
   doc.y = MARGIN;
   doc
     .font(FONT_BOLD)
-    .fontSize(22)
+    .fontSize(20)
     .fillColor(COLOR_BODY)
-    .text("Mustafa Aksu", MARGIN, MARGIN, {
+    .text("MUSTAFA AKSU", MARGIN, MARGIN, {
       width: CONTENT_WIDTH,
       align: "center",
+      characterSpacing: 1.5,
     });
-  doc.moveDown(0.1);
+  doc.moveDown(0.15);
 
-  // Role subtitle
   doc
     .font(FONT_REG)
-    .fontSize(12)
+    .fontSize(11)
     .fillColor(COLOR_MUTED)
-    .text("Salesforce Developer", MARGIN, doc.y, {
+    .text("Salesforce Developer  ·  Revenue Cloud  ·  Industries CPQ", MARGIN, doc.y, {
       width: CONTENT_WIDTH,
       align: "center",
     });
-  doc.moveDown(0.55);
+  doc.moveDown(0.45);
 
-  // Contact line 1 — location + availability
   centeredLine(
     doc,
-    [{ text: "Nigeria  ·  Targeting EU & DACH  ·  Visa sponsorship — or freelance" }],
+    [{ text: "Nigeria  ·  Open to relocation — Germany / DACH" }],
     { size: 9, after: 2 },
   );
 
-  // Contact line 2 — email + site (clickable)
   centeredLine(
     doc,
     [
-      {
-        text: "mustafa.aksu@mustafaaksu.dev",
-        link: "mailto:mustafa.aksu@mustafaaksu.dev",
-        color: COLOR_LINK,
-      },
+      inlineLink(
+        "mustafa.aksu@mustafaaksu.dev",
+        "mailto:mustafa.aksu@mustafaaksu.dev",
+      ),
       { text: "  ·  " },
-      {
-        text: "mustafaaksu.dev",
-        link: "https://mustafaaksu.dev",
-        color: COLOR_LINK,
-      },
+      inlineLink("mustafaaksu.dev", "https://mustafaaksu.dev"),
+      { text: "  ·  " },
+      inlineLink("LinkedIn", "https://www.linkedin.com/in/aksumustafa16/"),
+      { text: "  ·  " },
+      inlineLink("GitHub", "https://github.com/aksumustafa1625"),
+      { text: "  ·  " },
+      inlineLink(
+        "Trailhead (Five Star Ranger)",
+        "https://www.salesforce.com/trailblazer/aksumustafa16",
+      ),
     ],
-    { size: 9, after: 2 },
-  );
-
-  // Contact line 3 — profile links
-  centeredLine(
-    doc,
-    [
-      {
-        text: "LinkedIn",
-        link: "https://www.linkedin.com/in/aksumustafa16/",
-        color: COLOR_LINK,
-      },
-      { text: "    ·    " },
-      {
-        text: "GitHub",
-        link: "https://github.com/aksumustafa1625",
-        color: COLOR_LINK,
-      },
-      { text: "    ·    " },
-      {
-        text: "Trailhead (Five Star Ranger)",
-        link: "https://www.salesforce.com/trailblazer/aksumustafa16",
-        color: COLOR_LINK,
-      },
-    ],
-    { size: 9, after: 10 },
+    { size: 9, after: 6 },
   );
 }
 
@@ -294,106 +238,8 @@ function renderSummary(doc) {
   sectionHeading(doc, "Professional Summary");
   paragraph(
     doc,
-    "Salesforce Developer with seven active certifications across Platform (PD I, PD II, Administrator, App Builder), Industry Solutions (Industries CPQ Developer), Sales Cloud (CPQ Administrator), and Agentforce (Agentforce Specialist). Eight Trailhead Superbadges concentrated in Apex and integration (Advanced Apex, Apex Callouts, Apex Web Services, Inbound Integration Specialist, Named Credentials, Platform Events, Platform API). Five Star Ranger on Trailhead with 518 badges and 258,050 points.",
+    "Salesforce Developer with seven active certifications and eight Trailhead Superbadges, specialising in Apex architecture, async patterns (Queueable, Batch, Schedulable, Platform Events), and end-to-end integrations (MuleSoft, REST/SOAP, SAP S/4HANA). Owns Revenue Cloud (RLM + CLM) and Industries CPQ implementations from declarative design through trigger frameworks, unit testing, and SFDX / GitHub Actions deployment. MSc Computer Software Engineering · bilingual EN/DE portfolio · targeting senior Salesforce roles in the DACH market.",
   );
-  paragraph(
-    doc,
-    "Specialise in Apex architecture, asynchronous patterns (Queueable, Batch, Schedulable, Platform Events), and end-to-end integrations between Salesforce and external systems (MuleSoft, REST/SOAP APIs, payment gateways, e-signature, SAP S/4HANA). Comfortable owning a feature from declarative design through Apex trigger framework, unit tests, and deployment via SFDX and GitHub Actions. Master's degree in Computer Software Engineering. Bilingual portfolio in English and German, targeting the DACH Salesforce market.",
-  );
-}
-
-function renderCertifications(doc) {
-  sectionHeading(doc, "Salesforce Certifications");
-  const certs = [
-    ["Salesforce Certified Industries CPQ Developer", "May 2025"],
-    ["Salesforce Certified Platform App Builder", "April 2025"],
-    ["Salesforce Certified CPQ Administrator", "March 2025"],
-    ["Salesforce Certified Agentforce Specialist", "January 2025"],
-    ["Salesforce Certified Platform Developer II", "December 2024"],
-    ["Salesforce Certified Platform Developer I", "November 2024"],
-    ["Salesforce Certified Administrator", "October 2024"],
-  ];
-  certs.forEach(([name, date]) => {
-    bullet(doc, [
-      { text: name, font: "bold" },
-      { text: ` — ${date}` },
-    ]);
-  });
-  bullet(doc, [
-    { text: "Salesforce Certified AI Associate", font: "bold" },
-    { text: " — December 2024 " },
-    { text: "(retired credential)", font: "italic" },
-  ]);
-}
-
-function renderTrailhead(doc) {
-  sectionHeading(doc, "Trailhead");
-  bullet(doc, [
-    { text: "Profile: ", font: "bold" },
-    inlineLink(
-      doc,
-      "salesforce.com/trailblazer/aksumustafa16",
-      "https://www.salesforce.com/trailblazer/aksumustafa16",
-    ),
-  ]);
-  bullet(doc, [
-    { text: "Rank: ", font: "bold" },
-    { text: "Five Star Ranger (working toward All Star Ranger)" },
-  ]);
-  bullet(doc, [
-    { text: "Badges: ", font: "bold" },
-    { text: "518  ·  Points: 258,050  ·  Trails: 28" },
-  ]);
-  bullet(doc, [
-    { text: "Superbadges (8): ", font: "bold" },
-    {
-      text: "Advanced Apex Specialist, Apex Specialist, Apex Callouts, Apex Web Services, Inbound Integration Specialist, Named Credentials, Platform Events, Platform API",
-    },
-  ]);
-}
-
-function renderSkills(doc) {
-  sectionHeading(doc, "Technical Skills");
-  const groups = [
-    [
-      "Revenue Cloud",
-      "Salesforce CPQ (Admin certified), Industries CPQ (Developer certified), Revenue Lifecycle Management (RLM), Contract Lifecycle Management (CLM), Salesforce Billing (basics), Quote-to-Cash architecture, subscription & usage-based pricing",
-    ],
-    [
-      "Salesforce Platform",
-      "Apex (PD II), Lightning Web Components (LWC), Aura Components, SOQL / SOSL, Flow Builder, Validation Rules, Platform Events, Async Apex (Queueable, Batch, Schedulable), Trigger frameworks (Kevin O'Hara), Visualforce",
-    ],
-    [
-      "Industry & AI",
-      "Agentforce Specialist, Einstein Prompt Templates, ConnectApi.EinsteinLLM",
-    ],
-    [
-      "Integration",
-      "REST APIs, SOAP APIs, Named Credentials, External Services, Platform Events, Webhooks (HMAC-SHA256), MuleSoft Anypoint (intermediate), SAP S/4HANA (active project), OpenAPI 3.0",
-    ],
-    [
-      "Tools",
-      "Salesforce DX (sfdx), VS Code + SF Extensions, Scratch Orgs, Workbench, Data Loader, Postman, Schema Builder",
-    ],
-    [
-      "DevOps",
-      "Git, GitHub, GitHub Actions, CI/CD pipelines, Salesforce DevOps Center (basics), Copado (basics)",
-    ],
-    [
-      "Other",
-      "JavaScript (ES6+), TypeScript (basics), HTML, CSS, Agile / SCRUM, JIRA, OAuth2, JSON, JWT",
-    ],
-    [
-      "Languages",
-      "Turkish (native), English (professional), German (Goethe A2 — in progress)",
-    ],
-  ];
-  groups.forEach(([label, items]) => {
-    bullet(doc, [
-      { text: `${label}: `, font: "bold" },
-      { text: items },
-    ]);
-  });
 }
 
 function renderProjects(doc) {
@@ -407,7 +253,7 @@ function renderProjects(doc) {
   );
   bullet(
     doc,
-    "Built an end-to-end Quote-to-Cash demo for a B2B electronics supplier targeting the DACH market — Revenue Lifecycle Management (RLM) + Contract Lifecycle Management (CLM) + Industries CPQ on the Salesforce side.",
+    "Built end-to-end Quote-to-Cash demo for a B2B electronics supplier targeting DACH — Revenue Lifecycle Management (RLM) + Contract Lifecycle Management (CLM) + Industries CPQ.",
   );
   bullet(
     doc,
@@ -415,7 +261,7 @@ function renderProjects(doc) {
   );
   bullet(
     doc,
-    "Applied the Kevin O'Hara sfdc-trigger-framework across a six-package SFDX layout; achieved full Apex test coverage and published OpenAPI 3.0 specs for inbound webhooks.",
+    "Applied the Kevin O'Hara sfdc-trigger-framework across a six-package SFDX layout; full Apex test coverage; published OpenAPI 3.0 specs for inbound webhooks.",
   );
   bullet(
     doc,
@@ -423,12 +269,11 @@ function renderProjects(doc) {
   );
   bullet(
     doc,
-    "Currently extending the project with SAP S/4HANA integration via MuleSoft (Product Master sync, Order Acknowledgment on activation) and a DATEV integration to round out the DACH back-office story.",
+    "Extending with SAP S/4HANA via MuleSoft (Product Master sync, Order Acknowledgment on activation) and a DATEV integration for the DACH back-office story.",
   );
   bullet(doc, [
     { text: "Repository: ", font: "bold" },
     inlineLink(
-      doc,
       "github.com/aksumustafa1625/TechnoStore",
       "https://github.com/aksumustafa1625/TechnoStore",
     ),
@@ -459,7 +304,6 @@ function renderProjects(doc) {
   bullet(doc, [
     { text: "Repository: ", font: "bold" },
     inlineLink(
-      doc,
       "github.com/aksumustafa1625/urla-shoes",
       "https://github.com/aksumustafa1625/urla-shoes",
     ),
@@ -486,7 +330,6 @@ function renderProjects(doc) {
   bullet(doc, [
     { text: "Repository: ", font: "bold" },
     inlineLink(
-      doc,
       "github.com/aksumustafa1625/VoltStreamMobility",
       "https://github.com/aksumustafa1625/VoltStreamMobility",
     ),
@@ -495,28 +338,99 @@ function renderProjects(doc) {
   roleHeader(
     doc,
     "mustafaaksu.dev — Personal Portfolio Site",
-    "Designer & product owner",
+    "Designer & Product Owner",
     "2026",
   );
   bullet(doc, [
-    { text: "Designed and shipped a bilingual (EN + DE) Salesforce-developer portfolio at " },
-    inlineLink(doc, "mustafaaksu.dev", "https://mustafaaksu.dev"),
+    { text: "Bilingual (EN + DE) Salesforce-developer portfolio at " },
+    inlineLink("mustafaaksu.dev", "https://mustafaaksu.dev"),
     {
-      text: " hosted on Vercel with a GoDaddy custom domain; Lighthouse-perfect, dark-mode, SEO-ready (sitemap, robots, per-locale Open Graph images).",
+      text: " hosted on Vercel; Lighthouse-perfect, dark-mode, SEO-ready (sitemap, robots, per-locale Open Graph images).",
     },
   ]);
   bullet(
     doc,
-    "Content modelled in TypeScript so adding a project, certification, or Trailhead stat is a single object edit — site, sitemap, and a programmatically synced Notion documentation page all update from that source.",
+    "Content modelled in TypeScript so adding a project, certification, or Trailhead stat is a single object edit — site, sitemap, and a synced Notion documentation page all update from that source.",
   );
   bullet(doc, [
     { text: "Repository: ", font: "bold" },
     inlineLink(
-      doc,
       "github.com/aksumustafa1625/mustafaaksu-portfolio",
       "https://github.com/aksumustafa1625/mustafaaksu-portfolio",
     ),
   ]);
+}
+
+function renderSkills(doc) {
+  sectionHeading(doc, "Technical Skills");
+  labeledLine(
+    doc,
+    "Revenue Cloud",
+    "Salesforce CPQ (Admin), Industries CPQ (Developer), Revenue Lifecycle Management (RLM), Contract Lifecycle Management (CLM), Salesforce Billing, Quote-to-Cash architecture, subscription & usage-based pricing",
+  );
+  labeledLine(
+    doc,
+    "Salesforce Platform",
+    "Apex (PD II), Lightning Web Components (LWC), Aura, SOQL / SOSL, Flow Builder, Validation Rules, Platform Events, Async Apex (Queueable, Batch, Schedulable), Trigger frameworks (Kevin O'Hara), Visualforce",
+  );
+  labeledLine(
+    doc,
+    "Industry & AI",
+    "Agentforce Specialist, Einstein Prompt Templates, ConnectApi.EinsteinLLM",
+  );
+  labeledLine(
+    doc,
+    "Integration",
+    "REST APIs, SOAP APIs, Named Credentials, External Services, Platform Events, Webhooks (HMAC-SHA256), MuleSoft Anypoint, SAP S/4HANA, OpenAPI 3.0",
+  );
+  labeledLine(
+    doc,
+    "DevOps & Tools",
+    "Salesforce DX (sfdx), VS Code + SF Extensions, Scratch Orgs, Workbench, Data Loader, Postman, Git, GitHub Actions, CI/CD pipelines, Salesforce DevOps Center, Copado (basics)",
+  );
+  labeledLine(
+    doc,
+    "Other",
+    "JavaScript (ES6+), TypeScript, HTML, CSS, Agile / SCRUM, JIRA, OAuth2, JSON, JWT",
+  );
+  labeledLine(
+    doc,
+    "Languages",
+    "Turkish (native), English (professional), German (Goethe A2 — in progress)",
+  );
+}
+
+function renderCertifications(doc) {
+  sectionHeading(doc, "Salesforce Certifications");
+  labeledLine(
+    doc,
+    "Platform",
+    "Administrator (Oct 2024), Platform App Builder (Apr 2025), Platform Developer I (Nov 2024), Platform Developer II (Dec 2024)",
+  );
+  labeledLine(
+    doc,
+    "Industry & Revenue",
+    "Industries CPQ Developer (May 2025), CPQ Administrator (Mar 2025)",
+  );
+  labeledLine(doc, "AI", "Agentforce Specialist (Jan 2025)");
+}
+
+function renderTrailhead(doc) {
+  sectionHeading(doc, "Trailhead");
+  ensureRoom(doc, 16);
+  doc.font(FONT_REG).fontSize(9).fillColor(COLOR_BODY);
+  doc.text("", MARGIN, doc.y, { continued: true });
+  doc.font(FONT_BOLD).text("Five Star Ranger", { continued: true });
+  doc.font(FONT_REG).text(
+    "  ·  518 badges  ·  258K points  ·  8 Superbadges (Advanced Apex, Apex Specialist, Apex Callouts, Apex Web Services, Inbound Integration, Named Credentials, Platform Events, Platform API)  ·  ",
+    { continued: true, width: CONTENT_WIDTH, lineGap: 1.5 },
+  );
+  doc.fillColor(COLOR_LINK).text("@aksumustafa16", {
+    link: "https://www.salesforce.com/trailblazer/aksumustafa16",
+    underline: true,
+  });
+  doc.fillColor(COLOR_BODY);
+  doc.moveDown(0.1);
 }
 
 function renderEducation(doc) {
@@ -524,25 +438,13 @@ function renderEducation(doc) {
 
   roleHeader(
     doc,
-    "Master of Science in Computer Software Engineering",
-    "North American University (NAU)",
+    "MSc Computer Software Engineering",
+    "North American University",
     "Jan 2021 — May 2023",
   );
-  bullet(
+  paragraph(
     doc,
-    "Capstone: cloud-based SaaS subscription-billing application with JWT authentication, dynamic pricing modules, and Hibernate ORM persistence.",
-  );
-  bullet(
-    doc,
-    "Coursework: distributed systems, software architecture, database optimization (indexing, normalization, query tuning), NoSQL fundamentals, API security (OAuth2, rate limiting), TDD / BDD methodologies.",
-  );
-  bullet(
-    doc,
-    "Practiced Agile / SCRUM in bi-weekly sprints; led sprint planning, conducted code reviews, used Jira / Trello / Git / GitHub for distributed version control.",
-  );
-  bullet(
-    doc,
-    "Implemented CI/CD pipelines with Jenkins and GitHub Actions, automated tests (JUnit, TestNG), and Docker containerization.",
+    "Capstone: cloud-based SaaS subscription-billing application with JWT authentication, dynamic pricing modules, and Hibernate ORM persistence. Coursework: distributed systems, software architecture, database optimization, NoSQL fundamentals, API security (OAuth2), TDD/BDD. CI/CD with Jenkins and GitHub Actions; JUnit/TestNG; Docker containerization.",
   );
 
   roleHeader(
@@ -551,54 +453,24 @@ function renderEducation(doc) {
     "Vistula University",
     "Jun 2019 — May 2020",
   );
-  bullet(
+  paragraph(
     doc,
-    "Advanced system architecture, software development, and data management — fully online international program, completed with strong self-discipline and remote-team collaboration habits.",
+    "Advanced system architecture, software development, and data management; fully online international program.",
   );
 
   roleHeader(
     doc,
-    "Bachelor of Education (BEd) — Turkish Language and Literature",
+    "Bachelor of Education — Turkish Language and Literature",
     "Balıkesir University",
     "Sep 1996 — Jun 2000",
-  );
-  bullet(
-    doc,
-    "Served as MC for the graduation ceremony; foundation in structured communication and presentation that transfers directly to technical demos and stakeholder briefings.",
   );
 }
 
 function renderEarlierCareer(doc) {
   sectionHeading(doc, "Earlier Career");
-
-  roleHeader(
+  paragraph(
     doc,
-    "High School Counselor",
-    "Nigerian Tulip International Colleges (NTIC) · Nigeria · On-site",
-    "Sep 2014 — Jun 2020",
-  );
-  bullet(
-    doc,
-    "Guided a multicultural student body in an international school context; coordinated academic planning, mentoring, and personal-development programs.",
-  );
-  bullet(
-    doc,
-    "Developed strong cross-cultural communication and stakeholder-management skills that translate directly to consulting-style work with global Salesforce teams.",
-  );
-
-  roleHeader(
-    doc,
-    "Turkish Language Teacher",
-    "Sevgi Çiçeği Anafen Dershanesi · Türkiye · On-site",
-    "Sep 2000 — Aug 2014",
-  );
-  bullet(
-    doc,
-    "Designed and delivered language curriculum to high-school students over 14 years at the same institution; sustained, results-oriented training programs.",
-  );
-  bullet(
-    doc,
-    "Honed structured presentation, mentoring, and explanation skills — directly applicable to demoing Salesforce solutions, training admin users, and communicating with non-technical stakeholders.",
+    "2000 – 2020: Educator and counselor roles at Sevgi Çiçeği Anafen Dershanesi (Türkiye) and Nigerian Tulip International Colleges (Nigeria) — foundation for structured communication, mentoring, and cross-cultural stakeholder management.",
   );
 }
 
@@ -619,26 +491,15 @@ const doc = new PDFDocument({
   },
 });
 
-// Register Unicode-capable TTFs so Turkish characters render correctly.
-for (const [name, fontPath] of Object.entries(FONT_PATHS)) {
-  if (!fs.existsSync(fontPath)) {
-    throw new Error(
-      `Font file not found at ${fontPath}. ` +
-        `Edit FONT_PATHS in scripts/generate-cv-pdf.mjs for your platform.`,
-    );
-  }
-  doc.registerFont(name, fontPath);
-}
-
 const stream = fs.createWriteStream(outPath);
 doc.pipe(stream);
 
 renderHeader(doc);
 renderSummary(doc);
+renderProjects(doc);
+renderSkills(doc);
 renderCertifications(doc);
 renderTrailhead(doc);
-renderSkills(doc);
-renderProjects(doc);
 renderEducation(doc);
 renderEarlierCareer(doc);
 
