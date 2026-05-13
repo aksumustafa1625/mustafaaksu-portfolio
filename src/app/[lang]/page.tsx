@@ -1,4 +1,5 @@
 import { ArrowRight, Award, Mail, Sparkles } from "lucide-react";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ButtonLink } from "@/components/ui/button";
 import { GithubIcon, LinkedinIcon } from "@/components/icons";
@@ -26,7 +27,17 @@ export default async function HomePage(props: PageProps<"/[lang]">) {
           </div>
         </FadeIn>
         <FadeIn delay={0.1}>
-          <p className="mt-6 text-sm text-muted">{dict.home.greeting}</p>
+          <div className="mt-6 flex items-center gap-3">
+            <Image
+              src="/profile.jpg"
+              alt="Mustafa Aksu"
+              width={56}
+              height={56}
+              priority
+              className="h-14 w-14 rounded-full object-cover ring-1 ring-border"
+            />
+            <p className="text-sm text-muted">{dict.home.greeting}</p>
+          </div>
         </FadeIn>
         <FadeIn delay={0.2}>
           <h1 className="mt-2 max-w-3xl text-4xl font-semibold tracking-tight text-foreground sm:text-5xl md:text-6xl">

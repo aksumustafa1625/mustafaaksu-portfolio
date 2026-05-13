@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Download } from "lucide-react";
 import { ButtonLink } from "@/components/ui/button";
@@ -26,11 +27,25 @@ export default async function AboutPage(props: PageProps<"/[lang]/about">) {
           {dict.about.title}
         </p>
       </FadeIn>
-      <FadeIn delay={0.1}>
-        <h1 className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl">
-          {dict.about.lead}
-        </h1>
-      </FadeIn>
+
+      <div className="mt-6 flex flex-col gap-6 sm:flex-row sm:items-start sm:gap-8">
+        <FadeIn delay={0.1}>
+          <Image
+            src="/profile.jpg"
+            alt="Mustafa Aksu"
+            width={160}
+            height={160}
+            priority
+            className="h-32 w-32 flex-shrink-0 rounded-2xl object-cover ring-1 ring-border sm:h-40 sm:w-40"
+          />
+        </FadeIn>
+        <FadeIn delay={0.15}>
+          <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+            {dict.about.lead}
+          </h1>
+        </FadeIn>
+      </div>
+
       <FadeIn delay={0.2}>
         <div className="mt-8 space-y-5 text-base leading-relaxed text-foreground/80">
           {dict.about.body.map((para, idx) => (
