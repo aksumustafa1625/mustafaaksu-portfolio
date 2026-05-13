@@ -34,7 +34,7 @@ export default async function HomePage(props: PageProps<"/[lang]">) {
               width={56}
               height={56}
               priority
-              className="h-14 w-14 rounded-full object-cover ring-1 ring-border"
+              className="h-14 w-14 rounded-full object-cover object-[center_top] ring-1 ring-border"
             />
             <p className="text-sm text-muted">{dict.home.greeting}</p>
           </div>
