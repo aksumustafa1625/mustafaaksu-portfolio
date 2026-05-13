@@ -323,7 +323,7 @@ const earlierCareer = [
   sectionHeading("Earlier Career"),
   p([
     t(
-      "2000 – 2020: Educator and counselor roles at Sevgi Çiçeği Anafen Dershanesi (Türkiye) and Nigerian Tulip International Colleges (Nigeria) — foundation for structured communication, mentoring, and cross-cultural stakeholder management.",
+      "2000 – 2020: Educator and ultimately Principal at Sevgi Çiçeği Anafen Dershanesi (Türkiye, 2000 – 2014), then Counselor at Nigerian Tulip International Colleges (Nigeria, 2014 – 2020) — foundation for leadership, structured communication, mentoring, and cross-cultural stakeholder management.",
     ),
   ]),
 ];
