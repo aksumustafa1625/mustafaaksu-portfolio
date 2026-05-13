@@ -117,7 +117,7 @@ const blocks = [
   h2("TL;DR"),
   p(
     rt(
-      "Personal portfolio site for Mustafa Aksu — Salesforce Developer with 10 active certifications, 8 superbadges, and Five Star Ranger on Trailhead. Bilingual (EN + DE), targeted at the DACH Salesforce market. Three real case studies featured: TechnoStore (Revenue Cloud + MuleSoft Quote-to-Cash), VoltStream Mobility (channel attribution with Apex trigger framework), Urla Shoes (async-callout reference).",
+      "Personal portfolio site for Mustafa Aksu — Salesforce Developer with seven active certifications, eight Superbadges, and Five Star Ranger on Trailhead. Bilingual (EN + DE), targeted at the DACH Salesforce market. Three real case studies featured: TechnoStore (Revenue Cloud + MuleSoft Quote-to-Cash), VoltStream Mobility (channel attribution with Apex trigger framework), Urla Shoes (Google Maps + OpenWeather + Einstein route safety).",
     ),
   ),
 
@@ -153,8 +153,8 @@ const blocks = [
 
   h2("Credentials snapshot"),
   bullet([
-    rt("10 Salesforce certifications", { bold: true }),
-    rt(" — PD I, PD II, Administrator, Platform App Builder, CPQ Admin, OmniStudio Developer, OmniStudio Consultant, Industries CPQ Developer, Agentforce Specialist + AI Associate (retired)."),
+    rt("Eight Salesforce certifications", { bold: true }),
+    rt(" — seven active: PD I, PD II, Administrator, Platform App Builder, CPQ Administrator, Industries CPQ Developer, Agentforce Specialist; plus AI Associate (retired)."),
   ]),
   bullet([
     rt("8 Superbadges", { bold: true }),
@@ -356,13 +356,19 @@ const blocks = [
 // ---------- Sync logic ----------
 
 async function clearExistingChildren() {
-  const children = await notion("GET", `/blocks/${PAGE_ID}/children?page_size=100`);
-  for (const block of children.results) {
-    await notion("DELETE", `/blocks/${block.id}`);
-    await sleep(80); // gentle rate limiting
-  }
-  if (children.has_more) {
-    console.warn("More than 100 existing children; consider re-running to clean fully.");
+  // Notion's children endpoint pages at 100. After we delete a page worth,
+  // re-fetch the new "first 100" rather than chasing cursors that may have
+  // become invalid mid-deletion. Loop until the page is empty.
+  while (true) {
+    const children = await notion(
+      "GET",
+      `/blocks/${PAGE_ID}/children?page_size=100`,
+    );
+    if (children.results.length === 0) break;
+    for (const block of children.results) {
+      await notion("DELETE", `/blocks/${block.id}`);
+      await sleep(80); // gentle rate limiting
+    }
   }
 }
 

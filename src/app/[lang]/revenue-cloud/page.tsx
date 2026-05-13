@@ -29,6 +29,7 @@ export async function generateMetadata(
 const REVENUE_CLOUD_CERT_CATEGORIES = new Set([
   "Industry Solutions",
   "Sales Cloud",
+  "Platform",
 ]);
 
 export default async function RevenueCloudPage(

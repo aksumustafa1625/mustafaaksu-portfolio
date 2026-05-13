@@ -125,7 +125,7 @@ const summary = [
   sectionHeading("Professional Summary"),
   p([
     t(
-      "Salesforce Developer with 9 active certifications across Platform (PD I, PD II, Administrator, App Builder), Industry Solutions (OmniStudio Developer + Consultant, Industries CPQ), Sales Cloud (CPQ Admin), and Agentforce. Eight Trailhead Superbadges concentrated in Apex and integration (Advanced Apex, Apex Callouts, Apex Web Services, Inbound Integration Specialist, Named Credentials, Platform Events, Platform API). Five Star Ranger on Trailhead with 518 badges and 258,050 points.",
+      "Salesforce Developer with seven active certifications across Platform (PD I, PD II, Administrator, App Builder), Industry Solutions (Industries CPQ Developer), Sales Cloud (CPQ Administrator), and Agentforce (Agentforce Specialist). Eight Trailhead Superbadges concentrated in Apex and integration (Advanced Apex, Apex Callouts, Apex Web Services, Inbound Integration Specialist, Named Credentials, Platform Events, Platform API). Five Star Ranger on Trailhead with 518 badges and 258,050 points.",
     ),
   ]),
   p([
@@ -137,8 +137,6 @@ const summary = [
 
 const certifications = [
   sectionHeading("Salesforce Certifications"),
-  bullet([t("Salesforce Certified OmniStudio Developer", { bold: true }), t(" — June 2025")]),
-  bullet([t("Salesforce Certified OmniStudio Consultant", { bold: true }), t(" — June 2025")]),
   bullet([t("Salesforce Certified Industries CPQ Developer", { bold: true }), t(" — May 2025")]),
   bullet([t("Salesforce Certified Platform App Builder", { bold: true }), t(" — April 2025")]),
   bullet([t("Salesforce Certified CPQ Administrator", { bold: true }), t(" — March 2025")]),
@@ -171,7 +169,7 @@ const skills = [
   ]),
   bullet([
     t("Industry Solutions: ", { bold: true }),
-    t("OmniStudio (Developer + Consultant), Industries CPQ, Salesforce CPQ, Agentforce"),
+    t("Industries CPQ, Salesforce CPQ, Agentforce, Einstein Prompt Templates"),
   ]),
   bullet([
     t("Integration: ", { bold: true }),

@@ -13,20 +13,6 @@ export type Certification = {
 
 export const certifications: Certification[] = [
   {
-    name: "Salesforce Certified OmniStudio Developer",
-    category: "Industry Solutions",
-    issuedMonth: "Jun",
-    issuedYear: 2025,
-    status: "active",
-  },
-  {
-    name: "Salesforce Certified OmniStudio Consultant",
-    category: "Industry Solutions",
-    issuedMonth: "Jun",
-    issuedYear: 2025,
-    status: "active",
-  },
-  {
     name: "Salesforce Certified Industries CPQ Developer",
     category: "Industry Solutions",
     issuedMonth: "May",

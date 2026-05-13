@@ -31,8 +31,6 @@ export const skills: Record<SkillCategory, string[]> = {
     "Visualforce",
   ],
   industry: [
-    "OmniStudio Developer (certified)",
-    "OmniStudio Consultant (certified)",
     "Agentforce Specialist (certified)",
     "Einstein Prompt Templates",
     "ConnectApi.EinsteinLLM",

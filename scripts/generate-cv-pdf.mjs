@@ -294,7 +294,7 @@ function renderSummary(doc) {
   sectionHeading(doc, "Professional Summary");
   paragraph(
     doc,
-    "Salesforce Developer with 9 active certifications across Platform (PD I, PD II, Administrator, App Builder), Industry Solutions (OmniStudio Developer + Consultant, Industries CPQ), Sales Cloud (CPQ Admin), and Agentforce. Eight Trailhead Superbadges concentrated in Apex and integration (Advanced Apex, Apex Callouts, Apex Web Services, Inbound Integration Specialist, Named Credentials, Platform Events, Platform API). Five Star Ranger on Trailhead with 518 badges and 258,050 points.",
+    "Salesforce Developer with seven active certifications across Platform (PD I, PD II, Administrator, App Builder), Industry Solutions (Industries CPQ Developer), Sales Cloud (CPQ Administrator), and Agentforce (Agentforce Specialist). Eight Trailhead Superbadges concentrated in Apex and integration (Advanced Apex, Apex Callouts, Apex Web Services, Inbound Integration Specialist, Named Credentials, Platform Events, Platform API). Five Star Ranger on Trailhead with 518 badges and 258,050 points.",
   );
   paragraph(
     doc,
@@ -305,8 +305,6 @@ function renderSummary(doc) {
 function renderCertifications(doc) {
   sectionHeading(doc, "Salesforce Certifications");
   const certs = [
-    ["Salesforce Certified OmniStudio Developer", "June 2025"],
-    ["Salesforce Certified OmniStudio Consultant", "June 2025"],
     ["Salesforce Certified Industries CPQ Developer", "May 2025"],
     ["Salesforce Certified Platform App Builder", "April 2025"],
     ["Salesforce Certified CPQ Administrator", "March 2025"],
@@ -367,7 +365,7 @@ function renderSkills(doc) {
     ],
     [
       "Industry & AI",
-      "OmniStudio (Developer + Consultant), Agentforce Specialist, Einstein Prompt Templates, ConnectApi.EinsteinLLM",
+      "Agentforce Specialist, Einstein Prompt Templates, ConnectApi.EinsteinLLM",
     ],
     [
       "Integration",
@@ -617,7 +615,7 @@ const doc = new PDFDocument({
     Author: "Mustafa Aksu",
     Subject: "Salesforce Developer / Revenue Cloud — CV",
     Keywords:
-      "Salesforce, Apex, LWC, Revenue Cloud, CPQ, MuleSoft, Quote-to-Cash, DACH, OmniStudio, Agentforce",
+      "Salesforce, Apex, LWC, Revenue Cloud, CPQ, Industries CPQ, MuleSoft, Quote-to-Cash, DACH, Agentforce",
   },
 });
 

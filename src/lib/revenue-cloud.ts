@@ -79,20 +79,6 @@ export const capabilities: Capability[] = [
       },
     },
   },
-  {
-    id: "omnistudio",
-    cert: "OmniStudio Developer + Consultant certified",
-    translations: {
-      en: {
-        title: "OmniStudio",
-        body: "DataRaptors, Integration Procedures, OmniScripts, and FlexCards — the OmniStudio surface that sits on top of Industries CPQ for guided sales and partner experiences.",
-      },
-      de: {
-        title: "OmniStudio",
-        body: "DataRaptors, Integration Procedures, OmniScripts und FlexCards — die OmniStudio-Oberfläche auf Industries CPQ für Guided Sales und Partner Experiences.",
-      },
-    },
-  },
 ];
 
 export const lifecycle: LifecycleStage[] = [
