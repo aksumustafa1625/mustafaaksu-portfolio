@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
@@ -166,8 +167,18 @@ export default async function RevenueCloudPage(
           {relevantCerts.map((cert, idx) => (
             <li key={cert.name}>
               <FadeIn delay={0.1 + idx * 0.04}>
-                <div className="flex items-start gap-3 rounded-xl border border-border bg-muted-bg/20 p-4">
-                  <Award className="mt-0.5 h-4 w-4 flex-shrink-0 text-accent" />
+                <div className="flex items-center gap-3 rounded-xl border border-border bg-muted-bg/20 p-4">
+                  {cert.badgeImage ? (
+                    <Image
+                      src={cert.badgeImage}
+                      alt={`${cert.name} badge`}
+                      width={48}
+                      height={48}
+                      className="h-12 w-12 flex-shrink-0"
+                    />
+                  ) : (
+                    <Award className="h-4 w-4 flex-shrink-0 text-accent" />
+                  )}
                   <div className="min-w-0">
                     <p className="text-sm font-medium text-foreground">
                       {cert.name}

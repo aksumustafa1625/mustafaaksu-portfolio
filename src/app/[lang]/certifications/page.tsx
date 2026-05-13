@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Award, ExternalLink, Sparkles } from "lucide-react";
 import { ButtonLink } from "@/components/ui/button";
@@ -68,9 +69,19 @@ export default async function CertificationsPage(
           <li key={cert.name}>
             <FadeIn delay={0.2 + idx * 0.04}>
               <div className="flex items-start gap-4 rounded-2xl border border-border bg-muted-bg/30 p-5">
-                <div className="rounded-xl bg-background p-2.5 text-accent flex-shrink-0">
-                  <Award className="h-5 w-5" />
-                </div>
+                {cert.badgeImage ? (
+                  <Image
+                    src={cert.badgeImage}
+                    alt={`${cert.name} badge`}
+                    width={72}
+                    height={72}
+                    className="h-16 w-16 flex-shrink-0 sm:h-20 sm:w-20"
+                  />
+                ) : (
+                  <div className="rounded-xl bg-background p-2.5 text-accent flex-shrink-0">
+                    <Award className="h-5 w-5" />
+                  </div>
+                )}
                 <div className="min-w-0 flex-1">
                   <p className="text-xs uppercase tracking-wider text-muted">
                     {cert.category}

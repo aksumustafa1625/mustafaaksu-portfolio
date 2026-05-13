@@ -9,6 +9,7 @@ export type Certification = {
   issuedMonth: string;
   issuedYear: number;
   status: "active" | "preparing" | "retired";
+  badgeImage?: string;
 };
 
 export const certifications: Certification[] = [
@@ -18,6 +19,7 @@ export const certifications: Certification[] = [
     issuedMonth: "May",
     issuedYear: 2025,
     status: "active",
+    badgeImage: "/badges/cert-industries-cpq-developer.png",
   },
   {
     name: "Salesforce Certified Platform App Builder",
@@ -25,6 +27,7 @@ export const certifications: Certification[] = [
     issuedMonth: "Apr",
     issuedYear: 2025,
     status: "active",
+    badgeImage: "/badges/cert-platform-app-builder.png",
   },
   {
     name: "Salesforce Certified CPQ Administrator",
@@ -32,6 +35,7 @@ export const certifications: Certification[] = [
     issuedMonth: "Mar",
     issuedYear: 2025,
     status: "active",
+    badgeImage: "/badges/cert-cpq-administrator.png",
   },
   {
     name: "Salesforce Certified Agentforce Specialist",
@@ -39,6 +43,7 @@ export const certifications: Certification[] = [
     issuedMonth: "Jan",
     issuedYear: 2025,
     status: "active",
+    badgeImage: "/badges/cert-agentforce-specialist.png",
   },
   {
     name: "Salesforce Certified Platform Developer II",
@@ -46,6 +51,7 @@ export const certifications: Certification[] = [
     issuedMonth: "Dec",
     issuedYear: 2024,
     status: "active",
+    badgeImage: "/badges/cert-platform-developer-ii.png",
   },
   {
     name: "Salesforce Certified Platform Developer I",
@@ -53,6 +59,7 @@ export const certifications: Certification[] = [
     issuedMonth: "Nov",
     issuedYear: 2024,
     status: "active",
+    badgeImage: "/badges/cert-platform-developer-i.png",
   },
   {
     name: "Salesforce Certified Administrator",
@@ -60,6 +67,7 @@ export const certifications: Certification[] = [
     issuedMonth: "Oct",
     issuedYear: 2024,
     status: "active",
+    badgeImage: "/badges/cert-administrator.png",
   },
   {
     name: "Salesforce Certified AI Associate",
