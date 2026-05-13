@@ -112,35 +112,43 @@ export const projects: Project[] = [
     year: 2024,
     role: "Salesforce Developer",
     tech: [
-      "Apex (Queueable)",
+      "Apex (Queueable, Schedulable)",
       "Lightning Web Components",
       "Visualforce (bridge)",
       "Salesforce Einstein",
       "Prompt Templates",
       "ConnectApi.EinsteinLLM",
-      "Named Credentials",
+      "Trigger Framework (Kevin O'Hara)",
+      "Custom Settings (hierarchical)",
+      "Platform Events",
+      "Custom Objects",
+      "HttpCalloutMock",
       "Remote Site Settings",
     ],
     integrations: [
-      { name: "Google Maps Directions", href: "https://developers.google.com/maps", note: "Route geometry via VF + postMessage" },
-      { name: "OpenWeatherMap", href: "https://openweathermap.org", note: "5-waypoint parallel forecast" },
-      { name: "Salesforce Einstein (GPT-4o mini)", href: "https://www.salesforce.com/products/artificial-intelligence/einstein/", note: "Prompt Template safety assessment" },
-      { name: "Nationalize.io", href: "https://nationalize.io", note: "Contact country prediction (secondary feature)" },
+      { name: "Google Maps Directions", href: "https://developers.google.com/maps", note: "Route geometry via VF iframe + postMessage; key from Custom Setting" },
+      { name: "OpenWeatherMap", href: "https://openweathermap.org", note: "5-waypoint parallel forecast; key from Custom Setting" },
+      { name: "Salesforce Einstein (GPT-4o mini)", href: "https://www.salesforce.com/products/artificial-intelligence/einstein/", note: "Prompt Template safety assessment via ConnectApi.EinsteinLLM" },
+      { name: "Nationalize.io", href: "https://nationalize.io", note: "Contact country prediction on insert (Queueable + 6-scenario mock)" },
     ],
     highlights: {
       en: [
-        "Three external APIs composed in a single user flow",
-        "Five-waypoint parallel weather fetch via Promise.all",
-        "GPT-4o mini reasoning via Einstein Prompt Template — output coloured red/amber/green by keyword classifier",
-        "postMessage bridge between LWC and Visualforce to bypass Lightning Web Security for Google Maps",
-        "Queueable Apex with full HttpCalloutMock test coverage on the secondary nationalization feature",
+        "Route Safety LWC — Google Maps + 5-waypoint parallel OpenWeather + Einstein Prompt Template AI verdict in one screen",
+        "Contact Enrichment Queueable — Nationalize.io with HttpCalloutMock across 6 scenarios (success, empty, HTTP 500, missing FirstName, bulk-10, parser test)",
+        "Lead Queue Routing — scheduled batch + Lead_Shift_Event__e Platform Event + LWC dashboard for shift-based distribution",
+        "Loan Sync Pipeline — Loan__c + Loan_Sync_Log__c custom objects + Opportunity-triggered sync + retry scheduler with audit logging",
+        "Reseller Matching Engine — multi-criteria scoring + Opportunity trigger + LWC tier badge",
+        "Platform foundations — extensible Kevin O'Hara TriggerHandler framework, round-robin task assignment, SLA expiry automation",
+        "Senior pattern: API keys served from API_Config__c Custom Setting via ApiKeyService Apex helper — no secrets in source",
       ],
       de: [
-        "Drei externe APIs in einem einzigen User-Flow komponiert",
-        "Wetterabfrage für fünf Wegpunkte parallel via Promise.all",
-        "GPT-4o-mini-Reasoning via Einstein Prompt Template — Output rot/gelb/grün eingefärbt per Schlagwort-Klassifizierer",
-        "postMessage-Brücke zwischen LWC und Visualforce, um Lightning Web Security für Google Maps zu umgehen",
-        "Queueable Apex mit voller HttpCalloutMock-Testabdeckung für das sekundäre Nationalize-Feature",
+        "Route-Safety-LWC — Google Maps + parallele 5-Wegpunkt-OpenWeather + Einstein-Prompt-Template-KI-Urteil auf einem Screen",
+        "Contact-Enrichment-Queueable — Nationalize.io mit HttpCalloutMock über 6 Szenarien (Erfolg, leer, HTTP 500, fehlender FirstName, Bulk-10, Parser-Test)",
+        "Lead-Queue-Routing — scheduled Batch + Lead_Shift_Event__e Platform Event + LWC-Dashboard für schichtbasierte Verteilung",
+        "Loan-Sync-Pipeline — Loan__c + Loan_Sync_Log__c Custom Objects + Opportunity-getriggerter Sync + Retry-Scheduler mit Audit-Logging",
+        "Reseller-Matching-Engine — mehrkriterielles Scoring + Opportunity-Trigger + LWC-Tier-Badge",
+        "Plattform-Foundations — erweiterbares Kevin-O'Hara-TriggerHandler-Framework, Round-Robin-Task-Zuweisung, SLA-Ablauf-Automatisierung",
+        "Senior-Pattern: API-Keys aus API_Config__c Custom Setting via ApiKeyService Apex-Helper — keine Secrets im Code",
       ],
     },
     repoUrl: "https://github.com/aksumustafa1625/urla-shoes",
@@ -148,30 +156,30 @@ export const projects: Project[] = [
     featured: true,
     translations: {
       en: {
-        title: "Urla Shoes — Route safety with Google Maps, OpenWeather, and Salesforce Einstein",
+        title: "Urla Shoes — Multi-feature Salesforce platform sandbox",
         tagline:
-          "A live demo combining three external integrations to plan a route, fetch weather along five waypoints, and let an Einstein Prompt Template (GPT-4o mini) decide whether the journey is safe.",
+          "A multi-feature Salesforce sandbox: route-safety AI composition (Google Maps + OpenWeather + Einstein), Contact enrichment via Nationalize.io, Lead Queue routing with Platform Events, Loan Sync with retry scheduler, a Reseller Matching engine, and a Custom-Setting-backed API key layer that keeps secrets out of source.",
         problem:
-          "Sales reps and field technicians in logistics-heavy industries plan routes on the day. Weather and conditions vary along the path, not just at the destination, and a single 'it's sunny in Frankfurt' check fails when the midpoint is hailing. Combining route geometry, multi-waypoint weather, and a judgement call into a Salesforce-native experience is the kind of multi-system composition that breaks naïve trigger-and-callout patterns.",
+          "I needed a single Salesforce project that demonstrated platform breadth — multiple integration patterns, async Apex flavours, AI integration, custom data models, and the kind of secrets-out-of-source discipline that production orgs require. A single-feature demo wouldn't show how engineering decisions compose across an org.",
         architecture:
-          "The routeWeather LWC is the orchestrator. It hosts a Visualforce page in an iframe (the only way to load Google Maps under Lightning Web Security) and communicates via postMessage: the LWC sends DRAW_ROUTE, the page responds with ROUTE_DONE plus the destination coordinates. The LWC then computes five waypoints (origin, 25 %, midpoint, 75 %, destination) and fires five parallel fetches to OpenWeatherMap via Promise.all. Once weather lands, the LWC POSTs a slim six-field-per-waypoint payload to the Apex RouteWeatherAnalysisService, which formats the data as text and invokes ConnectApi.EinsteinLLM.generateMessagesForPromptTemplate('RouteWeatherAnalysis', input). The GPT-4o mini response is rendered in a colour-coded card based on a keyword classifier (storm / ice / hazard → red; caution / careful → amber; otherwise green).",
+          "The headline feature is the routeWeather LWC — a three-integration composition. It hosts a Visualforce page (RouteMapPage) in an iframe (the only way to load Google Maps under Lightning Web Security) and communicates via postMessage: the LWC sends DRAW_ROUTE, the page responds with ROUTE_DONE plus the destination coordinates. The LWC then computes five waypoints (origin, 25 %, midpoint, 75 %, destination) and fires five parallel fetches to OpenWeatherMap via Promise.all. Once weather lands, the LWC POSTs a slim six-field-per-waypoint payload to the Apex RouteWeatherAnalysisService, which formats the data as text and invokes ConnectApi.EinsteinLLM.generateMessagesForPromptTemplate('RouteWeatherAnalysis', input). The GPT-4o mini response is rendered in a colour-coded card by a keyword classifier (storm/ice/hazard → red; caution/careful → amber; otherwise green). Around that headline sits a Lead Queue routing system (LeadQueueScheduler scheduled batch + Lead_Shift_Event__e Platform Event + leadShiftDashboard LWC), a Loan Sync Pipeline (Loan__c + Loan_Sync_Log__c custom objects with retry scheduler and audit logging), a Reseller Matching Engine (multi-criteria scoring service + Opportunity trigger + resellerTierBadge LWC), and an extensible TriggerHandler framework that every trigger in the org extends.",
         approach:
-          "Three lessons drove the design. First, the LWC stays in charge of the user-facing flow so weather cards render before the AI verdict — graceful degradation if Einstein times out. Second, payloads are minimised: only six fields per waypoint cross the Apex boundary, keeping heap and serialisation cost low. Third, the secondary Nationalize.io feature on Contact insert is intentionally separated into a Queueable with Database.AllowsCallouts — bulk-safe, mocked end-to-end (success, empty array, HTTP 500, missing FirstName, ten-record bulk insert, parser unit test), and chosen over a synchronous trigger callout precisely because the demo is meant to be a reference implementation.",
+          "Three principles run through every feature. First, async by default — every external callout uses Queueable or Schedulable, no synchronous trigger callouts, no governor surprises under load. Second, secrets out of source — both the Google Maps and OpenWeather API keys live in an API_Config__c hierarchical Custom Setting, read at runtime via an ApiKeyService Apex class (instance property for VF, @AuraEnabled cacheable methods for LWC). The Visualforce page renders the Maps key via {!JSENCODE(mapsApiKey)} so it never appears as a literal in source; the LWC awaits getOpenWeatherApiKey() in connectedCallback. ApiKeyServiceTest gives 100 % coverage. Third, every trigger extends the same Kevin O'Hara TriggerHandler base — recursion guards, bypass mechanism, testable logic — so the routing, sync, matching, and contact-enrichment features all behave consistently under bulk load.",
         outcome:
-          "A single screen where a rep types a destination and gets three layers of decision support: the route, the weather along the route, and an AI safety verdict — all running inside Salesforce, all using platform-native AI without leaving the Trust Layer. The same composition pattern transfers directly to fleet management, field service, and delivery scheduling apps the DACH market is full of.",
+          "A reference Salesforce sandbox a recruiter can clone, deploy, paste two API keys into Setup → Custom Settings → API Config → Manage, and watch run end-to-end. Six features across LWC, Apex, Visualforce, custom objects, Platform Events, scheduled batches, and Einstein AI — with the senior-engineering details (key management via Custom Setting, trigger framework, async-by-default, mocked tests) visible in the diff. The same patterns transfer directly to the multi-feature Salesforce orgs that mid-to-large DACH companies actually run.",
       },
       de: {
-        title: "Urla Shoes — Routensicherheit mit Google Maps, OpenWeather und Salesforce Einstein",
+        title: "Urla Shoes — Multifeature Salesforce-Plattform-Sandbox",
         tagline:
-          "Eine Live-Demo, die drei externe Integrationen kombiniert, um eine Route zu planen, das Wetter an fünf Wegpunkten zu holen und einen Einstein Prompt Template (GPT-4o mini) entscheiden zu lassen, ob die Reise sicher ist.",
+          "Ein Multifeature Salesforce-Sandbox: KI-gestützte Routensicherheit (Google Maps + OpenWeather + Einstein), Contact-Enrichment via Nationalize.io, Lead-Queue-Routing mit Platform Events, Loan-Sync mit Retry-Scheduler, eine Reseller-Matching-Engine und ein Custom-Setting-basiertes API-Key-Layer, das Secrets aus dem Code hält.",
         problem:
-          "Vertriebsmitarbeiter und Außendiensttechniker in logistiklastigen Branchen planen Routen tagesaktuell. Wetter und Bedingungen schwanken entlang der Strecke, nicht nur am Ziel — ein simpler 'in Frankfurt scheint die Sonne'-Check versagt, wenn es auf halbem Weg hagelt. Die Komposition aus Routengeometrie, Wegpunkt-Wetter und einer Bewertungs-Empfehlung zu einer Salesforce-nativen Erfahrung ist genau die Mehrsystem-Komposition, an der naive Trigger-und-Callout-Muster scheitern.",
+          "Ich brauchte ein einzelnes Salesforce-Projekt, das Plattform-Breite demonstriert — mehrere Integrations-Patterns, Async-Apex-Varianten, KI-Integration, eigene Datenmodelle und die Secrets-aus-dem-Code-Disziplin, die Produktions-Orgs verlangen. Eine Single-Feature-Demo würde nicht zeigen, wie Engineering-Entscheidungen über eine Org hinweg komponieren.",
         architecture:
-          "Die routeWeather-LWC ist der Orchestrator. Sie hostet eine Visualforce-Seite im iframe (der einzige Weg, Google Maps unter Lightning Web Security zu laden) und kommuniziert via postMessage: Die LWC sendet DRAW_ROUTE, die Seite antwortet mit ROUTE_DONE plus Zielkoordinaten. Die LWC berechnet dann fünf Wegpunkte (Start, 25 %, Mitte, 75 %, Ziel) und feuert fünf parallele Fetches gegen OpenWeatherMap via Promise.all. Sobald das Wetter ankommt, POSTet die LWC ein schlankes Payload mit sechs Feldern pro Wegpunkt an den Apex-Service RouteWeatherAnalysisService, der die Daten als Text formatiert und ConnectApi.EinsteinLLM.generateMessagesForPromptTemplate('RouteWeatherAnalysis', input) aufruft. Die GPT-4o-mini-Antwort wird in einer farbcodierten Karte basierend auf einem Schlagwort-Klassifizierer gerendert (storm / ice / hazard → rot; caution / careful → gelb; sonst grün).",
+          "Das Headline-Feature ist die routeWeather-LWC — eine Drei-Integrations-Komposition. Sie hostet eine Visualforce-Seite (RouteMapPage) im iframe (der einzige Weg, Google Maps unter Lightning Web Security zu laden) und kommuniziert via postMessage: Die LWC sendet DRAW_ROUTE, die Seite antwortet mit ROUTE_DONE plus Zielkoordinaten. Die LWC berechnet dann fünf Wegpunkte (Start, 25 %, Mitte, 75 %, Ziel) und feuert fünf parallele Fetches gegen OpenWeatherMap via Promise.all. Sobald das Wetter ankommt, POSTet die LWC ein schlankes Sechs-Felder-pro-Wegpunkt-Payload an den Apex-Service RouteWeatherAnalysisService, der die Daten als Text formatiert und ConnectApi.EinsteinLLM.generateMessagesForPromptTemplate('RouteWeatherAnalysis', input) aufruft. Die GPT-4o-mini-Antwort wird in einer farbcodierten Karte gerendert per Schlagwort-Klassifizierer (storm/ice/hazard → rot; caution/careful → gelb; sonst grün). Drumherum sitzt ein Lead-Queue-Routing-System (LeadQueueScheduler scheduled Batch + Lead_Shift_Event__e Platform Event + leadShiftDashboard LWC), eine Loan-Sync-Pipeline (Loan__c + Loan_Sync_Log__c Custom Objects mit Retry-Scheduler und Audit-Logging), eine Reseller-Matching-Engine (mehrkriterieller Scoring-Service + Opportunity-Trigger + resellerTierBadge LWC) und ein erweiterbares TriggerHandler-Framework, von dem jeder Trigger in der Org erbt.",
         approach:
-          "Drei Lektionen prägten das Design. Erstens: Die LWC behält die Hoheit über den User-Flow, sodass Wetterkarten erscheinen, bevor das KI-Urteil eintrifft — Graceful Degradation, falls Einstein in Timeout läuft. Zweitens: Payloads minimiert — nur sechs Felder pro Wegpunkt überqueren die Apex-Grenze, Heap- und Serialisierungskosten bleiben niedrig. Drittens: Das sekundäre Nationalize.io-Feature beim Contact-Insert ist bewusst in einen Queueable mit Database.AllowsCallouts ausgelagert — bulk-safe, End-to-End gemockt (Erfolg, leere Antwort, HTTP 500, fehlender FirstName, Zehn-Datensatz-Bulk-Insert, Parser-Unit-Test) und gegenüber einem synchronen Trigger-Callout gewählt, weil die Demo explizit als Referenzimplementierung gedacht ist.",
+          "Drei Prinzipien laufen durch jedes Feature. Erstens: Async by default — jeder externe Callout nutzt Queueable oder Schedulable, keine synchronen Trigger-Callouts, keine Governor-Überraschungen unter Last. Zweitens: Secrets aus dem Code — sowohl der Google-Maps- als auch der OpenWeather-API-Key leben in einer API_Config__c-Hierarchical-Custom-Setting, zur Laufzeit gelesen via ApiKeyService Apex-Klasse (Instance-Property für VF, @AuraEnabled-cacheable-Methoden für LWC). Die Visualforce-Seite rendert den Maps-Key via {!JSENCODE(mapsApiKey)}, sodass er nie als Literal im Code erscheint; die LWC awaitet getOpenWeatherApiKey() im connectedCallback. ApiKeyServiceTest liefert 100 % Coverage. Drittens: Jeder Trigger erbt vom selben Kevin-O'Hara-TriggerHandler — Rekursionsschutz, Bypass-Mechanismus, testbare Logik — sodass Routing, Sync, Matching und Contact-Enrichment unter Bulk-Last konsistent verhalten.",
         outcome:
-          "Ein einziger Screen, auf dem ein Mitarbeiter ein Ziel eingibt und drei Entscheidungs-Layer bekommt: die Route, das Wetter entlang der Route und ein KI-Sicherheitsurteil — alles in Salesforce, alles mit plattformnativer KI ohne den Trust Layer zu verlassen. Dasselbe Kompositions-Muster überträgt sich direkt auf Fleet-Management-, Field-Service- und Delivery-Scheduling-Apps, von denen der DACH-Markt voll ist.",
+          "Ein Salesforce-Referenz-Sandbox, das ein Recruiter klonen, deployen, zwei API-Keys in Setup → Custom Settings → API Config → Manage einfügen und End-to-End laufen sehen kann. Sechs Features über LWC, Apex, Visualforce, Custom Objects, Platform Events, scheduled Batches und Einstein-KI — mit den Senior-Engineering-Details (Key-Management via Custom Setting, Trigger-Framework, Async-by-Default, gemockte Tests) im Diff sichtbar. Dieselben Patterns übertragen sich direkt auf die Multifeature-Salesforce-Orgs, die mittlere bis große DACH-Unternehmen tatsächlich betreiben.",
       },
     },
   },
